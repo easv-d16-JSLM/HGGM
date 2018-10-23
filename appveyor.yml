@@ -1,0 +1,26 @@
+version: '{build}'
+
+image: Visual Studio 2017
+configuration: Release
+
+install:
+  - choco install gitversion.portable -pre -y
+  - choco install codecov
+
+before_build:
+  - ps: gitversion /l console /output buildserver /updateAssemblyInfo
+  - ps: msbuild /t:Restore /v:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
+build:
+  verbosity: minimal
+  
+after_build:
+  - dotnet publish -f netcoreapp2.1 -c Release HGGM
+
+artifacts:
+- path: HGGM/bin/Release/*/*/publish
+  name: binaries
+
+test_script:
+- cmd: dotnet test "src\HGGM.Tests\HGGM.Tests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+- cmd: codecov -f "src\HGGM.Tests\coverage.opencover.xml"
