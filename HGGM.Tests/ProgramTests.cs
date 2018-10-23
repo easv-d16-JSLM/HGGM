@@ -4,12 +4,18 @@ using Xunit;
 
 namespace HGGM.Tests
 {
-    public class General
+    public class ProgramTests
     {
         [Fact]
         public void ProjectExists()
         {
             new Program().Should().NotBeNull();
+        }
+
+        [Fact]
+        public void WebHostBuilds()
+        {
+            Program.CreateWebHostBuilder(new string[0]).Build().Should().NotBeNull();
         }
     }
 }
