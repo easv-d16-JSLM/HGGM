@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RuntimeFrameworkVersion>2.1.5</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>2.1.4</RuntimeFrameworkVersion>
     <UserSecretsId>aspnet-HGGM-E2D3AA94-9F9D-4F25-B26F-A0C1EDDFF3AE</UserSecretsId>
   </PropertyGroup>
 
