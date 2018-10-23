@@ -18,7 +18,7 @@ after_build:
   - dotnet publish -f netcoreapp2.1 -c Release HGGM
 
 artifacts:
-- path: HGGM/bin/Release/*/*/publish
+- path: HGGM/bin/Release/netcoreapp2.1/publish
   name: binaries
 
 test_script:
