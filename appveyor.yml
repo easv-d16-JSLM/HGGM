@@ -22,5 +22,5 @@ artifacts:
   name: binaries
 
 test_script:
-- cmd: dotnet test "src\HGGM.Tests\HGGM.Tests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- cmd: codecov -f "src\HGGM.Tests\coverage.opencover.xml"
+- cmd: dotnet test "HGGM.Tests\HGGM.Tests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+- cmd: codecov -f "HGGM.Tests\coverage.opencover.xml"
