@@ -1,7 +1,7 @@
 FROM microsoft/dotnet:sdk AS build-env
 WORKDIR /app
 
-COPY * /app/
+COPY . /app/
 RUN ls -lah
 RUN cd HGGM; dotnet restore
 RUN cd HGGM; dotnet publish -c Release -o out
