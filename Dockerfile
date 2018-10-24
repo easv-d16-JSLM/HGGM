@@ -1,6 +1,10 @@
 FROM microsoft/dotnet:sdk AS build-env
 WORKDIR /app
-RUN apt-get install -y libcurl3 git
+
+#Fix from: https://github.com/GitTools/GitVersion/issues/1473
+RUN apt-get update && \
+        apt-get install -y libgit2-dev && \
+        ln -s /usr/lib/x86_64-linux-gnu/libgit2.so /lib/x86_64-linux-gnu/libgit2-15e1193.so
 
 COPY . /app/
 RUN ls -lah
