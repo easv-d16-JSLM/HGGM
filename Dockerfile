@@ -1,6 +1,6 @@
 FROM microsoft/dotnet:sdk AS build-env
 WORKDIR /app
-RUN apt-get install -y libcurl3
+RUN apt-get install -y libcurl3 git
 
 COPY . /app/
 RUN ls -lah
