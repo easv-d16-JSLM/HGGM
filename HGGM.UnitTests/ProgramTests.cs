@@ -2,7 +2,7 @@ using System;
 using FluentAssertions;
 using Xunit;
 
-namespace HGGM.Tests
+namespace HGGM.UnitTests
 {
     public class ProgramTests
     {

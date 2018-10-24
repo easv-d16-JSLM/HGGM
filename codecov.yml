@@ -1,7 +1,0 @@
-flags:
-  Views:
-    paths:
-      - HGGM/Views/
-  Controllers:
-    paths:
-      - HGGM/Controllers/

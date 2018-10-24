@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HGGM", "HGGM\HGGM.csproj", "{8C2BB360-B887-4FD9-94E1-28E220E0D220}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HGGM.Tests", "HGGM.Tests\HGGM.Tests.csproj", "{BCB2DA09-AED1-45FF-9B22-0D3852CACD59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HGGM.UnitTests", "HGGM.UnitTests\HGGM.UnitTests.csproj", "{BCB2DA09-AED1-45FF-9B22-0D3852CACD59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HGGM.IntegrationTests", "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj", "{B60E8FD0-FE20-4D42-A1B9-AD49360BAA6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BCB2DA09-AED1-45FF-9B22-0D3852CACD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB2DA09-AED1-45FF-9B22-0D3852CACD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB2DA09-AED1-45FF-9B22-0D3852CACD59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B60E8FD0-FE20-4D42-A1B9-AD49360BAA6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B60E8FD0-FE20-4D42-A1B9-AD49360BAA6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B60E8FD0-FE20-4D42-A1B9-AD49360BAA6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B60E8FD0-FE20-4D42-A1B9-AD49360BAA6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

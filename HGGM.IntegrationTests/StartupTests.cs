@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace HGGM.Tests
+namespace HGGM.IntegrationTests
 {
     public class StartupTests : IClassFixture<WebApplicationFactory<Startup>>
     {
