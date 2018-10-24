@@ -23,6 +23,6 @@ artifacts:
 
 test_script:
 - cmd: dotnet test "HGGM.UnitTests\HGGM.UnitTests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- cmd: codecov -f "HGGM.UnitTests\coverage.opencover.xml" -F UnitTests
+- cmd: codecov -f "HGGM.UnitTests\coverage.opencover.xml" --flag UnitTests
 - cmd: dotnet test "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- cmd: codecov -f "HGGM.IntegrationTests\coverage.opencover.xml" -F IntegrationTests
+- cmd: codecov -f "HGGM.IntegrationTests\coverage.opencover.xml" --flag IntegrationTests
