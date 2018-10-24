@@ -9,7 +9,7 @@ RUN apt-get update && \
 COPY . /app/
 RUN ls -lah
 RUN cd HGGM; dotnet restore
-RUN cd HGGM; dotnet publish -c Release -o out
+RUN cd HGGM; dotnet publish -c Release -o out /p:NCrunch=true
 
 # Build runtime image
 FROM microsoft/dotnet:aspnetcore-runtime
