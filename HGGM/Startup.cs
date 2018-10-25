@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCore.Identity.LiteDB;
+using AspNetCore.Identity.LiteDB.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HGGM.Data;
+using HGGM.Models.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -34,11 +37,11 @@ namespace HGGM
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddUserStore<LiteDbUserStore<User>>()
+                .AddRoles<Role>()
+                .AddRoleStore<LiteDbRoleStore<Role>>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

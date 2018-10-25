@@ -6,10 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.Identity.LiteDB" Version="2.6.0" />
     <PackageReference Include="GitVersionTask" Version="4.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="LiteDB" Version="4.1.4" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
