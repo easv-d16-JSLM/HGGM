@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Identity.LiteDB;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HGGM.Models.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -44,8 +46,12 @@ namespace HGGM
                 .AddRoleStore<LiteDbRoleStore<Role>>()
                 //.AddDefaultUI() FIX: the UI has to be scaffolded?
                 .AddDefaultTokenProviders();
+
+            services.AddLocalization();
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddMvcLocalization();
 
             services.AddSwaggerGen(c =>
             {
@@ -69,6 +75,14 @@ namespace HGGM
             }
 
             app.UseHttpsRedirection();
+
+            app.UseRequestLocalization(new RequestLocalizationOptions()
+            {
+                DefaultRequestCulture = new RequestCulture("en"),
+                //SupportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures),
+                SupportedUICultures = CultureInfo.GetCultures(CultureTypes.AllCultures)
+            });
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
