@@ -15,6 +15,8 @@ namespace HGGM.IntegrationTests
 
         [Theory]
         [InlineData("/")]
+        [InlineData("/swagger")]
+        [InlineData("/swagger/v1/swagger.json")]
         public async Task GetReturnsSuccess(string url)
         {
             // Arrange
