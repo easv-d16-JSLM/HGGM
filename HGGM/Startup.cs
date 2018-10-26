@@ -13,9 +13,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HGGM.Data;
+using HGGM.Models.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using IdentityRole = AspNetCore.Identity.LiteDB.IdentityRole;
 
 namespace HGGM
 {
@@ -39,13 +39,12 @@ namespace HGGM
             });
 
             services.AddSingleton<LiteDbContext>();
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddUserStore<LiteDbUserStore<ApplicationUser>>()
-                .AddRoles<IdentityRole>()
-                .AddRoleStore<LiteDbRoleStore<IdentityRole>>()
+            services.AddIdentity<User, Role>()
+                .AddUserStore<LiteDbUserStore<User>>()
+                .AddRoleStore<LiteDbRoleStore<Role>>()
+                //.AddDefaultUI() FIX: the UI has to be scaffolded?
                 .AddDefaultTokenProviders();
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
