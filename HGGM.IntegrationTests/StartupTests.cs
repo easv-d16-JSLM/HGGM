@@ -15,6 +15,10 @@ namespace HGGM.IntegrationTests
 
         [Theory]
         [InlineData("/")]
+        [InlineData("/Home/About")]
+        [InlineData("/Home/Contact")]
+        [InlineData("/Home/Privacy")]
+        [InlineData("/Home/Error")]
         [InlineData("/swagger")]
         [InlineData("/swagger/v1/swagger.json")]
         public async Task GetReturnsSuccess(string url)
