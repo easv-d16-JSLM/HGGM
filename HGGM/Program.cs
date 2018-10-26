@@ -43,7 +43,6 @@ namespace HGGM
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
                 .UseSerilog()
                 .UseStartup<Startup>();
     }
