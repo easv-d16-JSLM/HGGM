@@ -20,6 +20,7 @@ namespace HGGM
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
+                .Enrich.WithDemystifiedStackTraces()
                 .WriteTo.Console()
                 .CreateLogger();
 

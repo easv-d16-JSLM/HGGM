@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Identity.LiteDB;
+using AspNetCore.Identity.LiteDB.Data;
 using AspNetCore.Identity.LiteDB.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -12,9 +13,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HGGM.Data;
-using HGGM.Models.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using IdentityRole = AspNetCore.Identity.LiteDB.IdentityRole;
 
 namespace HGGM
 {
@@ -37,10 +38,12 @@ namespace HGGM
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSingleton<LiteDbContext>();
+
             services.AddDefaultIdentity<IdentityUser>()
-                .AddUserStore<LiteDbUserStore<User>>()
-                .AddRoles<Role>()
-                .AddRoleStore<LiteDbRoleStore<Role>>()
+                .AddUserStore<LiteDbUserStore<ApplicationUser>>()
+                .AddRoles<IdentityRole>()
+                .AddRoleStore<LiteDbRoleStore<IdentityRole>>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -53,6 +56,7 @@ namespace HGGM
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseExceptionDemystifier();
             }
             else
             {
