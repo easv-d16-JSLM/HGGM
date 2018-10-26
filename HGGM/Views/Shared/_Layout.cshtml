@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Threading
+@using Microsoft.AspNetCore.Http.Extensions
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -45,7 +47,24 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - HGGM</p>
+            <details>
+                <summary>&copy; 2018 - HGGM</summary>
+                <dl>
+                    <dt>Request</dt>
+                    <dd>@Context.Request.GetDisplayUrl() at @DateTimeOffset.Now.ToString()</dd>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <dt>User</dt>
+                        <dd>@User.Identity.Name using @User.Identity.AuthenticationType</dd>
+                    }
+                    <dt>Connection</dt>
+                    <dd>[@Context.Connection.RemoteIpAddress]:@Context.Connection.RemotePort - [@Context.Connection.LocalIpAddress]:@Context.Connection.LocalPort</dd>
+                    <dt>User languages</dt>
+                    <dd>@Context.Request.Headers["Accept-Language"].ToString()</dd>
+                    <dt>Server language</dt>
+                    <dd>Culture: @Thread.CurrentThread.CurrentCulture, UI: @Thread.CurrentThread.CurrentCulture</dd>
+                </dl>
+            </details>
         </footer>
     </div>
 
