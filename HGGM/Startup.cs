@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HGGM.Models.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -47,11 +48,12 @@ namespace HGGM
                 //.AddDefaultUI() FIX: the UI has to be scaffolded?
                 .AddDefaultTokenProviders();
 
-            services.AddLocalization();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddMvcLocalization();
+                .AddMvcLocalization(LanguageViewLocationExpanderFormat.SubFolder)
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder,options => options.ResourcesPath = "Resources");
 
             services.AddSwaggerGen(c =>
             {
@@ -79,7 +81,7 @@ namespace HGGM
             app.UseRequestLocalization(new RequestLocalizationOptions()
             {
                 DefaultRequestCulture = new RequestCulture("en"),
-                //SupportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures),
+                SupportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures),
                 SupportedUICultures = CultureInfo.GetCultures(CultureTypes.AllCultures)
             });
 
