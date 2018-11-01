@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AspNetCore.Identity.LiteDB;
 using AspNetCore.Identity.LiteDB.Data;
 using AspNetCore.Identity.LiteDB.Models;
+using HGGM.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HGGM.Models.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -44,7 +46,10 @@ namespace HGGM
                 .AddRoleStore<LiteDbRoleStore<Role>>()
                 //.AddDefaultUI() FIX: the UI has to be scaffolded?
                 .AddDefaultTokenProviders();
-            
+
+            services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwaggerGen(c =>
