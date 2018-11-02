@@ -46,7 +46,6 @@ namespace HGGM
             services.AddIdentity<User, Role>()
                 .AddUserStore<LiteDbUserStore<User>>()
                 .AddRoleStore<LiteDbRoleStore<Role>>()
-                //.AddDefaultUI() FIX: the UI has to be scaffolded?
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IAuthorizationHandler, PermissionHandler>();
