@@ -47,7 +47,7 @@ namespace HGGM
                 .AddUserStore<LiteDbUserStore<User>>()
                 .AddRoleStore<LiteDbRoleStore<Role>>()
                 .AddDefaultTokenProviders();
-
+           
             services.AddScoped<IAuthorizationHandler, PermissionHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 

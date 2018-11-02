@@ -13,7 +13,7 @@ namespace HGGM.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return new ForbidResult();
         }
         [Permission(Permission.ShowMainMenu)]
         public IActionResult About()
