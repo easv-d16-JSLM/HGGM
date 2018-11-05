@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Identity.LiteDB;
@@ -17,6 +18,8 @@ using HGGM.Models.Identity;
 using HGGM.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -53,7 +56,12 @@ namespace HGGM
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddMvcLocalization(LanguageViewLocationExpanderFormat.SubFolder)
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder,options => options.ResourcesPath = "Resources");
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -84,6 +92,14 @@ namespace HGGM
             }
 
             app.UseHttpsRedirection();
+
+            app.UseRequestLocalization(new RequestLocalizationOptions()
+            {
+                DefaultRequestCulture = new RequestCulture("en"),
+                SupportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures),
+                SupportedUICultures = CultureInfo.GetCultures(CultureTypes.AllCultures)
+            });
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
