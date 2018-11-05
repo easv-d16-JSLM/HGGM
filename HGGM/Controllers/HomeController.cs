@@ -13,9 +13,9 @@ namespace HGGM.Controllers
     {
         public IActionResult Index()
         {
-            return new ForbidResult();
+            return View();
         }
-        [Permission(Permission.ShowMainMenu)]
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
