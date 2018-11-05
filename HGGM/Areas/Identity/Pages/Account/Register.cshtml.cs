@@ -41,9 +41,19 @@ namespace HGGM.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+            [RegularExpression("[0-9a-zA-Z]+", ErrorMessage = "The {0} must be characters and numeric")]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Year of birth")]
+            public string DateOfBirth { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -55,6 +65,16 @@ namespace HGGM.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [StringLength(17, ErrorMessage = "The {0} must be {1} characters long.", MinimumLength = 17)]
+            [RegularExpression("[0-9]+", ErrorMessage = "The {0} must be numeric")]
+            [Display(Name = "Steam 64 ID")]
+            public string Steam64ID { get; set; }
+
+            //requires last character to be =
+            [Display(Name = "Teamspeak Unique ID")]
+            public string TeamspeakUID { get; set; }
+
         }
 
         public void OnGet(string returnUrl = null)
@@ -67,7 +87,7 @@ namespace HGGM.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

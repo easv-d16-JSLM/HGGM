@@ -13,9 +13,19 @@
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Input.UserName"></label>
+                <input asp-for="Input.UserName" class="form-control" />
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.DateOfBirth"></label>
+                <input asp-for="Input.DateOfBirth" class="form-control" />
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Password"></label>
@@ -27,6 +37,23 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Input.Steam64ID"></label>
+                <input asp-for="Input.Steam64ID" class="form-control" />
+                <span asp-validation-for="Input.Steam64ID" class="text-danger"></span>
+                <p><a href="JavaScript:newPopup('https://lh4.googleusercontent.com/peZOdTNWCcaZj4TtH71e_ULiMkTwznx-L6PkfNP8915un0_MkcovxrpGCQp1An8nEVw8HEoNZg=w798');">how?</a></p>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.TeamspeakUID"></label>
+                <input asp-for="Input.TeamspeakUID" class="form-control" />
+                <span asp-validation-for="Input.TeamspeakUID" class="text-danger"></span>
+
+                <p><a href="JavaScript:newPopup('https://lh3.googleusercontent.com/NqMs0cOClNPfV2x5r0EjyLxAINVNcZkI0uwOOGzNQoWf16WXyB6Mq-6C2niUCZDeNCTk7juAjA=w706');">how?</a></p>
+            </div>
+            <div>
+                By clicking register you agree to the <a href="#">Terms of Service</a>
+                and the <a href="#">Privacy Policy</a>
+            </div>
             <button type="submit" class="btn btn-default">Register</button>
         </form>
     </div>
@@ -34,4 +61,11 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
+        // Popup window code
+        function newPopup(url) {
+            popupWindow = window.open(
+                url, 'popUpWindow', 'height=600,width=700,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+        }
+    </script>
 }
