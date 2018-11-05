@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AspNetCore.Identity.LiteDB;
 using AspNetCore.Identity.LiteDB.Data;
 using AspNetCore.Identity.LiteDB.Models;
+using HGGM.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +15,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HGGM.Models.Identity;
+using HGGM.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
@@ -45,8 +49,12 @@ namespace HGGM
             services.AddIdentity<User, Role>()
                 .AddUserStore<LiteDbUserStore<User>>()
                 .AddRoleStore<LiteDbRoleStore<Role>>()
-                //.AddDefaultUI() FIX: the UI has to be scaffolded?
                 .AddDefaultTokenProviders();
+           
+            services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             
@@ -54,6 +62,13 @@ namespace HGGM
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddMvcLocalization(LanguageViewLocationExpanderFormat.SubFolder)
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder,options => options.ResourcesPath = "Resources");
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
 
             services.AddSwaggerGen(c =>
             {
