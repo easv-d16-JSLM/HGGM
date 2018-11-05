@@ -11,10 +11,10 @@ namespace HGGM.Services
     {
         private readonly ILogger log = Log.ForContext<LiteDbInitializer>();
 
-        public LiteDbInitializer(LiteRepository repository, UserManager<User> userManager,
+        public LiteDbInitializer(LiteDatabase db, UserManager<User> userManager,
             RoleManager<Role> roleManager)
         {
-            Initialize(repository, userManager, roleManager).RunSynchronously();
+            Initialize(new LiteRepository(db), userManager, roleManager).GetAwaiter().GetResult();
         }
 
         private async Task CreateUsers(UserManager<User> userManager)

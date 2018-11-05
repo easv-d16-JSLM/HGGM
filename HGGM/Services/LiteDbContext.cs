@@ -12,9 +12,9 @@ namespace HGGM.Services
     public class LiteDbContext : AspNetCore.Identity.LiteDB.Data.LiteDbContext
     {
 
-        public LiteDbContext(IHostingEnvironment environment, LiteDatabase db) : base(environment)
+        public LiteDbContext(IHostingEnvironment environment, LiteRepository repo) : base(environment)
         {
-            LiteDatabase = db;
+            LiteDatabase = repo.Database;
         }
     }
 }
