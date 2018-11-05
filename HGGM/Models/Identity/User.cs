@@ -7,5 +7,8 @@ namespace HGGM.Models.Identity
 {
     public class User : AspNetCore.Identity.LiteDB.Models.ApplicationUser
     {
+        public DateTime DateOfBirth { get; set; }
+        public string Steam64ID { get; set; }
+        public string TeamspeakUID { get; set; }
     }
 }
