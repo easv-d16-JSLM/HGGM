@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HGGM.Models.Identity;
 using HGGM.Services;
+using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
@@ -23,6 +24,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using LiteDbContext = HGGM.Services.LiteDbContext;
 
 namespace HGGM
 {
@@ -45,7 +47,10 @@ namespace HGGM
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSingleton(new LiteDatabase(@"AppData/Database.db"));
             services.AddSingleton<LiteDbContext>();
+            services.AddSingleton<LiteRepository>();
+
             services.AddIdentity<User, Role>()
                 .AddUserStore<LiteDbUserStore<User>>()
                 .AddRoleStore<LiteDbRoleStore<Role>>()
