@@ -68,11 +68,6 @@ namespace HGGM
 
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
-
-            using (var scope = app.ApplicationServices.CreateScope())
-            {
-                scope.ServiceProvider.GetRequiredService<LiteDbInitializer>();
-            }
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -86,7 +81,6 @@ namespace HGGM
             });
             
             services.AddSingleton(new LiteDatabase(Configuration.GetConnectionString("LiteDb")));
-            services.AddTransient<LiteDbInitializer>();
             services.AddSingleton<LiteRepository>();
             services.AddSingleton<LiteDbContext, Services.LiteDbContext>();
 
