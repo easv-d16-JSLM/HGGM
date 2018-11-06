@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace HGGM.IntegrationTests.Areas.Identity.Pages.Account.Manage
+namespace HGGM.IntegrationTests.Areas.Identity.Pages.Account
 {
     public class RegisterTests : IClassFixture<WebApplicationFactory<Startup>>
     {
@@ -59,13 +59,14 @@ namespace HGGM.IntegrationTests.Areas.Identity.Pages.Account.Manage
                     {"Input_Password", "@Asd123" },
                     {"Input_ConfirmPassword", "@Asd123" },
                     {"Input_DateOfBirth", "hej" } });
-            response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 
             // Assert
             responseString.Should().NotContain("already exists");
+            responseString.Should().NotContain("Invalid");
+            responseString.Should().NotContain("AppData");
             response.RequestMessage.RequestUri.AbsolutePath.Should().Be("/");
-
+            response.IsSuccessStatusCode.Should().BeTrue("because {0} does not indicate success",response.StatusCode, response.ReasonPhrase);
         }
     }
 }
