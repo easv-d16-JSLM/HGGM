@@ -11,11 +11,5 @@ namespace HGGM.UnitTests
         {
             new Program().Should().NotBeNull();
         }
-
-        [Fact]
-        public void WebHostBuilds()
-        {
-            Program.CreateWebHostBuilder(new string[0]).Build().Should().NotBeNull();
-        }
     }
 }
