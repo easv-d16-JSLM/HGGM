@@ -89,6 +89,8 @@ namespace HGGM
             services.AddSingleton<LiteRepository>();
             services.AddSingleton<LiteDbContext, Services.LiteDbContext>();
 
+            services.AddAuthentication()
+                .AddSteam();
             services.AddIdentity<User, Role>()
                 .AddUserStore<LiteDbUserStore<User>>()
                 .AddRoleStore<LiteDbRoleStore<Role>>()

@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.10" />
+    <PackageReference Include="AspNet.Security.OpenId.Steam" Version="2.0.0" />
     <PackageReference Include="AspNetCore.Identity.LiteDB" Version="2.6.0" />
     <PackageReference Include="codeessentials.AspNetCore.Diagnostics.Demystifier" Version="0.1.37" />
     <PackageReference Include="GitVersionTask" Version="4.0.0">
