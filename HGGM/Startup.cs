@@ -1,6 +1,8 @@
 ﻿using System.Globalization;
 using System.IO;
 using AspNetCore.Identity.LiteDB;
+using Hangfire;
+using Hangfire.LiteDB;
 using HGGM.Authorization;
 using HGGM.Models.Identity;
 using HGGM.Services;
@@ -59,6 +61,9 @@ namespace HGGM
 
             app.UseAuthentication();
 
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -95,6 +100,8 @@ namespace HGGM
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddHangfire(configuration => configuration.UseLiteDbStorage());
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
