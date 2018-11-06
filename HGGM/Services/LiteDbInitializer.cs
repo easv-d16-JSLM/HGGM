@@ -14,14 +14,18 @@ namespace HGGM.Services
         public LiteDbInitializer(LiteDatabase db, UserManager<User> userManager,
             RoleManager<Role> roleManager)
         {
+            db.Log.Level = Logger.FULL;
+            db.Log.Logging += msg => Log.ForContext<LiteDatabase>().Verbose("{msg}", msg);
+            db.Engine.DropCollection("users");
             Initialize(new LiteRepository(db), userManager, roleManager).GetAwaiter().GetResult();
+            
         }
 
         private async Task CreateUsers(UserManager<User> userManager)
         {
             var results = new List<IdentityResult>
             {
-                await userManager.CreateAsync(new User {Email = "root@localhost", UserName = "root"}, "root")
+                await userManager.CreateAsync(new User {Email = "root@localhost", UserName = "root"}, "ASDfghjkl123.")
             };
             results.ForEach(r =>
             {

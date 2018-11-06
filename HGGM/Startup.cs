@@ -84,9 +84,8 @@ namespace HGGM
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            Directory.CreateDirectory("AppData");
-            services.AddSingleton(new LiteDatabase(@"AppData/Database.db"));
+            
+            services.AddSingleton(new LiteDatabase(Configuration.GetConnectionString("LiteDb")));
             services.AddTransient<LiteDbInitializer>();
             services.AddSingleton<LiteRepository>();
             services.AddSingleton<LiteDbContext, Services.LiteDbContext>();
