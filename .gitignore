@@ -1,4 +1,6 @@
 
+/HGGM/wwwroot/lib
+
 # Created by https://www.gitignore.io/api/git,linux,windows,visualstudio,visualstudiocode
 
 ### Git ###
@@ -400,4 +402,3 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/git,linux,windows,visualstudio,visualstudiocode
-/HGGM/wwwroot/App_Data/LiteDbIdentity.db

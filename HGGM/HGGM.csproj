@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\App_Data\**" />
+    <Content Remove="wwwroot\App_Data\**" />
+    <EmbeddedResource Remove="wwwroot\App_Data\**" />
+    <None Remove="wwwroot\App_Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.10" />
     <PackageReference Include="AspNetCore.Identity.LiteDB" Version="2.6.0" />
     <PackageReference Include="codeessentials.AspNetCore.Diagnostics.Demystifier" Version="0.1.37" />
@@ -17,14 +24,11 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.163" />
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Serilog.Enrichers.Demystify" Version="0.1.0-dev-00016" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\App_Data\" />
   </ItemGroup>
 
 </Project>
