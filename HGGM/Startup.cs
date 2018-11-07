@@ -1,11 +1,10 @@
 ﻿using System.Globalization;
-using System.IO;
 using AspNetCore.Identity.LiteDB;
 using Hangfire;
 using Hangfire.LiteDB;
-using HGGM.Authorization;
 using HGGM.Models.Identity;
 using HGGM.Services;
+using HGGM.Services.Authorization;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -61,7 +60,8 @@ namespace HGGM
 
             app.UseAuthentication();
 
-            app.UseHangfireDashboard();
+            app.UseHangfireDashboard(options: new DashboardOptions
+                {Authorization = new[] {new PermissionDashboardAuthorizationFilter()}});
             app.UseHangfireServer();
 
             app.UseMvc(routes =>
@@ -86,7 +86,7 @@ namespace HGGM
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
             services.AddSingleton(new LiteDatabase(Configuration.GetConnectionString("LiteDb")));
             services.AddSingleton<LiteRepository>();
             services.AddSingleton<LiteDbContext, Services.LiteDbContext>();
