@@ -6,21 +6,32 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link dropdown-toggle" href="#" id="ManagmentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-fw fa-user"></i> @(UserManager.GetUserName(User))
+        </a>
+        <ul class="navbar-dropdown">
             <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                <a class="dropdown-item" asp-area="Identity" asp-controller="Manage" asp-action="Index"><i class="fa fa-fw fa-user"></i> Profile</a>
             </li>
+            <li class="navbar-divider"></li>
             <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" >
+                    @*<a class="button is-light" value="submit" asp-area="Identity" asp-controller="Account" asp-action="Logout"><i class="fa fa-fw fa-power-off"></i>Log Out</a>*@
+                    <button class="button is-white" type="submit"><i class="fa fa-fw fa-power-off"></i>Logout</button>
+                </form>
             </li>
         </ul>
-    </form>
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
-        <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
-    </ul>
-}
+    </li>
+        }
+        else
+        {
+        <div class="buttons">
+            <a class="button is-primary" asp-area="Identity" asp-controller="Account" asp-action="Register">
+                <strong>Register</strong>
+            </a>
+            <a class="button is-light" asp-area="Identity" asp-controller="Account" asp-action="Login">
+                Log in
+            </a>
+        </div>
+        }

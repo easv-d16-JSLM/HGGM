@@ -3,48 +3,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HGGM</title>
 
-    <link rel="stylesheet" href="~/lib/bulma/css/bulma.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/bulma/css/bulma.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">HGGM</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="About">About</a>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                </li>
-            </ul>
-            <partial name="_LoginPartial"/>
-        </div>
-    </div>
-</nav>
 
-<partial name="_CookieConsentPartial"/>
 
-<div class="container body-content">
-    @RenderBody()
-    <hr/>
-    <footer>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="https://417rct.org/themes/fabriciorabelo-squad/assets/images/417LogoPath.svg" width="60" height="40">
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+                <a class="navbar-item" asp-controller="Home" asp-action="Index">
+                    Events
+                </a>
+
+                <a class="navbar-item" asp-controller="Home" asp-action="Index">
+                    Videos
+                </a>
+
+                <a class="navbar-item" asp-controller="Home" asp-action="Index">
+                    Donate
+                </a>
+
+                <a class="navbar-item" asp-controller="Home" asp-action="Index">
+                    Status
+                </a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    <section class="section">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </section>
+    <hr />
+    <footer class="footer">
         <details>
             <summary>&copy; 2018 - HGGM</summary>
             <dl>
@@ -64,11 +82,11 @@
             </dl>
         </details>
     </footer>
-</div>
+    </div>
 
-<script src="~/lib/jquery/jquery.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
-@RenderSection("Scripts", false)
+    @RenderSection("Scripts", false)
 </body>
 </html>
