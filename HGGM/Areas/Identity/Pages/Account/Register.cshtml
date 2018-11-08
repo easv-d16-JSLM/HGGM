@@ -12,49 +12,69 @@
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.UserName"></label>
-                <input asp-for="Input.UserName" class="form-control" />
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control">
+                    <input class="input form-control" type="text" asp-for="Input.UserName" placeholder="Text Input" />
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input asp-for="Input.Email" class="input form-control" placeholder="Email" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.DateOfBirth"></label>
-                <input asp-for="Input.DateOfBirth" class="form-control" />
-                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            <div class="field">
+                <label class="label">Date of birth</label>
+                <div class="control">
+                    <input asp-for="Input.DateOfBirth" class="input form-control" />
+                    <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input asp-for="Input.Password" class="input form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            <div class="field">
+                <label class="label">Confirm Password</label>
+                <div class="control">
+                    <input asp-for="Input.ConfirmPassword" class="input form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Steam64ID"></label>
-                <input asp-for="Input.Steam64ID" class="form-control" />
-                <span asp-validation-for="Input.Steam64ID" class="text-danger"></span>
-                <p><a href="JavaScript:newPopup('https://lh4.googleusercontent.com/peZOdTNWCcaZj4TtH71e_ULiMkTwznx-L6PkfNP8915un0_MkcovxrpGCQp1An8nEVw8HEoNZg=w798');">how?</a></p>
+            <div class="field">
+                <label class="label">Steam 64 ID</label>
+                <div class="control">
+                    <input asp-for="Input.Steam64ID" class="input form-control" />
+                    <span asp-validation-for="Input.Steam64ID" class="text-danger"></span>
+                    <p><a href="JavaScript:newPopup('https://lh4.googleusercontent.com/peZOdTNWCcaZj4TtH71e_ULiMkTwznx-L6PkfNP8915un0_MkcovxrpGCQp1An8nEVw8HEoNZg=w798');">how?</a></p>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.TeamspeakUID"></label>
-                <input asp-for="Input.TeamspeakUID" class="form-control" />
-                <span asp-validation-for="Input.TeamspeakUID" class="text-danger"></span>
-
-                <p><a href="JavaScript:newPopup('https://lh3.googleusercontent.com/NqMs0cOClNPfV2x5r0EjyLxAINVNcZkI0uwOOGzNQoWf16WXyB6Mq-6C2niUCZDeNCTk7juAjA=w706');">how?</a></p>
+            <div class="field">
+                <label class="label">Teamspeak UID</label>
+                <div class="control">
+                    <input asp-for="Input.TeamspeakUID" class="input form-control" />
+                    <span asp-validation-for="Input.TeamspeakUID" class="text-danger"></span>
+                    <p><a href="JavaScript:newPopup('https://lh3.googleusercontent.com/NqMs0cOClNPfV2x5r0EjyLxAINVNcZkI0uwOOGzNQoWf16WXyB6Mq-6C2niUCZDeNCTk7juAjA=w706');">how?</a></p>
+                </div>
             </div>
             <div>
                 By clicking register you agree to the <a href="#">Terms of Service</a>
                 and the <a href="#">Privacy Policy</a>
             </div>
-            <button id="SubmitRegister" type="submit" class="btn btn-default">Register</button>
+            <div class="field is-grouped" style="margin-top: 1rem">
+                <div class="control">
+                    <button id="SubmitRegister" type="submit" class="button is-link">Register</button>
+                </div>
+                <div class="control">
+                    <button asp-controller="Home" asp-action="Index" class="button is-text">Cancel</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
