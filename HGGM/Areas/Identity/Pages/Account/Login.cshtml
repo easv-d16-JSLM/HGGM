@@ -13,35 +13,39 @@
                 <h4>Use a local account to log in.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.NickName"></label>
-                    <input asp-for="Input.NickName" class="form-control" />
-                    <span asp-validation-for="Input.NickName" class="text-danger"></span>
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input asp-for="Input.NickName" class="input form-control" />
+                        <span asp-validation-for="Input.NickName" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input asp-for="Input.Password" class="input form-control" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" asp-for="Input.RememberMe" />
                             @Html.DisplayNameFor(m => m.Input.RememberMe)
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                </div>
+                    <div class="control" style="margin-top: 1rem">
+                        <button id="SubmitRegister" type="submit" class="button is-link">Login</button>
+                    </div>
+                    <div class="form-group" style="margin-top: 1rem">
+                        <p>
+                            <a asp-page="./ForgotPassword">Forgot your password?</a>
+                        </p>
+                        <p>
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        </p>
+                    </div>
             </form>
         </section>
     </div>
