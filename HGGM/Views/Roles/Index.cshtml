@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" >
     <thead>
         <tr>
             <th>Name</th>
@@ -18,14 +18,14 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <td>
                 @item.Name
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
         

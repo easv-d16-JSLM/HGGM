@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using AspNetCore.Identity.LiteDB;
 using HGGM.Authorization;
@@ -51,7 +52,7 @@ namespace HGGM
             {
                 DefaultRequestCulture = new RequestCulture("en"),
                 SupportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures),
-                SupportedUICultures = CultureInfo.GetCultures(CultureTypes.AllCultures)
+                SupportedUICultures = new [] {new CultureInfo("en"),new CultureInfo("cs")}
             });
 
             app.UseStaticFiles();
