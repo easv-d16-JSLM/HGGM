@@ -11,4 +11,6 @@ namespace HGGM.Models.Identity
         public List<Permission> Permissions { get; set; }
 
     }
+
+   
 }
