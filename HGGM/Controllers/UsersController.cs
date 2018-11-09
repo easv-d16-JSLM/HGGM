@@ -101,7 +101,8 @@ namespace HGGM.Controllers
         public async System.Threading.Tasks.Task<ActionResult> Index()
         {
             var users = _db.Fetch<User>(collectionName: "users").ToList();
-            return View(users.Select(u => new UserWithRolesViewModel(){User = u}));
+            var roles = _roleManager.Roles.ToList();
+            return View(users.Select(u => new UserWithRolesViewModel(){User = u, Roles = roles}));
         }
     }
 }

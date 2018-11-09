@@ -1,33 +1,36 @@
-﻿@model IEnumerable<HGGM.ViewModels.UserWithRolesViewModel>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model IEnumerable<HGGM.ViewModels.UserWithRolesViewModel>
+@inject IViewLocalizer lang
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = lang["title"];
 }
 
-<h2>Index</h2>
+<h2>@lang["heading"]</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@lang["create"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>Username</th>
-            <th>Roles</th>
-            <th>Action</th>
+            <th>@lang["username"]</th>
+            <th>@lang["roles"]</th>
+            <th>@lang["action"]</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-    <tr>
-        <td>@item.User.UserName</td>
-        @*<td>@System.String.Join(" ", item.User.Roles)</td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
-            @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
-            @Html.ActionLink("Delete", "Delete", new {/* id=item.PrimaryKey */})
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User.UserName</td>
+                <td>@System.String.Join(" ", item.User.Roles)</td>
+                <td>
+                    @Html.ActionLink(lang["edit"].Value, "Edit", new {/* id=item.PrimaryKey */}) |
+                    @Html.ActionLink(lang["details"].Value, "Details", new {/* id=item.PrimaryKey */}) |
+                    @Html.ActionLink(lang["delete"].Value, "Delete", new {/* id=item.PrimaryKey */})
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
