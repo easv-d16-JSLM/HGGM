@@ -23,10 +23,10 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.User.UserName</td>
-                <td>@System.String.Join(" ", item.User.Roles)</td>
+                <td>@item.Username</td>
+                @*<td>@System.String.Join(" ", item.User.Roles)</td>*@
                 <td>
-                    @Html.ActionLink(lang["edit"].Value, "Edit", new {/* id=item.PrimaryKey */}) |
+                    @Html.ActionLink(lang["edit"].Value, "Edit", new {id = item.Id}) |
                     @Html.ActionLink(lang["details"].Value, "Details", new {/* id=item.PrimaryKey */}) |
                     @Html.ActionLink(lang["delete"].Value, "Delete", new {/* id=item.PrimaryKey */})
                 </td>

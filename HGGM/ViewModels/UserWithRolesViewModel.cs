@@ -5,7 +5,8 @@ namespace HGGM.ViewModels
 {
     public class UserWithRolesViewModel
     {
-        public IList<Role> Roles { get; set; }
-        public User User { get; set; }
+        public string Id { get; set; }
+        //public string Roles { get; set; }
+        public string Username { get; set; }
     }
 }
