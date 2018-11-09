@@ -1,12 +1,14 @@
-﻿@model HGGM.Models.Identity.Role
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer L
+@model HGGM.Models.Identity.Role
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>@L["createPageTitle"]</h2>
 
-<h4>Role</h4>
+<h4>@L["rolePageUnderTitle"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -26,7 +28,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@L["backToListButton"]</a>
 </div>
 
 @section Scripts {
