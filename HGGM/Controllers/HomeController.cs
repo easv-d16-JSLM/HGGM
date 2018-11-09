@@ -11,16 +11,9 @@ namespace HGGM.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IStringLocalizer<HomeController> _l;
-
-        public HomeController(IStringLocalizer<HomeController> localizer)
-        {
-            _l = localizer;
-        }
 
         public IActionResult Index()
         {
-            ViewData["Message"] = _l["Welcome."];
             return View();
         }
 
