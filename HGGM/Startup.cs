@@ -2,9 +2,11 @@
 using System.Globalization;
 using System.IO;
 using AspNetCore.Identity.LiteDB;
-using HGGM.Authorization;
+using Hangfire;
+using Hangfire.LiteDB;
 using HGGM.Models.Identity;
 using HGGM.Services;
+using HGGM.Services.Authorization;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -60,6 +62,10 @@ namespace HGGM
 
             app.UseAuthentication();
 
+            app.UseHangfireDashboard(options: new DashboardOptions
+                {Authorization = new[] {new PermissionDashboardAuthorizationFilter()}});
+            app.UseHangfireServer();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -73,6 +79,8 @@ namespace HGGM
 
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+
+            RecurringJob.AddOrUpdate<DbShrinker>(s => s.Shrink(), Cron.Hourly);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -84,11 +92,13 @@ namespace HGGM
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
             services.AddSingleton(new LiteDatabase(Configuration.GetConnectionString("LiteDb")));
             services.AddSingleton<LiteRepository>();
             services.AddSingleton<LiteDbContext, Services.LiteDbContext>();
 
+            services.AddAuthentication()
+                .AddSteam();
             services.AddIdentity<User, Role>()
                 .AddUserStore<LiteDbUserStore<User>>()
                 .AddRoleStore<LiteDbRoleStore<Role>>()
@@ -100,6 +110,8 @@ namespace HGGM
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddHangfire(configuration => configuration.UseLiteDbStorage());
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)

@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using AspNetCore.Identity.LiteDB.Data;
 using HGGM.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 
-namespace HGGM.Authorization
+namespace HGGM.Services.Authorization
 {
     public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
@@ -24,11 +23,12 @@ namespace HGGM.Authorization
             PermissionRequirement requirement)
         {
             var user = await _userManager.GetUserAsync(context.User);
-            log.Verbose("User {username} needs {permission} at {context}", user.UserName,requirement.Permission,context.Resource);
+            log.Verbose("User {username} needs {permission} at {context}", user?.UserName, requirement.Permission,
+                context.Resource);
             if (_roleManager.Roles.Any(r => user.Roles.Contains(r.Name)
                                             && r.Permissions.Contains(requirement.Permission)))
             {
-                log.Debug("User {username} was granted {permission}", user.UserName,requirement.Permission);
+                log.Debug("User {username} was granted {permission}", user?.UserName, requirement.Permission);
                 context.Succeed(requirement);
             }
         }

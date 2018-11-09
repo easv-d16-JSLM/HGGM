@@ -1,5 +1,6 @@
 
 /HGGM/wwwroot/lib
+HGGM/*\.db
 
 # Created by https://www.gitignore.io/api/git,linux,windows,visualstudio,visualstudiocode
 
@@ -402,5 +403,3 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/git,linux,windows,visualstudio,visualstudiocode
-
-HGGM/Database\.db
