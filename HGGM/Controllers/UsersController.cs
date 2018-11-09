@@ -1,19 +1,19 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using HGGM.Models.Identity;
 using HGGM.ViewModels;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HGGM.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly LiteRepository _db;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
-        private readonly LiteRepository _db;
 
         public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, LiteRepository db)
         {
@@ -69,40 +69,51 @@ namespace HGGM.Controllers
         }
 
         // GET: UserWithRoles/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
             return View();
         }
 
         // GET: UserWithRoles/Edit/5
-        public async System.Threading.Tasks.Task<ActionResult> Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            var user = await _userManager.FindByIdAsync(id);
+            var roles = _roleManager.Roles.ToList();
+            return View(new UserWithRolesViewModel {Username = user.UserName});
         }
 
         // POST: UserWithRoles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(string id, UserWithRolesViewModel uvm)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                var user = await _userManager.FindByIdAsync(id);
+                user.UserName = uvm.Username;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded) { 
 
                 return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                }
+                else
+                {
+                    foreach (var VARIABLE in result.Errors)
+                    {
+                        ModelState.AddModelError(VARIABLE.Code, VARIABLE.Description);
+                    }
+                }
+            } 
+
+            return View(uvm);
         }
 
         // GET: UserWithRoles
-        public async System.Threading.Tasks.Task<ActionResult> Index()
+        public async Task<ActionResult> Index()
         {
             var users = _db.Fetch<User>(collectionName: "users").ToList();
             var roles = _roleManager.Roles.ToList();
-            return View(users.Select(u => new UserWithRolesViewModel(){User = u, Roles = roles}));
+            return View(users.Select(u => new UserWithRolesViewModel {Username = u.UserName, Id = u.Id}));
         }
     }
 }

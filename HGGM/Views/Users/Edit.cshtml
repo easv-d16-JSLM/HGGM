@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model HGGM.ViewModels.UserWithRolesViewModel
+@inject IViewLocalizer lang
+
+@{
+    ViewData["Title"] = lang["title"];
+}
+
+<h2>@lang["header"]</h2>
+
+
+<div class="column is-one-quarter">
+    <form asp-action="Edit"> 
+        <div class="column">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="field">
+                <label class="label">@lang["nickname"]</label>
+                <div class="control">
+                    <input asp-for="Username" class="input form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">@lang["roles"]</label>
+                @*<div class="control">
+                <input asp-for="User.Roles" class="input form-control"/>
+                <span asp-validation-for="User.Roles" class="text-danger"></span>
+            </div>*@
+            </div>
+            <div class="control">
+                <button type="submit" value="Save" class="button is-link">@lang["save"]</button>
+            </div>
+            <div class="control" style="margin-top: 1rem">
+                <a asp-action="Index">@lang["back"]</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
