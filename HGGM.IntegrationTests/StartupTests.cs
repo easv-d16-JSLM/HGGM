@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
@@ -33,6 +35,20 @@ namespace HGGM.IntegrationTests
 
             // Assert
             response.EnsureSuccessStatusCode();
+        }
+
+        [Theory]
+        [InlineData("/hangfire")]
+        public async Task UnauthenticatedFails(string url)
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var response = await client.GetAsync(url);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
     }
 }
