@@ -12,23 +12,23 @@
 <div class="column is-one-quarter">
     <form asp-action="Edit"> 
         <div class="column">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="is-danger"></div>
             <div class="field">
                 <label class="label">@lang["nickname"]</label>
                 <div class="control">
-                    <input asp-for="Username" class="input form-control" />
-                    <span asp-validation-for="Username" class="text-danger"></span>
+                    <input asp-for="Username" class="input" />
+                    <span asp-validation-for="Username" class="is-danger"></span>
                 </div>
             </div>
             <div class="field">
                 <label class="label">@lang["roles"]</label>
                 @*<div class="control">
-                <input asp-for="User.Roles" class="input form-control"/>
-                <span asp-validation-for="User.Roles" class="text-danger"></span>
+                <input asp-for="User.Roles" class="input"/>
+                <span asp-validation-for="User.Roles"></span>
             </div>*@
             </div>
             <div class="control">
-                <button type="submit" value="Save" class="button is-link">@lang["save"]</button>
+                <button type="submit" class="button is-link">@lang["save"]</button>
             </div>
             <div class="control" style="margin-top: 1rem">
                 <a asp-action="Index">@lang["back"]</a>
