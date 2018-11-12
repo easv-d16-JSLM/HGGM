@@ -28,7 +28,6 @@
                 <th>
                     @Html.DisplayNameFor(model => Model.Permissions)
                 </th>
-
             </tr>
         </thead>
         <tbody>
@@ -48,13 +47,11 @@
                 <td>
                     @Model.Permissions
                 </td>
-
             </tr>
         </tbody>
     </table>
-    <dl class="dl-horizontal"></dl>
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@L["backToListButton"]</a>
 </div>
