@@ -1,4 +1,5 @@
 ﻿using Hangfire.Dashboard;
+using HGGM.Services.Authorization.Simple;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +12,7 @@ namespace HGGM.Services.Authorization
             var httpContext = context.GetHttpContext();
             var authorizationService = httpContext.RequestServices.GetRequiredService<IAuthorizationService>();
             var result = authorizationService
-                .AuthorizeAsync(httpContext.User, null, new PermissionRequirement(Permission.Hangfire)).GetAwaiter()
+                .AuthorizeAsync(httpContext.User, null, new SimplePermissionRequirement(SimplePermission.Hangfire)).GetAwaiter()
                 .GetResult();
 
             return result.Succeeded;

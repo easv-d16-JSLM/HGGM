@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+﻿using System.Globalization;
 using AspNetCore.Identity.LiteDB;
 using Hangfire;
 using Hangfire.LiteDB;
 using HGGM.Models.Identity;
 using HGGM.Services;
 using HGGM.Services.Authorization;
+using HGGM.Services.Authorization.Simple;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -54,7 +53,7 @@ namespace HGGM
             {
                 DefaultRequestCulture = new RequestCulture("en"),
                 SupportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures),
-                SupportedUICultures = new [] {new CultureInfo("en"),new CultureInfo("cs")}
+                SupportedUICultures = new[] {new CultureInfo("en"), new CultureInfo("cs")}
             });
 
             app.UseStaticFiles();
@@ -69,8 +68,8 @@ namespace HGGM
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "areaRoute",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    "areaRoute",
+                    "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     "default",
@@ -104,8 +103,8 @@ namespace HGGM
                 .AddRoleStore<LiteDbRoleStore<Role>>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<IAuthorizationHandler, PermissionHandler>();
-            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, SimplePermissionHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, SimplePermissionPolicyProvider>();
 
             services.AddSingleton<IEmailSender, EmailSender>();
 

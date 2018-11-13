@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
-namespace HGGM.Services.Authorization
+namespace HGGM.Services.Authorization.Simple
 {
-    public class PermissionPolicyProvider : IAuthorizationPolicyProvider
+    public class SimplePermissionPolicyProvider : IAuthorizationPolicyProvider
     {
         public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {
@@ -15,9 +15,9 @@ namespace HGGM.Services.Authorization
         {
             if (policyName.StartsWith("Permission"))
             {
-                var permission = Enum.Parse<Permission>(policyName.Substring("Permission".Length));
+                var permission = Enum.Parse<SimplePermission>(policyName.Substring("Permission".Length));
                 return Task.FromResult(new AuthorizationPolicyBuilder()
-                    .AddRequirements(new PermissionRequirement(permission)).Build());
+                    .AddRequirements(new SimplePermissionRequirement(permission)).Build());
             }
 
             throw new NotImplementedException();

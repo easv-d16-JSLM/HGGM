@@ -5,22 +5,22 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 
-namespace HGGM.Services.Authorization
+namespace HGGM.Services.Authorization.Simple
 {
-    public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
+    public class SimplePermissionHandler : AuthorizationHandler<SimplePermissionRequirement>
     {
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
-        private readonly ILogger log = Log.ForContext<PermissionHandler>();
+        private readonly ILogger log = Log.ForContext<SimplePermissionHandler>();
 
-        public PermissionHandler(RoleManager<Role> roleManager, UserManager<User> userManager)
+        public SimplePermissionHandler(RoleManager<Role> roleManager, UserManager<User> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
-            PermissionRequirement requirement)
+            SimplePermissionRequirement requirement)
         {
             var user = await _userManager.GetUserAsync(context.User);
             log.Verbose("User {username} needs {permission} at {context}", user?.UserName, requirement.Permission,
