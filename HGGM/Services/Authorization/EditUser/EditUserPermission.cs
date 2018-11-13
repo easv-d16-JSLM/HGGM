@@ -8,6 +8,7 @@ namespace HGGM.Services.Authorization.EditUser
 {
     public class EditUserPermission : IPermission
     {
-        public User User { get; set; }
+        public string PropertyName { get; set; }
+        public IList<Role> Roles { get; set; }
     }
 }
