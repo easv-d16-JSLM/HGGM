@@ -1,8 +1,18 @@
-﻿namespace HGGM.Services.Authorization.Simple
+﻿using HGGM.Models.Identity;
+
+namespace HGGM.Services.Authorization.Simple
 {
-    public enum SimplePermission
+    public class SimplePermission : IPermission
     {
-        ShowMainMenu,
-        Hangfire
+        public SimplePermission(SimplePermissionType permission)
+        {
+            Permission = permission;
+        }
+        public SimplePermissionType Permission { get; set; }
+        public enum SimplePermissionType
+        {
+            ShowMainMenu,
+            Hangfire
+        }
     }
 }

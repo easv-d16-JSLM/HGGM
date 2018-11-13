@@ -15,7 +15,8 @@ namespace HGGM.Services.Authorization.Simple
         {
             if (policyName.StartsWith("Permission"))
             {
-                var permission = Enum.Parse<SimplePermission>(policyName.Substring("Permission".Length));
+                var permission = new SimplePermission(
+                    Enum.Parse<SimplePermission.SimplePermissionType>(policyName.Substring("Permission".Length)));
                 return Task.FromResult(new AuthorizationPolicyBuilder()
                     .AddRequirements(new SimplePermissionRequirement(permission)).Build());
             }

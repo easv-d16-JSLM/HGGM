@@ -12,7 +12,7 @@ namespace HGGM.Services.Authorization
             var httpContext = context.GetHttpContext();
             var authorizationService = httpContext.RequestServices.GetRequiredService<IAuthorizationService>();
             var result = authorizationService
-                .AuthorizeAsync(httpContext.User, null, new SimplePermissionRequirement(SimplePermission.Hangfire)).GetAwaiter()
+                .AuthorizeAsync(httpContext.User, null, new SimplePermissionRequirement(new SimplePermission(SimplePermission.SimplePermissionType.Hangfire))).GetAwaiter()
                 .GetResult();
 
             return result.Succeeded;

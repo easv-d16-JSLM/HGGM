@@ -9,8 +9,7 @@ namespace HGGM.Models.Identity
 {
     public class Role : AspNetCore.Identity.LiteDB.IdentityRole
     {
-        public List<SimplePermission> Permissions { get; set; }
-
+        public IList<IPermission> Permissions { get; set; }
     }
 
    
