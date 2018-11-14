@@ -1,5 +1,8 @@
 ﻿@using System.Threading
 @using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +66,7 @@
     </section>
     <hr />
     <footer class="footer">
-        <details>
+        <details class="content">
             <summary>&copy; 2018 - HGGM</summary>
             <dl>
                 <dt>Request</dt>
@@ -79,6 +82,14 @@
                 <dd>@Context.Request.Headers["Accept-Language"].ToString()</dd>
                 <dt>Server language</dt>
                 <dd>Culture: @Thread.CurrentThread.CurrentCulture, UI: @Thread.CurrentThread.CurrentCulture</dd>
+                <dt>Chosen language</dt>
+                @{
+                    var rf = Context.Features.Get<IRequestCultureFeature>();
+                    var culture = rf.RequestCulture.Culture;
+                    var uiCulture = rf.RequestCulture.UICulture;
+                    var setBy = rf.Provider.GetType().Name;
+                }
+                <dd>Culture: @culture, UI: @uiCulture, Set by: @setBy</dd>
             </dl>
         </details>
     </footer>
