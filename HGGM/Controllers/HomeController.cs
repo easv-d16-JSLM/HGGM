@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
 using HGGM.Models;
-using Microsoft.Extensions.Localization;
+using HGGM.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HGGM.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly MarkdownService _markdown;
 
-        public IActionResult Index()
+        public HomeController(MarkdownService markdown)
         {
-            return View();
+            _markdown = markdown;
         }
 
         public IActionResult About()
@@ -31,15 +28,21 @@ namespace HGGM.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+        }
+
+        public IActionResult Index()
+        {
+            ViewData["Message"] = _markdown.ToHtml("- [x] Markdown works!");
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
     }
 }

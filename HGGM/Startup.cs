@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+﻿using System.Globalization;
 using AspNetCore.Identity.LiteDB;
 using Hangfire;
 using Hangfire.LiteDB;
@@ -54,7 +52,7 @@ namespace HGGM
             {
                 DefaultRequestCulture = new RequestCulture("en"),
                 SupportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures),
-                SupportedUICultures = new [] {new CultureInfo("en"),new CultureInfo("cs")}
+                SupportedUICultures = new[] {new CultureInfo("en"), new CultureInfo("cs")}
             });
 
             app.UseStaticFiles();
@@ -69,8 +67,8 @@ namespace HGGM
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "areaRoute",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    "areaRoute",
+                    "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     "default",
@@ -127,6 +125,8 @@ namespace HGGM
             });
 
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "HGGM API", Version = "v1"}); });
+
+            services.AddSingleton<MarkdownService>();
         }
     }
 }
