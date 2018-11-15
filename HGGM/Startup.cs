@@ -5,6 +5,7 @@ using Hangfire.LiteDB;
 using HGGM.Models.Identity;
 using HGGM.Services;
 using HGGM.Services.Authorization;
+using HGGM.Services.Authorization.Simple;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -101,8 +102,8 @@ namespace HGGM
                 .AddRoleStore<LiteDbRoleStore<Role>>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<IAuthorizationHandler, PermissionHandler>();
-            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, SimplePermissionHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, SimplePermissionPolicyProvider>();
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
