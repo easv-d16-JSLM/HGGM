@@ -30,4 +30,4 @@ test_script:
 - cmd: codecov -f "HGGM.IntegrationTests\coverage.opencover.xml" --flag IntegrationTests
 
 after_test:
-- dotnet sonarscanner end
+- dotnet sonarscanner end /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
