@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model HGGM.Models.Identity.User
+@inject IViewLocalizer lang
+
+@{
+    ViewData["Title"] = lang["title"];
+}
+
+<div class="column is-half">
+    <form asp-action="Delete">
+        <div class="column">
+            <h1 class="title" style="margin-bottom: 2rem">@lang["header"]</h1>
+            <h3 class="subtitle">@lang["subtitle"]</h3>
+            <div asp-validation-summary="All" class="is-danger"></div>
+            <div class="field">
+                <label class="label">@lang["nickname"]</label>
+                <div class="control">
+                    <input asp-for="@Model.UserName" class="input" disabled="disabled"/>
+                    <span asp-validation-for="@Model.UserName" class="is-danger"></span>
+                </div>
+            </div>
+            <div class="control">
+                <button style="margin-top: 1rem" type="submit" class="button is-link">@lang["deleteButton"]</button>
+            </div>
+            <div class="control" style="margin-top: 1rem">
+                <a asp-action="Index">@lang["back"]</a>
+            </div>
+        </div>
+    </form>
+</div>

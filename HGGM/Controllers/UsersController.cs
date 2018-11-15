@@ -22,50 +22,21 @@ namespace HGGM.Controllers
             _db = db;
         }
 
-        // GET: UserWithRoles/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: UserWithRoles/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: UserWithRoles/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
-            return View();
+            var user = await _userManager.FindByIdAsync(id);
+            return View(user);
         }
 
         // POST: UserWithRoles/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string id, IFormCollection collection)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            _db.Delete<User>(collectionName: "users", id: id);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: UserWithRoles/Details/5
@@ -78,34 +49,34 @@ namespace HGGM.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            var roles = _roleManager.Roles.Select(r => r.Name).ToList();
-            return View(new UserWithRolesViewModel {Username = user.UserName, UserRoles = user.Roles, AllRoles = roles});
+            var roles = _roleManager.Roles
+                .Select(r => r.Name)
+                .ToDictionary(r => r, r => user.Roles.Contains(r));
+            return View(new EditUserViewModel {Username = user.UserName, Roles = roles});
         }
 
         // POST: UserWithRoles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(string id, UserWithRolesViewModel uvm)
+        public async Task<ActionResult> Edit(string id, EditUserViewModel uvm)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByIdAsync(id);
-                user.UserName = uvm.Username;
-                var result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded)
-                    return RedirectToAction(nameof(Index));
-                foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
-            }
+            if (!ModelState.IsValid) return View(uvm);
+            var user = await _userManager.FindByIdAsync(id);
+            user.UserName = uvm.Username;
+            user.Roles = uvm.Roles.Where(r => r.Value).Select(h => h.Key).ToList();
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+                return RedirectToAction(nameof(Index));
+            foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
 
             return View(uvm);
         }
 
         // GET: UserWithRoles
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             var users = _db.Fetch<User>(collectionName: "users").ToList();
-            var roles = _roleManager.Roles.ToList();
-            return View(users.Select(u => new UserWithRolesViewModel {Username = u.UserName, Id = u.Id}));
+            return View(users);
         }
     }
 }
