@@ -1,36 +1,35 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model HGGM.ViewModels.UserWithRolesViewModel
+@model HGGM.ViewModels.EditUserViewModel
 @inject IViewLocalizer lang
 
 @{
     ViewData["Title"] = lang["title"];
 }
 
-<h2>@lang["header"]</h2>
-
 
 <div class="column is-one-quarter">
-    <form asp-action="Edit"> 
+    <form asp-action="Edit">
         <div class="column">
+            <h1 class="title" style="margin-bottom: 2rem">@lang["header"]</h1>
             <div asp-validation-summary="All" class="is-danger"></div>
             <div class="field">
                 <label class="label">@lang["nickname"]</label>
                 <div class="control">
-                    <input asp-for="Username" class="input" />
+                    <input asp-for="Username" class="input"/>
                     <span asp-validation-for="Username" class="is-danger"></span>
                 </div>
             </div>
             <div class="field">
                 <label class="label">@lang["roles"]</label>
-                <div class="control">
-                    @foreach (var role in Model.AllRoles)
-                    {
+                @foreach (var role in Model.Roles.Keys)
+                {
+                    <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox" checked="@(Model.UserRoles.Contains(role) ? "checked" : "")"/>
+                            <input type="checkbox" asp-for="@Model.Roles[role]"/>
                             @role
                         </label>
-                    }
-                </div>
+                    </div>
+                }
             </div>
             <div class="control">
                 <button type="submit" class="button is-link">@lang["save"]</button>
