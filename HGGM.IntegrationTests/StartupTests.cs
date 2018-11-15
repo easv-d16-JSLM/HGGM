@@ -51,7 +51,7 @@ namespace HGGM.IntegrationTests
 
             // Act
             var response = await client.GetAsync(url);
-
+            output.WriteLine(await response.Content.ReadAsStringAsync());
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
