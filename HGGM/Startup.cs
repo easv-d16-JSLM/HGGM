@@ -38,7 +38,6 @@ namespace HGGM
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
                 app.UseExceptionDemystifier();
             }
             else
@@ -126,6 +125,8 @@ namespace HGGM
             });
 
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "HGGM API", Version = "v1"}); });
+
+            services.AddSingleton<MarkdownService>();
         }
     }
 }
