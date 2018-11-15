@@ -1,36 +1,43 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model IEnumerable<HGGM.ViewModels.UserWithRolesViewModel>
+@model IEnumerable<HGGM.Models.Identity.User>
 @inject IViewLocalizer lang
 
 @{
     ViewData["Title"] = lang["title"];
 }
 
-<h2>@lang["heading"]</h2>
-
-<p>
-    <a asp-action="Create">@lang["create"]</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>@lang["username"]</th>
-            <th>@lang["roles"]</th>
-            <th>@lang["action"]</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Username</td>
-                @*<td>@System.String.Join(" ", item.User.Roles)</td>*@
-                <td>
-                    @Html.ActionLink(lang["edit"].Value, "Edit", new {id = item.Id}) |
-                    @Html.ActionLink(lang["details"].Value, "Details", new {/* id=item.PrimaryKey */}) |
-                    @Html.ActionLink(lang["delete"].Value, "Delete", new {/* id=item.PrimaryKey */})
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="column is-centered">
+    <nav class="panel">
+        <p class="panel-heading">@lang["heading"]</p>
+        <div class="panel-block">
+            <table class="table" style="width: 100%">
+                <colgroup>
+                    <col span="1" style="width: 40%"/>
+                    <col span="1" style="width: auto"/>
+                    <col span="1" style="width: 15%"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>@lang["username"]</th>
+                    <th>@lang["roles"]</th>
+                    <th>@lang["action"]</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@string.Join(", ", item.Roles)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </nav>
+</div>
