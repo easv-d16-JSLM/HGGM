@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HGGM.Authorization;
+using HGGM.Services.Authorization;
 
 namespace HGGM.Models.Identity
 {
@@ -11,4 +11,6 @@ namespace HGGM.Models.Identity
         public List<Permission> Permissions { get; set; }
 
     }
+
+   
 }

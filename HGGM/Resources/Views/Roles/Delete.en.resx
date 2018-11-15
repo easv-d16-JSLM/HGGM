@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Welcome." xml:space="preserve">
-    <value>Vítej.</value>
+  <data name="areYouSure" xml:space="preserve">
+    <value>Are you sure you want to delete this?</value>
+  </data>
+  <data name="backToListButton" xml:space="preserve">
+    <value>Back to list</value>
+  </data>
+  <data name="confirmButton" xml:space="preserve">
+    <value>Confirm Deletion</value>
+  </data>
+  <data name="deletePageTitle" xml:space="preserve">
+    <value>Delete</value>
   </data>
 </root>

@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer L
+@model HGGM.Models.Identity.Role
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>@L["deletePageTitle"]</h2>
+
+<h3>@L["areYouSure"]</h3>
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+
+    <form asp-action="Delete">
+        <input type="submit" value="@L["confirmButton"]" class="btn btn-default" />
+        <a asp-action="Index">@L["backToListButton"]</a>
+    </form>
+</div>
