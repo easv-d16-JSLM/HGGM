@@ -22,10 +22,15 @@
             </div>
             <div class="field">
                 <label class="label">@lang["roles"]</label>
-                @*<div class="control">
-                <input asp-for="User.Roles" class="input"/>
-                <span asp-validation-for="User.Roles"></span>
-            </div>*@
+                <div class="control">
+                    @foreach (var role in Model.AllRoles)
+                    {
+                        <label class="checkbox">
+                            <input type="checkbox" checked="@(Model.UserRoles.Contains(role) ? "checked" : "")"/>
+                            @role
+                        </label>
+                    }
+                </div>
             </div>
             <div class="control">
                 <button type="submit" class="button is-link">@lang["save"]</button>

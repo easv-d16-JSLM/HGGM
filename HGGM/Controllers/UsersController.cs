@@ -78,8 +78,8 @@ namespace HGGM.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            var roles = _roleManager.Roles.ToList();
-            return View(new UserWithRolesViewModel {Username = user.UserName});
+            var roles = _roleManager.Roles.Select(r => r.Name).ToList();
+            return View(new UserWithRolesViewModel {Username = user.UserName, UserRoles = user.Roles, AllRoles = roles});
         }
 
         // POST: UserWithRoles/Edit/5
@@ -92,18 +92,10 @@ namespace HGGM.Controllers
                 var user = await _userManager.FindByIdAsync(id);
                 user.UserName = uvm.Username;
                 var result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded) { 
-
-                return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    foreach (var VARIABLE in result.Errors)
-                    {
-                        ModelState.AddModelError(VARIABLE.Code, VARIABLE.Description);
-                    }
-                }
-            } 
+                if (result.Succeeded)
+                    return RedirectToAction(nameof(Index));
+                foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
+            }
 
             return View(uvm);
         }
