@@ -87,7 +87,7 @@
                     var rf = Context.Features.Get<IRequestCultureFeature>();
                     var culture = rf.RequestCulture.Culture;
                     var uiCulture = rf.RequestCulture.UICulture;
-                    var setBy = rf.Provider.GetType().Name;
+                    var setBy = rf.Provider?.GetType().Name;
                 }
                 <dd>Culture: @culture, UI: @uiCulture, Set by: @setBy</dd>
             </dl>

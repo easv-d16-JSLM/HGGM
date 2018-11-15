@@ -3,16 +3,19 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace HGGM.IntegrationTests
 {
     public class StartupTests : IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly WebApplicationFactory<Startup> _factory;
+        private readonly ITestOutputHelper output;
 
-        public StartupTests(WebApplicationFactory<Startup> factory)
+        public StartupTests(WebApplicationFactory<Startup> factory, ITestOutputHelper output)
         {
             _factory = factory;
+            this.output = output;
         }
 
         [Theory]
@@ -34,7 +37,9 @@ namespace HGGM.IntegrationTests
             var response = await client.GetAsync(url);
 
             // Assert
-            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            output.WriteLine(content);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Theory]
