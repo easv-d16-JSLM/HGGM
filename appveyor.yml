@@ -10,7 +10,7 @@ install:
 
 before_build:
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-  - dotnet sonarscanner begin /k:"b115314e7aa3ce0289a0691e0b78933b721288bc"
+  - dotnet sonarscanner begin /k:"HGGM" /d:sonar.organization="j2ghz-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
   - ps: msbuild /t:Restore /v:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 build:
