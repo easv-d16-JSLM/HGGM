@@ -28,6 +28,7 @@ namespace HGGM.IntegrationTests
         [InlineData("/swagger/v1/swagger.json")]
         [InlineData("/Identity/Account/Register")]
         [InlineData("/Identity/Account/Login")]
+        [InlineData("/roles")]
         public async Task GetReturnsSuccess(string url)
         {
             // Arrange

@@ -53,48 +53,39 @@ namespace HGGM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Role role)
         {
-
-  
-
-                //var role = await roleManager.FindByIdAsync(id);
-
                 await roleManager.DeleteAsync(role);
 
                 return RedirectToAction(nameof(Index));
-
         }
 
         // GET: Roles/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View(roleManager.Roles.ElementAt(id));
+            var role = await roleManager.FindByIdAsync(id);
+            return View(role);
         }
 
         // GET: Roles/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            var role = await roleManager.FindByIdAsync(id);
+            return View(role);
         }
 
         // POST: Roles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(Role role)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                var result = await roleManager.UpdateAsync(role);
 
-                var role = await roleManager.FindByIdAsync(id);
-
-                await roleManager.UpdateAsync(role);
-
-                return RedirectToAction(nameof(Index));
+                foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
+                if (result.Succeeded) return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+                 
+            return View(role);          
         }
 
         // GET: Roles
