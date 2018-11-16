@@ -1,9 +1,11 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace HGGM.IntegrationTests
 {
@@ -51,9 +53,17 @@ namespace HGGM.IntegrationTests
 
             // Act
             var response = await client.GetAsync(url);
-            output.WriteLine(await response.Content.ReadAsStringAsync());
+            
             // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            try
+            {
+                response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            }
+            catch
+            {
+                output.WriteLine(await response.Content.ReadAsStringAsync());
+                throw;
+            }
         }
     }
 }
