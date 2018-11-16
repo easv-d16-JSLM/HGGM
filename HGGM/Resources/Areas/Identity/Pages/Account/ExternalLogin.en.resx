@@ -143,18 +143,6 @@ Please enter the remaining information for this site below and click the Registe
     <value>By clicking register you agree to the [Terms of Service](/) and the [Privacy Policy](/privacyPolicy)</value>
     <comment>Markdown enabled</comment>
   </data>
-  <data name="tos1" xml:space="preserve">
-    <value>By clicking register you agree to the</value>
-  </data>
-  <data name="tos2" xml:space="preserve">
-    <value>Terms of Service</value>
-  </data>
-  <data name="tos3" xml:space="preserve">
-    <value>and the</value>
-  </data>
-  <data name="tos4" xml:space="preserve">
-    <value>Privacy Policy</value>
-  </data>
   <data name="username" xml:space="preserve">
     <value>Username</value>
   </data>
