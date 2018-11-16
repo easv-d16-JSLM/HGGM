@@ -11,55 +11,55 @@
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
             <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="is-danger"></div>
             <div class="field">
                 <label class="label">Username</label>
                 <div class="control">
-                    <input class="input form-control" type="text" asp-for="Input.UserName" placeholder="Text Input" />
-                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                    <input class="input" type="text" asp-for="Input.UserName" placeholder="Text Input" />
+                    <span asp-validation-for="Input.UserName" class="is-danger"></span>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Email</label>
                 <div class="control">
-                    <input asp-for="Input.Email" class="input form-control" placeholder="Email" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <input asp-for="Input.Email" class="input" placeholder="Email" />
+                    <span asp-validation-for="Input.Email" class="is-danger"></span>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Date of birth</label>
                 <div class="control">
-                    <input asp-for="Input.DateOfBirth" class="input form-control" />
-                    <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                    <input asp-for="Input.DateOfBirth" class="input" />
+                    <span asp-validation-for="Input.DateOfBirth" class="is-danger"></span>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Password</label>
                 <div class="control">
-                    <input asp-for="Input.Password" class="input form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <input asp-for="Input.Password" class="input" />
+                    <span asp-validation-for="Input.Password" class="is-danger"></span>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Confirm Password</label>
                 <div class="control">
-                    <input asp-for="Input.ConfirmPassword" class="input form-control" />
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    <input asp-for="Input.ConfirmPassword" class="input" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="is-danger"></span>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Steam 64 ID</label>
                 <div class="control">
-                    <input asp-for="Input.Steam64ID" class="input form-control" />
-                    <span asp-validation-for="Input.Steam64ID" class="text-danger"></span>
+                    <input asp-for="Input.Steam64ID" class="input" />
+                    <span asp-validation-for="Input.Steam64ID" class="is-danger"></span>
                     <p><a href="JavaScript:newPopup('https://lh4.googleusercontent.com/peZOdTNWCcaZj4TtH71e_ULiMkTwznx-L6PkfNP8915un0_MkcovxrpGCQp1An8nEVw8HEoNZg=w798');">how?</a></p>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Teamspeak UID</label>
                 <div class="control">
-                    <input asp-for="Input.TeamspeakUID" class="input form-control" />
-                    <span asp-validation-for="Input.TeamspeakUID" class="text-danger"></span>
+                    <input asp-for="Input.TeamspeakUID" class="input" />
+                    <span asp-validation-for="Input.TeamspeakUID" class="is-danger"></span>
                     <p><a href="JavaScript:newPopup('https://lh3.googleusercontent.com/NqMs0cOClNPfV2x5r0EjyLxAINVNcZkI0uwOOGzNQoWf16WXyB6Mq-6C2niUCZDeNCTk7juAjA=w706');">how?</a></p>
                 </div>
             </div>
