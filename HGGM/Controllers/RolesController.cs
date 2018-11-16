@@ -85,7 +85,7 @@ namespace HGGM.Controllers
                 if (result.Succeeded) return RedirectToAction(nameof(Index));
             }
                  
-            return View();          
+            return View(role);          
         }
 
         // GET: Roles

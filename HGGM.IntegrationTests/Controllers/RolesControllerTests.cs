@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AngleSharp.Dom.Html;
+using AngleSharp.Extensions;
 using FluentAssertions;
 using HGGM.IntegrationTests.Helpers;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -71,6 +73,35 @@ namespace HGGM.IntegrationTests.Controllers
 
             responseString.Should()
                 .Contain(roleName, "because we expect the role to be in the list after it's created");
+            var listcontent = await HtmlHelpers.GetDocumentAsync(response);
+            var editUrl = listcontent.All.OfType<IHtmlAnchorElement>().First(a => a.Href.Contains("/roles/Edit/")).Href;
+            var editPage = await client.GetAsync(editUrl);
+            editPage.EnsureSuccessStatusCode();
+            var editPageContent = await HtmlHelpers.GetDocumentAsync(editPage);
+            var html = await editPage.Content.ReadAsStringAsync();
+            var form = editPageContent.All.OfType<IHtmlFormElement>().Last();
+            var newRoleName = roleName + DateTime.Now.ToFileTime();
+            var editPageResponse = await client.SendAsync(
+                form,
+                (IHtmlButtonElement)editPageContent.GetElementById("Button_Save"),
+                new Dictionary<string, string>
+                {
+                    {"Id", "1223123"},
+                    {"Name", newRoleName},
+                    {"NormalizedName", newRoleName},
+                    {"ConcurrencyStamp", newRoleName}
+                });
+            responseString = await editPageResponse.Content.ReadAsStringAsync();
+            editPageResponse.RequestMessage.RequestUri.AbsolutePath.Should().Be("/roles");
+            
+            //responseString.Should().Contain("Id");
+            //responseString.Should().Contain("Name");
+            //responseString.Should().Contain("NormalizedName");
+            //responseString.Should().Contain("ConcurrencyStamp");
+
+
+
+
         }
     }
 }
