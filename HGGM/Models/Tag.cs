@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Identity;
+using LiteDB;
 
 namespace HGGM.Models
 {
     public class Tag
     {
-        public string TagId { get; set; }
+        public ObjectId Id { get; set; }
+        [BsonRef("users")]
         public List<User> Users { get; set; }
-        public string TagName { get; set; }
-
-        public Tag(string tagId, List<User> users, string tagName)
-        {
-            TagId = tagId;
-            Users = users;
-            TagName = tagName;
-        }     
+        public string TagName { get; set; }    
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models;
 using HGGM.Models.Identity;
+using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +12,18 @@ namespace HGGM.Controllers
 {
     public class TagsController : Controller
     {
+        private readonly LiteRepository db;
+
+        public TagsController(LiteRepository db)
+        {
+            this.db = db;
+        }
 
         // GET: Tags
         public ActionResult Index()
         {
-            return View();
+            var tags = db.Fetch<Tag>();
+            return View(tags);
         }
 
         // GET: Tags/Details/5
@@ -33,18 +41,15 @@ namespace HGGM.Controllers
         // POST: Tags/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public  ActionResult Create([Bind("Name")] Tag tag)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                db.Insert(tag);
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: Tags/Edit/5
