@@ -54,8 +54,8 @@ namespace HGGM.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [Display(Name = "Year of birth")]
-            public string DateOfBirth { get; set; }
+            [Display(Name = "Date of birth")]
+            public DateTime DateOfBirth { get; set; }
 
             //TODO requires last character to be =
             [Display(Name = "Teamspeak Unique ID")]
@@ -131,7 +131,7 @@ namespace HGGM.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.UserName, Email = Input.Email, DateOfBirth = Input.DateOfBirth, TeamspeakUID = Input.TeamspeakUID};
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
