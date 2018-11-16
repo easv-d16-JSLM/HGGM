@@ -1,4 +1,5 @@
 ﻿@using System.Threading
+@using Humanizer
 @using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -79,9 +80,7 @@
         </div>
 
         <div class="navbar-end">
-            <div class="navbar-item">
-                <partial name="_LoginPartial"/>
-            </div>
+            <partial name="_LoginPartial"/>
         </div>
     </div>
 </nav>
@@ -99,14 +98,12 @@
         <summary>&copy; 2018 - HGGM</summary>
         <dl>
             <dt>Request</dt>
-            <dd>@Context.Request.GetDisplayUrl() at @DateTimeOffset.Now.ToString()</dd>
+            <dd>@Context.Request.GetDisplayUrl() at @DateTimeOffset.Now.Humanize()</dd>
             @if (User.Identity.IsAuthenticated)
             {
                 <dt>User</dt>
                 <dd>@User.Identity.Name using @User.Identity.AuthenticationType</dd>
             }
-            <dt>Connection</dt>
-            <dd>[@Context.Connection.RemoteIpAddress]:@Context.Connection.RemotePort - [@Context.Connection.LocalIpAddress]:@Context.Connection.LocalPort</dd>
             <dt>User languages</dt>
             <dd>@Context.Request.Headers["Accept-Language"].ToString()</dd>
             <dt>Server language</dt>
@@ -122,7 +119,6 @@
         </dl>
     </details>
 </footer>
-</div>
 
 <script src="~/lib/jquery/jquery.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
