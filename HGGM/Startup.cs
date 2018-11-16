@@ -78,7 +78,7 @@ namespace HGGM
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-            RecurringJob.AddOrUpdate<DbShrinker>(s => s.Shrink(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<DbShrinker>(s => s.Shrink(), Cron.Daily);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
