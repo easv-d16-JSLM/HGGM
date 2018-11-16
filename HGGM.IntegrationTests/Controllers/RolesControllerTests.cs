@@ -40,7 +40,7 @@ namespace HGGM.IntegrationTests.Controllers
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Fact]
+        [Fact(Skip = "Outdated")]
         public async Task CreateRole()
         {
             var client = _factory.CreateClient();
