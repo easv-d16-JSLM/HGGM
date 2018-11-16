@@ -1,13 +1,12 @@
 @using HGGM.Models.Identity
 @using Microsoft.AspNetCore.Identity
-
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link dropdown-toggle" href="#" id="ManagmentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="navbar-link" href="#" id="Dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-user"></i> @(UserManager.GetUserName(User))
         </a>
         <ul class="navbar-dropdown">
@@ -16,22 +15,21 @@
             </li>
             <li class="navbar-divider"></li>
             <li>
-                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" >
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})" method="post" id="logoutForm">
                     @*<a class="button is-light" value="submit" asp-area="Identity" asp-controller="Account" asp-action="Logout"><i class="fa fa-fw fa-power-off"></i>Log Out</a>*@
                     <button class="button is-white" type="submit"><i class="fa fa-fw fa-power-off"></i>Logout</button>
                 </form>
             </li>
         </ul>
     </li>
-        }
-        else
-        {
-        <div class="buttons">
-            <a class="button is-primary" asp-area="Identity" asp-controller="Account" asp-action="Register">
-                <strong>Register</strong>
-            </a>
-            <a class="button is-light" asp-area="Identity" asp-controller="Account" asp-action="Login">
-                Log in
-            </a>
-        </div>
-        }
+}
+else
+{
+    <div class="buttons">
+        <form method="post" asp-area="Identity" asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="/">
+            <button style="padding: 0" type="submit" class="button is-white" name="provider" value="Steam" title="Log in using your Steam account">
+                <img src="~/images/steamlogin.png"/>
+            </button>
+        </form>
+    </div>
+}
