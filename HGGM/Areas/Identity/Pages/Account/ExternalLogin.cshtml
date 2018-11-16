@@ -6,44 +6,43 @@
     ViewData["Title"] = lang["title"];
 }
 
-<h2 class="title">@ViewData["Title"]</h2>
-<hr/>
 
-<p>
-    @lang["description"]
-</p>
 
-<div class="is-one-quarter">
+<div class="column is-half">
+    <h2 class="title">@ViewData["Title"]</h2>
+    <hr/>
+
+    <p>
+        @lang["description"]
+    </p>
     <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-        <h4>Create a new account.</h4>
         <hr/>
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="field">
             <label class="label">@lang["username"]</label>
             <div class="control">
                 <input class="input form-control" type="text" asp-for="Input.UserName"/>
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                <span asp-validation-for="Input.UserName" class="has-text-danger"></span>
             </div>
         </div>
         <div class="field">
             <label class="label">@lang["email"]</label>
             <div class="control">
-                <input asp-for="Input.Email" class="input form-control"/>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <input asp-for="Input.Email" class="input"/>
+                <span asp-validation-for="Input.Email" class="has-text-danger"></span>
             </div>
         </div>
         <div class="field">
             <label class="label">@lang["dateofbirth"]</label>
             <div class="control">
-                <input asp-for="Input.DateOfBirth" class="input form-control"/>
-                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                <input asp-for="Input.DateOfBirth" class="input"/>
+                <span asp-validation-for="Input.DateOfBirth" class="has-text-danger"></span>
             </div>
         </div>
         <div class="field">
             <label class="label">@lang["teamspeak"]</label>
             <div class="control">
-                <input asp-for="Input.TeamspeakUID" class="input form-control"/>
-                <span asp-validation-for="Input.TeamspeakUID" class="text-danger"></span>
+                <input asp-for="Input.TeamspeakUID" class="input"/>
+                <span asp-validation-for="Input.TeamspeakUID" class="has-text-danger"></span>
                 <a onclick="$('#modal-bis').addClass('is-active');">@lang["how"]</a>
             </div>
         </div>
