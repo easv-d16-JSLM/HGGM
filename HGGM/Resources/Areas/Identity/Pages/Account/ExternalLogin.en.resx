@@ -139,6 +139,10 @@ Please enter the remaining information for this site below and click the Registe
   <data name="title" xml:space="preserve">
     <value>Account Register</value>
   </data>
+  <data name="tos" xml:space="preserve">
+    <value>By clicking register you agree to the [Terms of Service](/) and the [Privacy Policy](/privacyPolicy)</value>
+    <comment>Markdown enabled</comment>
+  </data>
   <data name="tos1" xml:space="preserve">
     <value>By clicking register you agree to the</value>
   </data>
