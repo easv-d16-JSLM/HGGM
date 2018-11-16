@@ -6,9 +6,11 @@ configuration: Release
 install:
   - choco install gitversion.portable -pre -y
   - choco install codecov
+  - dotnet tool install --global dotnet-sonarscanner
 
 before_build:
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
+  - dotnet sonarscanner begin /k:"HGGM" /d:sonar.organization="j2ghz-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
   - ps: msbuild /t:Restore /v:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 build:
@@ -26,3 +28,6 @@ test_script:
 - cmd: codecov -f "HGGM.UnitTests\coverage.opencover.xml" --flag UnitTests
 - cmd: dotnet test "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 - cmd: codecov -f "HGGM.IntegrationTests\coverage.opencover.xml" --flag IntegrationTests
+
+after_test:
+- dotnet sonarscanner end /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"

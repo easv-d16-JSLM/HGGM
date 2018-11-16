@@ -19,9 +19,11 @@ namespace HGGM
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .MinimumLevel.Override("HttpsConnectionAdapter", LogEventLevel.Information)
+                .MinimumLevel.Override("Hangfire", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .Enrich.WithDemystifiedStackTraces()
-                .WriteTo.Console()
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {SourceContext}] {Message:lj}{NewLine}{Exception}")
                 .CreateLogger();
 
             try
