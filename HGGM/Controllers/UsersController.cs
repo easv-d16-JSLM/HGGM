@@ -22,30 +22,27 @@ namespace HGGM.Controllers
             _db = db;
         }
 
-        // GET: UserWithRoles/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             return View(user);
         }
 
-        // POST: UserWithRoles/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, IFormCollection collection)
+        public async Task<ActionResult> Delete(string id, IFormCollection collection)
         {
-            _db.Delete<User>(collectionName: "users", id: id);
+            var user = await _userManager.FindByIdAsync(id);
+            await _userManager.DeleteAsync(user);
 
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: UserWithRoles/Details/5
         public ActionResult Details(string id)
         {
             return View();
         }
 
-        // GET: UserWithRoles/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -55,7 +52,6 @@ namespace HGGM.Controllers
             return View(new EditUserViewModel {Username = user.UserName, Roles = roles});
         }
 
-        // POST: UserWithRoles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(string id, EditUserViewModel uvm)
@@ -72,7 +68,6 @@ namespace HGGM.Controllers
             return View(uvm);
         }
 
-        // GET: UserWithRoles
         public ActionResult Index()
         {
             var users = _db.Fetch<User>(collectionName: "users").ToList();
