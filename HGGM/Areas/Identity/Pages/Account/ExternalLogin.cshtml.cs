@@ -60,7 +60,6 @@ namespace HGGM.Areas.Identity.Pages.Account
             //TODO requires last character to be =
             [Display(Name = "Teamspeak Unique ID")]
             public string TeamspeakUID { get; set; }
-
         }
 
         public IActionResult OnGetAsync()
