@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using HGGM.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,13 @@ namespace HGGM.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
+            SignInManager<User> signInManager,
+            UserManager<User> userManager,
             ILogger<ExternalLoginModel> logger)
         {
             _signInManager = signInManager;
@@ -42,8 +43,23 @@ namespace HGGM.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+            [RegularExpression("[0-9a-zA-Z]+", ErrorMessage = "The {0} must be characters and numeric")]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
+
+            [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Date of birth")]
+            public DateTime DateOfBirth { get; set; }
+
+            //TODO requires last character to be =
+            [Display(Name = "Teamspeak Unique ID")]
+            public string TeamspeakUID { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -114,7 +130,7 @@ namespace HGGM.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.UserName, Email = Input.Email, DateOfBirth = Input.DateOfBirth, TeamspeakUID = Input.TeamspeakUID};
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
