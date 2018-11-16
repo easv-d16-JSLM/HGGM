@@ -1,5 +1,7 @@
 ﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
 @model ExternalLoginModel
+@inject IViewLocalizer lang
 @{
     ViewData["Title"] = "Register";
 }
@@ -10,25 +12,76 @@
 
 <p class="text-info">
     You've successfully authenticated with <strong>@Model.LoginProvider</strong>.
-    Please enter an email address for this site below and click the Register button to finish
+    Please enter the remaining information for this site below and click the Register button to finish
     logging in.
 </p>
 
 <div class="row">
     <div class="col-md-4">
         <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control">
+                    <input class="input form-control" type="text" asp-for="Input.UserName" />
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
             </div>
-            <button type="submit" class="btn btn-default">Register</button>
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input asp-for="Input.Email" class="input form-control"/>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Date of birth</label>
+                <div class="control">
+                    <input asp-for="Input.DateOfBirth" class="input form-control" />
+                    <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Teamspeak UID</label>
+                <div class="control">
+                    <input asp-for="Input.TeamspeakUID" class="input form-control" />
+                    <span asp-validation-for="Input.TeamspeakUID" class="text-danger"></span>
+                    <a onclick="$('#modal-bis').addClass('is-active');">How?</a>
+                </div>
+            </div>
+            <div>
+                By clicking register you agree to the <a href="#">Terms of Service</a>
+                and the <a href="#">Privacy Policy</a>
+            </div>
+            <div class="field is-grouped" style="margin-top: 1rem">
+                <div class="control">
+                    <button type="submit" class="button is-link">Register</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
 
+<div id="modal-bis" class="modal" onclick="$('#modal-bis').removeClass('is-active');">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <p class="image">
+            <img src="https://lh3.googleusercontent.com/NqMs0cOClNPfV2x5r0EjyLxAINVNcZkI0uwOOGzNQoWf16WXyB6Mq-6C2niUCZDeNCTk7juAjA=w706" alt="">
+        </p>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
+        // Popup window code
+        function newPopup(url) {
+            popupWindow = window.open(
+                url, 'popUpWindow', 'height=600,width=700,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+        }
+    </script>
 }
 
