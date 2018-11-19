@@ -55,6 +55,7 @@ namespace HGGM.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Date of birth")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
             public DateTime DateOfBirth { get; set; }
 
             //TODO requires last character to be =
@@ -130,7 +131,7 @@ namespace HGGM.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.UserName, Email = Input.Email, DateOfBirth = Input.DateOfBirth, TeamspeakUID = Input.TeamspeakUID};
+                var user = new User { UserName = Input.UserName, Email = Input.Email, DateOfBirth = Input.DateOfBirth.Date, TeamspeakUID = Input.TeamspeakUID};
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
