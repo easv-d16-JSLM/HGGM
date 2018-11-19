@@ -1,11 +1,12 @@
-﻿@{ 
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
+@inject IViewLocalizer lang
 
-<h2>Manage your account</h2>
+<h2>@lang["manage"]</h2>
 
 <div>
-    <h4>Change your account settings</h4>
     <hr />
     <div class="columns">
         <div class="column is-one-quarter">
