@@ -12,10 +12,10 @@
 <div>
     <h4>@Model.Name</h4>
     <hr />
-    <dl class="dl-horizontal"></dl>
+    <dl></dl>
 
     <form asp-action="Delete">
-        <input type="submit" value="@L["confirmButton"]" class="btn btn-default" />
+        <input type="submit" value="@L["confirmButton"]"/>
         <a asp-action="Index">@L["backToListButton"]</a>
     </form>
 </div>

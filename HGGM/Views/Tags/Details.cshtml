@@ -1,15 +1,17 @@
-﻿@model HGGM.Models.Tag
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer L
+@model HGGM.Models.Tag
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>@L["detailsPageTitle"]</h2>
 
 <div>
-    <h4>Tag</h4>
+    <h4>@Model.TagName</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl>
         <dt>
             @Html.DisplayNameFor(model => model.Id)
         </dt>
@@ -25,6 +27,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <a asp-action="Index">@L["backToListButton"]</a>
 </div>

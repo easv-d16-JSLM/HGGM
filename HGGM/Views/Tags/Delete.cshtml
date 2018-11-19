@@ -1,16 +1,18 @@
-﻿@model HGGM.Models.Tag
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer L
+@model HGGM.Models.Tag
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>@L["deletePageTitle"]</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>@L["areYouSure"]</h3>
 <div>
-    <h4>Tag</h4>
+    <h4>@Model.TagName</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl>
         <dt>
             @Html.DisplayNameFor(model => model.TagName)
         </dt>
@@ -18,9 +20,9 @@
             @Html.DisplayFor(model => model.TagName)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="@L["confirmButton"]"/> |
+        <a asp-action="Index">@L["backToListButton"]</a>
     </form>
 </div>
