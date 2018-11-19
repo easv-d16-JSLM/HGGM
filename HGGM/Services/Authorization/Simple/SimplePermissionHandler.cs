@@ -25,12 +25,14 @@ namespace HGGM.Services.Authorization.Simple
             var user = await _userManager.GetUserAsync(context.User);
             log.Verbose("User {username} needs {permission} at {context}", user?.UserName, requirement.Permission,
                 context.Resource);
-            if (_roleManager.Roles.Any(r => user.Roles.Contains(r.Name)
-                                            && r.Permissions.Contains(requirement.Permission)))
-            {
-                log.Debug("User {username} was granted {permission}", user?.UserName, requirement.Permission);
-                context.Succeed(requirement);
-            }
+            if (user != null)
+                if (_roleManager.Roles.Any(r => user.Roles.Contains(r.Name)
+                                                && r.Permissions != null
+                                                && r.Permissions.Contains(requirement.Permission)))
+                {
+                    log.Debug("User {username} was granted {permission}", user?.UserName, requirement.Permission);
+                    context.Succeed(requirement);
+                }
         }
     }
 }
