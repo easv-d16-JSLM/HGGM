@@ -7,6 +7,7 @@ using HGGM.Models.Identity;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HGGM.Controllers
 {
@@ -17,6 +18,7 @@ namespace HGGM.Controllers
         public TagsController(LiteRepository db)
         {
             this.db = db;
+            
         }
 
         // GET: Tags
@@ -41,7 +43,7 @@ namespace HGGM.Controllers
         // POST: Tags/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  ActionResult Create([Bind("Name")] Tag tag)
+        public  ActionResult Create([Bind("TagName")] Tag tag)
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +55,7 @@ namespace HGGM.Controllers
         }
 
         // GET: Tags/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(ObjectId id)
         {
             return View();
         }
@@ -76,26 +78,21 @@ namespace HGGM.Controllers
         }
 
         // GET: Tags/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            var tag = db.SingleById<Tag>(id);
+            return View(tag);
         }
 
         // POST: Tags/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete([Bind(nameof(Tag.Id))][FromRoute]Tag tag)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var tagId = tag.Id;
+            db.Delete<Tag>(tagId);
+            
+            return RedirectToAction(nameof(Index));
         }
     }
 }
