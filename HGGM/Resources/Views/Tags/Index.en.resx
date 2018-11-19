@@ -126,4 +126,7 @@
   <data name="nameTableHeader" xml:space="preserve">
     <value>Tag name</value>
   </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Index</value>
+  </data>
 </root>

@@ -123,10 +123,16 @@
   <data name="createPageTitle" xml:space="preserve">
     <value>Create tag</value>
   </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Create</value>
+  </data>
   <data name="tagCreateButton" xml:space="preserve">
     <value>Create</value>
   </data>
   <data name="tagPageUnderTitle" xml:space="preserve">
     <value>Tag</value>
+  </data>
+  <data name="tagTableHeader" xml:space="preserve">
+    <value>Tag Name</value>
   </data>
 </root>

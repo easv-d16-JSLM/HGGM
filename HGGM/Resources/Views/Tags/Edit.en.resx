@@ -126,4 +126,7 @@
   <data name="saveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>

@@ -129,4 +129,7 @@
   <data name="deletePageTitle" xml:space="preserve">
     <value>Delete tag</value>
   </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Delete</value>
+  </data>
 </root>

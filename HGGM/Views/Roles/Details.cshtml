@@ -52,6 +52,6 @@
     </table>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <a asp-action="Edit" asp-route-id="@Model.Id"><i class="fa fa-fw fa-edit"></i></a> |
     <a asp-action="Index">@L["backToListButton"]</a>
 </div>
