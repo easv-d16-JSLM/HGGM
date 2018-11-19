@@ -10,5 +10,7 @@ namespace HGGM.Models.Identity
         public DateTime DateOfBirth { get; set; }
         public string Steam64ID { get; set; }
         public string TeamspeakUID { get; set; }
+        public IList<Notification> Notififcations { get; set; }
+        public NotificationConfig Config { get; set; }
     }
 }
