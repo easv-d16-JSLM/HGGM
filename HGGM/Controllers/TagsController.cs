@@ -29,9 +29,10 @@ namespace HGGM.Controllers
         }
 
         // GET: Tags/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var tag = db.SingleById<Tag>(id);
+            return View(tag);
         }
 
         // GET: Tags/Create
@@ -55,27 +56,28 @@ namespace HGGM.Controllers
         }
 
         // GET: Tags/Edit/5
-        public ActionResult Edit(ObjectId id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var tag = db.SingleById<Tag>(id);
+            return View(tag);
         }
 
         // POST: Tags/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Tag tag)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+
+                db.Update<Tag>(tag);
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(tag);
         }
+        
 
         // GET: Tags/Delete/5
         public ActionResult Delete(Guid id)

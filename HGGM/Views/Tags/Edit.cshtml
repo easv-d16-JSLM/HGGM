@@ -1,0 +1,33 @@
+﻿@model HGGM.Models.Tag
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Tag</h4>
+<hr />
+<div class="row">
+    <div class="field">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="control">
+                <label asp-for="TagName"></label>
+                <input asp-for="TagName"/>
+                <span asp-validation-for="TagName"></span>
+            </div>
+            <div class="field is-grouped">
+                <button id="Button_Save" type="submit" class="button is-link">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
