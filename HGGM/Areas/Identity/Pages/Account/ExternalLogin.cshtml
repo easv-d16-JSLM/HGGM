@@ -34,8 +34,8 @@
         <div class="field">
             <label class="label">@lang["dateofbirth"]</label>
             <div class="control">
-                <input asp-for="Input.DateOfBirth" class="input"/>
-                <span asp-validation-for="Input.DateOfBirth" class="has-text-danger"></span>
+                <input asp-for="Input.DateOfBirth.Date" type="Date" class="input"/>
+                <span asp-validation-for="Input.DateOfBirth.Date" class="has-text-danger"></span>
             </div>
         </div>
         <div class="field">
