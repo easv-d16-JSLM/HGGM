@@ -6,10 +6,10 @@ using LiteDB;
 
 namespace HGGM.Models
 {
-    public abstract class AuditBase
+    public abstract class AuditEntryBase
     {
-        public ObjectId Id { get; set; }
-        public abstract DateTimeOffset Time { get; }
+        public Guid Id { get; set; }
+        public virtual DateTimeOffset Time { get; } = DateTimeOffset.Now;
         public abstract string Message { get; }
     }
 }

@@ -16,19 +16,19 @@ namespace HGGM.Services
             this.db = db;
         }
 
-        public void Add(AuditBase item)
+        public void Add(AuditEntryBase item)
         {
             db.Insert(item);
         }
 
-        public IList<AuditBase> GetAll()
+        public IList<AuditEntryBase> GetAll()
         {
-            return db.Fetch<AuditBase>();
+            return db.Fetch<AuditEntryBase>();
         }
 
-        public LiteQueryable<AuditBase> Query()
+        public LiteQueryable<AuditEntryBase> Query()
         {
-            return db.Query<AuditBase>();
+            return db.Query<AuditEntryBase>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace HGGM
                 CreateWebHostBuilder(args).Build().Run();
                 return 0;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (Debugger.IsAttached)
             {
                 Log.Fatal(ex, "Host terminated unexpectedly");
                 return 1;

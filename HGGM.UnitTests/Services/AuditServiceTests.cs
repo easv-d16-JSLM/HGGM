@@ -15,12 +15,12 @@ namespace HGGM.UnitTests.Services
     {
         private readonly LiteRepository db = new LiteRepository(new MemoryStream());
 
-        private class First : AuditBase
+        private class First : AuditEntryBase
         {
             public override DateTimeOffset Time { get; }
             public override string Message { get; }
         }
-        private class Second : AuditBase
+        private class Second : AuditEntryBase
         {
             public override DateTimeOffset Time { get; }
             public override string Message { get; }

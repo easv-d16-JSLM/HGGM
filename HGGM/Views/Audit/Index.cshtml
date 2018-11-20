@@ -1,0 +1,32 @@
+﻿@using Humanizer
+@model IEnumerable<AuditEntryBase>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Time.Humanize()
+            </td>
+            <td>
+                @item.Message
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
