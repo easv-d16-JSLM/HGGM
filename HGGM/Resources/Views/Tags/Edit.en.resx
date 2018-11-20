@@ -121,12 +121,15 @@
     <value>Back to list</value>
   </data>
   <data name="editPageTitle" xml:space="preserve">
-    <value>Edit</value>
+    <value>Editing tag:</value>
   </data>
   <data name="saveButton" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="tabTitle" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="tagName" xml:space="preserve">
+    <value>Tag Name</value>
   </data>
 </root>

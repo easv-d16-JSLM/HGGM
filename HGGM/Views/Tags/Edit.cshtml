@@ -16,7 +16,7 @@
             <div asp-validation-summary="ModelOnly"></div>
             <div class="field">
                 <div class="control">
-                    <label asp-for="TagName"></label>
+                    <label asp-for="TagName">@L["tagName"]</label>
                     <input asp-for="TagName" class="input" type="text"/>
                     <span asp-validation-for="TagName"></span>
                 </div>
