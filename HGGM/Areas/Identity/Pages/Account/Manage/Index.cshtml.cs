@@ -39,7 +39,7 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
         public InputModel Input { get; set; }
 
         public DateTime DateOfBirth { get; set; }
-        public string TeamspeakUID { get; set; }
+        
 
         public class InputModel
         {
@@ -47,9 +47,7 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             [EmailAddress]
             public string Email { get; set; }
 
-            //requires last character to be =
-            [Display(Name = "Teamspeak Unique ID")]
-            public string TeamspeakUID { get; set; }
+            public string TeamspeakUid { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -63,16 +61,15 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var dateOfBirth = user.DateOfBirth.Date;
-            var teamspeakUID = user.TeamspeakUID;
+            var teamspeakUid = user.TeamspeakUID;
 
             Username = userName;
             DateOfBirth = dateOfBirth;
-            TeamspeakUID = teamspeakUID;
 
             Input = new InputModel
             {
                 Email = email,
-                TeamspeakUID = teamspeakUID
+                TeamspeakUid = teamspeakUid
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -103,6 +100,13 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
                 }
             }
+
+            user.TeamspeakUID = Input.TeamspeakUid;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                return NotFound($"Unable to load update profile.");
+            foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
