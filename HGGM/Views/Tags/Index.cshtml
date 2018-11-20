@@ -6,33 +6,40 @@
     ViewData["Title"] = L["tabTitle"];
 }
 
-<h2>@L["indexViewPageTitle"]</h2>
+<div class="column is-centered">
+    <nav class="panel">
 
-<p>
-    <a asp-action="Create">@L["createNewButton"]</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @L["nameTableHeader"]
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+        <p class="panel-heading">@L["indexViewPageTitle"]</p>
+
+        <p class="button">
+            <a asp-action="Create">@L["createNewButton"]</a>
+        </p>
+        <div class="panel-block">
+        <table class="table" style="width: 100%">
+            <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TagName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
-                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
-                </td>
+                <th>
+                    @L["nameTableHeader"]
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TagName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        </div>
+    </nav>
+</div>
