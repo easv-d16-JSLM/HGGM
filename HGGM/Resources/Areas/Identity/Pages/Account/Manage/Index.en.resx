@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="dateofbirth" xml:space="preserve">
+    <value>Date of Birth</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="teamspeak" xml:space="preserve">
+    <value>Teamspeak Unique ID</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>Profile</value>

@@ -18,6 +18,12 @@
             </div>
         </div>
         <div class="field">
+            <label class="label">@lang["dateofbirth"]</label>
+            <div class="control">
+                <input asp-for="DateOfBirth" class="input" type="Date" disabled/>
+            </div>
+        </div>
+        <div class="field">
             <label class="label">@lang["email"]</label>
             @if (Model.IsEmailConfirmed)
             {
@@ -35,10 +41,9 @@
             <span asp-validation-for="Input.Email" class="is-danger"></span>
         </div>
         <div class="field">
-            <label asp-for="Input.PhoneNumber" class="label">@lang["phoneNumber"]</label>
+            <label class="label">@lang["teamspeak"]</label>
             <div class="control">
-                <input asp-for="Input.PhoneNumber" class="input"/>
-                <span asp-validation-for="Input.PhoneNumber" class="is-danger"></span>
+                <input asp-for="TeamspeakUID" class="input"/>
             </div>
         </div>
         <div class="control">

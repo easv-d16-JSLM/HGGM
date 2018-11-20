@@ -38,15 +38,18 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
+        public DateTime DateOfBirth { get; set; }
+        public string TeamspeakUID { get; set; }
+
         public class InputModel
         {
             [Required]
             [EmailAddress]
             public string Email { get; set; }
 
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            //requires last character to be =
+            [Display(Name = "Teamspeak Unique ID")]
+            public string TeamspeakUID { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -59,14 +62,17 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
 
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var dateOfBirth = user.DateOfBirth.Date;
+            var teamspeakUID = user.TeamspeakUID;
 
             Username = userName;
+            DateOfBirth = dateOfBirth;
+            TeamspeakUID = teamspeakUID;
 
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                TeamspeakUID = teamspeakUID
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -95,17 +101,6 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
                     throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
-                }
-            }
-
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
 
