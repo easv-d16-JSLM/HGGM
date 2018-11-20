@@ -8,8 +8,6 @@ namespace HGGM.Models.Events
     {
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Deleted { get; set; }
-        public ObjectId Id { get; set; }
-        public Slot Slot { get; set; }
         public User User { get; set; }
     }
 }
