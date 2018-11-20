@@ -18,7 +18,6 @@
     </p>
     <ul class="menu-list">
         <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-page="./Index">@lang["account"]</a></li>
-        <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a id="change-password" asp-page="./ChangePassword">@lang["password"]</a></li>
         @if (hasExternalLogins)
         {
             <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a id="external-login" asp-page="./ExternalLogins">@lang["externalLogin"]</a></li>
