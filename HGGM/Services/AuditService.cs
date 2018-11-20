@@ -21,7 +21,7 @@ namespace HGGM.Services
             db.Insert(item);
         }
 
-        public IList<AuditEntryBase> GetAll()
+        public List<AuditEntryBase> GetAll()
         {
             return db.Fetch<AuditEntryBase>();
         }

@@ -9,7 +9,7 @@ namespace HGGM.Models
     public abstract class AuditEntryBase
     {
         public Guid Id { get; set; }
-        public virtual DateTimeOffset Time { get; } = DateTimeOffset.Now;
+        public virtual DateTimeOffset Time { get; set; } = DateTimeOffset.Now;
         public abstract string Message { get; }
     }
 }

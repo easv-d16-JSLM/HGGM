@@ -20,7 +20,7 @@ namespace HGGM.Controllers
         // GET: Audit
         public ActionResult Index()
         {
-            return View(_auditService.GetAll());
+            return View(_auditService.GetAll().OrderByDescending(a=>a.Time));
         }
     }
 }
