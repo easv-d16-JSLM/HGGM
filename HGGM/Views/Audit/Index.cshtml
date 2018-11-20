@@ -1,19 +1,21 @@
 ﻿@using System.Globalization
 @using Humanizer
+@using Microsoft.AspNetCore.Mvc.Localization
 @model IEnumerable<AuditEntryBase>
+@inject IViewLocalizer Localize
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Localize["title"];
 }
 
 <table class="table">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Time)
+            @Localize["timestampHeader"]
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Message)
+            @Localize["messageHeader"]
         </th>
     </tr>
     </thead>
