@@ -121,7 +121,7 @@
     <value>Back to list</value>
   </data>
   <data name="detailsPageTitle" xml:space="preserve">
-    <value>Details</value>
+    <value>Details for: </value>
   </data>
   <data name="tabTitle" xml:space="preserve">
     <value>Details</value>

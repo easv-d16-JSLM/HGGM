@@ -1,32 +1,38 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer L
-@model HGGM.Models.Tag
+﻿@inject IViewLocalizer L
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Tag
 
 @{
     ViewData["Title"] = L["tabTitle"];
 }
 
-<h2>@L["detailsPageTitle"]</h2>
+<div class="column is-centered">
+    <nav class="panel">
+        <div>
+            <p class="panel-heading">@L["detailsPageTitle"] @Model.TagName</p>
+        </div>
+        <div class="panel-block">
+            <dl>
 
-<div>
-    <h4>@Model.TagName</h4>
-    <hr />
-    <dl>
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TagName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TagName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id"><i class="fa fa-fw fa-edit"></i></a> |
-    <a asp-action="Index">@L["backToListButton"]</a>
+                <dt class="panel-block">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="panel-block">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="panel-block">
+                    @Html.DisplayNameFor(model => model.TagName)
+                </dt>
+                <dd class="panel-block">
+                    @Html.DisplayFor(model => model.TagName)
+                </dd>
+            </dl>
+        </div>
+        <div class="panel-block">
+            <a asp-action="Edit" asp-route-id="@Model.Id">
+                <i class="fa fa-fw fa-edit"></i>
+            </a> |
+            <a asp-action="Index">@L["backToListButton"]</a>
+        </div>
+    </nav>
 </div>
