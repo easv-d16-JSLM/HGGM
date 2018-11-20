@@ -1,5 +1,4 @@
 ﻿@using System.Threading
-@using Humanizer
 @using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -68,6 +67,9 @@
                     <a class="navbar-item" asp-area="" asp-controller="Roles" asp-action="Index">
                         Roles
                     </a>
+                    <a class="navbar-item" asp-area="" asp-controller="Audit" asp-action="Index">
+                        Audit
+                    </a>
                     <hr class="navbar-divider">
                     <a class="navbar-item" href="/hangfire">
                         HangFire
@@ -98,16 +100,23 @@
         <summary>&copy; 2018 - HGGM</summary>
         <dl>
             <dt>Request</dt>
-            <dd>@Context.Request.GetDisplayUrl() at @DateTimeOffset.Now.Humanize()</dd>
+            <dd><span class="tag">@Context.Request.GetDisplayUrl()</span> at <span class="tag">@DateTimeOffset.Now.ToString()</span></dd>
             @if (User.Identity.IsAuthenticated)
             {
                 <dt>User</dt>
-                <dd>@User.Identity.Name using @User.Identity.AuthenticationType</dd>
+                <dd>
+                    @foreach (var c in User.Claims)
+                    {
+                        <span class="tag">@c.Type.Split('.', '/').Last()='@c.Value'</span>
+                    }
+                </dd>
             }
             <dt>User languages</dt>
-            <dd>@Context.Request.Headers["Accept-Language"].ToString()</dd>
+            <dd>
+                <span class="tag">@Context.Request.Headers["Accept-Language"].ToString()</span>
+            </dd>
             <dt>Server language</dt>
-            <dd>Culture: @Thread.CurrentThread.CurrentCulture, UI: @Thread.CurrentThread.CurrentCulture</dd>
+            <dd>Culture: <span class="tag">@Thread.CurrentThread.CurrentCulture</span>, UI: <span class="tag">@Thread.CurrentThread.CurrentCulture</span></dd>
             <dt>Chosen language</dt>
             @{
                 var rf = Context.Features.Get<IRequestCultureFeature>();
@@ -115,7 +124,7 @@
                 var uiCulture = rf.RequestCulture.UICulture;
                 var setBy = rf.Provider?.GetType().Name;
             }
-            <dd>Culture: @culture, UI: @uiCulture, Set by: @setBy</dd>
+            <dd>Culture: <span class="tag">@culture</span>, UI: <span class="tag">@uiCulture</span>, Set by: <span class="tag">@setBy</span></dd>
         </dl>
     </details>
 </footer>

@@ -25,6 +25,7 @@ namespace HGGM
                 .Enrich.FromLogContext()
                 .Enrich.WithDemystifiedStackTraces()
                 .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {SourceContext}] {Message:lj}{NewLine}{Exception}")
+                .WriteTo.File("HGGM-.log",buffered:true,rollingInterval:RollingInterval.Day,rollOnFileSizeLimit:true,outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3} {SourceContext}] {Message:lj}{Properties}{NewLine}{Exception}")
                 .CreateLogger();
 
             try
