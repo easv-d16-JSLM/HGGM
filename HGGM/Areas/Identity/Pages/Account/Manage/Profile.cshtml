@@ -1,7 +1,5 @@
 ﻿@page
-@using System.Linq
 @using Microsoft.AspNetCore.Mvc.Localization
-@using Microsoft.AspNetCore.Mvc.Rendering
 @model ProfileModel
 @inject IViewLocalizer lang
 @{
@@ -10,18 +8,18 @@
 
 <h3 class="title is-3">@ViewData["Title"]</h3>
 <partial name="_StatusMessage" model="Model.StatusMessage"/>
-<div class="column is-one-third">
+<div class="column is-half">
     <form id="profile-form" method="post">
         <div asp-validation-summary="All" class="is-danger"></div>
         <div class="field">
-            <label class="label">@lang["Name"]</label>
+            <label class="label">@lang["name"]</label>
             <div class="control">
                 <input asp-for="Input.Name" class="input"/>
             </div>
         </div>
         <div class="field">
-            <label class="label">@lang["Country"]</label>
-            <div class="control">
+            <label class="label">@lang["country"]</label>
+            <div class="select is-fullwidth">
                 <select asp-for="Input.Country" asp-Items="@((List<SelectListItem>) ViewData["Model.Input.Countries"])">
                     <option>Select One</option>
                     @foreach (var inputCountry in Model.Input.Countries)
@@ -32,15 +30,15 @@
             </div>
         </div>
         <div class="field">
-            <label class="label">@lang["Biography"]</label>
+            <label class="label">@lang["headline"]</label>
             <div class="control">
-                <input asp-for="Input.Biography" class="input"/>
+                <input asp-for="Input.Headline" class="input"/>
             </div>
         </div>
         <div class="field">
-            <label class="label">@lang["Headline"]</label>
+            <label class="label">@lang["biography"]</label>
             <div class="control">
-                <input asp-for="Input.Headline" class="input"/>
+                <textarea class="textarea" asp-for="Input.Biography" placeholder="Write a description of your self, maximum of 500 characters"></textarea>
             </div>
         </div>
         <div class="control">
