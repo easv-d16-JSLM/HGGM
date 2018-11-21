@@ -19,7 +19,9 @@
     </dl>
 
     <form asp-action="Delete">
-        <input type="submit" value="@L["confirmButton"]"/> |
+        <div>
+            <button type="submit" class="button is-link">@L["confirmButton"]</button>
+        </div>
         <a asp-action="Index">@L["backToListButton"]</a>
     </form>
 </div>

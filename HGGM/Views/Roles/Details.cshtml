@@ -2,16 +2,17 @@
 @inject IViewLocalizer L
 @model HGGM.Models.Identity.Role
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = L["tabTitle"];
 }
 
-<h2>@L["detailsPageTitle"]</h2>
-
-<div>
-    <h4>@Model.Name</h4>
-    <hr />
-    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-        <thead>
+<div class="column is-centered">
+    <nav class="panel">
+        <div>
+            <p class="panel-heading">@L["detailsPageTitle"] @Model.Name</p>
+        </div>
+    <div>
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => Model.Name)
@@ -29,8 +30,8 @@
                     @Html.DisplayNameFor(model => Model.Permissions)
                 </th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr>
                 <td>
                     @Model.Name
@@ -48,10 +49,13 @@
                     @Model.Permissions
                 </td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id"><i class="fa fa-fw fa-edit"></i></a> |
+        <a asp-action="Index">@L["backToListButton"]</a>
+    </div>
+    </nav>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id"><i class="fa fa-fw fa-edit"></i></a> |
-    <a asp-action="Index">@L["backToListButton"]</a>
-</div>
+

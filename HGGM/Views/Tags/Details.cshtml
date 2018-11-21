@@ -11,24 +11,31 @@
         <div>
             <p class="panel-heading">@L["detailsPageTitle"] @Model.TagName</p>
         </div>
-        <div class="panel-block">
-            <dl>
-
-                <dt class="panel-block">
-                    @Html.DisplayNameFor(model => model.Id)
-                </dt>
-                <dd class="panel-block">
-                    @Html.DisplayFor(model => model.Id)
-                </dd>
-                <dt class="panel-block">
-                    @Html.DisplayNameFor(model => model.TagName)
-                </dt>
-                <dd class="panel-block">
-                    @Html.DisplayFor(model => model.TagName)
-                </dd>
-            </dl>
+        <div class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.TagName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Id)
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        @Model.TagName
+                    </td>
+                    <td>
+                        @Model.Id
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="panel-block">
+        <div>
             <a asp-action="Edit" asp-route-id="@Model.Id">
                 <i class="fa fa-fw fa-edit"></i>
             </a> |

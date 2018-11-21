@@ -126,4 +126,7 @@
   <data name="rolePageUnderTitle" xml:space="preserve">
     <value>Role</value>
   </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Create</value>
+  </data>
 </root>
