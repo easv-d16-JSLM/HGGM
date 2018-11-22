@@ -3,36 +3,42 @@
 @model IEnumerable<HGGM.Models.Identity.Role>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = L["tabTitle"];
 }
 
-<h2>@L["indexViewPageTitle"]</h2>
+<div class="column is-centered">
+    <nav class="panel">
+        <p class="button">
+            <a asp-action="Create">@L["createNewButton"]</a>
+        </p>
+        <p class="panel-heading">@L["indexViewPageTitle"]</p>
+        <div class="panel-block">
+            <table class="table" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>@L["nameTableHeader"]</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
+                        </td>
+                    </tr>
 
-<p>
-    <a asp-action="Create">@L["createNewButton"]</a>
-</p>
-<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-    <thead>
-        <tr>
-            <th>@L["nameTableHeader"]</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
+                }
 
-        }
+                </tbody>
+            </table>
+        </div>
+    </nav>
+</div>
 
-    </tbody>
-</table>

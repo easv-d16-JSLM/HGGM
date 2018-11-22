@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer L
-@model HGGM.Models.Identity.Role
+@model HGGM.Models.Tag
 
 @{
     ViewData["Title"] = L["tabTitle"];
@@ -8,27 +8,26 @@
 
 <h2>@L["createPageTitle"]</h2>
 
-<h4>@L["rolePageUnderTitle"]</h4>
+<h4>@L["tagPageUnderTitle"]</h4>
 <hr />
 <div>
     <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly"></div>
-
             <div>
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="input" />
-                <span asp-validation-for="Name"></span>
+                <label asp-for="TagName">@L["tagTableHeader"]</label>
+                <input asp-for="TagName" class="input"/>
+                <span asp-validation-for="TagName"></span>
             </div>
             <div>
-                <button type="submit" id="SubmitCreate">Create</button>
+                <button type="submit" id="SubmitCreate">@L["tagCreateButton"]</button>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">@L["backToListButton"]</a>
+    <a asp-action="Index">@L["backToList"]</a>
 </div>
 
 @section Scripts {

@@ -108,7 +108,7 @@ namespace HGGM
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddHangfire(configuration => configuration.UseLiteDbStorage());
-
+            
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddMvcLocalization(LanguageViewLocationExpanderFormat.SubFolder)
