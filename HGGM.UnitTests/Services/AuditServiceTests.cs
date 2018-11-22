@@ -17,12 +17,10 @@ namespace HGGM.UnitTests.Services
 
         private class First : AuditEntryBase
         {
-            public override DateTimeOffset Time { get; }
             public override string Message { get; }
         }
         private class Second : AuditEntryBase
         {
-            public override DateTimeOffset Time { get; }
             public override string Message { get; }
         }
         [Fact]
@@ -32,8 +30,8 @@ namespace HGGM.UnitTests.Services
             audit.Add(new First());
             audit.Add(new Second());
             var list = audit.GetAll();
-            list[0].Should().BeOfType<First>();
-            list[1].Should().BeOfType<Second>();
+            list.OfType<First>().Should().HaveCount(1);
+            list.OfType<Second>().Should().HaveCount(1);
         }
     }
 }
