@@ -117,16 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="createNewButton" xml:space="preserve">
-    <value>Create new</value>
+  <data name="backToList" xml:space="preserve">
+    <value>Back to list</value>
   </data>
-  <data name="indexViewPageTitle" xml:space="preserve">
-    <value>View all</value>
-  </data>
-  <data name="nameTableHeader" xml:space="preserve">
-    <value>Name</value>
+  <data name="createPageTitle" xml:space="preserve">
+    <value>Create tag</value>
   </data>
   <data name="tabTitle" xml:space="preserve">
-    <value>Showing all roles</value>
+    <value>Create</value>
+  </data>
+  <data name="tagCreateButton" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="tagPageUnderTitle" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="tagTableHeader" xml:space="preserve">
+    <value>Tag Name</value>
   </data>
 </root>
