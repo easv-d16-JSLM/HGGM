@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Identity;
+using LiteDB;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +19,18 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly List<string> _countryList = new List<string>();
+        public List<string> CountryList = new List<string>();
+        private readonly LiteRepository _db;
 
         public ProfileModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            LiteRepository db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _db = db;
+            PopulateCountryList();
         }
 
         [TempData]
@@ -34,8 +41,6 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            public Guid Avatar { get; set; }
-
             [StringLength(500, ErrorMessage = "The {0} must be {1} characters long.", MinimumLength = 0)]
             [Display(Name = "Biography")]
             public string Biography { get; set; }
@@ -47,8 +52,10 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             [RegularExpression("[a-zA-Z]+", ErrorMessage = "The {0} must be letters")]
             [Display(Name = "Real Name")]
             public string Name { get; set; }
+
             public string Country { get; set; }
-            public List<string> Countries { set; get; }
+
+            public IFormFile AvatarUpload { get; set; }
         }
 
         public async Task<IActionResult> OnGet()
@@ -59,35 +66,35 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            Input = new InputModel
+            {
+                Biography = user.Biography,
+                Country = user.Country,
+                Headline = user.Headline,
+                Name = user.Name
+            };
+            return Page();
+        }
+
+        private void PopulateCountryList()
+        {
             CultureInfo[] CInfoList = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
             foreach (CultureInfo CInfo in CInfoList)
             {
                 RegionInfo R = new RegionInfo(CInfo.LCID);
-                if (!(_countryList.Contains(R.EnglishName)))
+                if (!(CountryList.Contains(R.EnglishName)))
                 {
-                    _countryList.Add(R.EnglishName);
+                    CountryList.Add(R.EnglishName);
                 }
             }
-            _countryList.Sort();
-
-            Input = new InputModel
-            {
-                Avatar = user.Avatar,
-                Biography = user.Biography,
-                Country = user.Country,
-                Headline = user.Headline,
-                Name = user.Name,
-                Countries = _countryList
-            };
-
-
-            return Page();
+            CountryList.Sort();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                PopulateCountryList();
                 return Page();
             }
 
@@ -102,7 +109,10 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             user.Headline = Input.Headline;
             user.Country = Input.Country;
 
-            //var country = _countryList.Find(c => c.Contains(user.Country));
+            if (Input.AvatarUpload != null && Input.AvatarUpload.Length > 0)
+            {
+                _db.FileStorage.Upload(user.Id, Input.AvatarUpload.FileName, Input.AvatarUpload.OpenReadStream());
+            }
 
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)

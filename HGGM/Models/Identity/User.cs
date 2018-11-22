@@ -6,7 +6,6 @@ namespace HGGM.Models.Identity
 {
     public class User : ApplicationUser
     {
-        public Guid Avatar { get; set; }
         public string Biography { get; set; }
 
         [PersonalData] public string Country { get; set; }
