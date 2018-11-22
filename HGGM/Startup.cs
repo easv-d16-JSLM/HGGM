@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -48,8 +49,8 @@ namespace HGGM
             foreach (var address in Configuration.GetSection("AllowedProxyIPs").Get<List<string>>()
                 .Select(IPAddress.Parse)) forwardedHeadersOptions.KnownProxies.Add(address);
             foreach (var network in Configuration.GetSection("AllowedProxyNetworks").Get<List<string>>().Select(i =>
-                new IPNetwork(IPAddress.Parse(i.Substring(0, i.LastIndexOf("/"))),
-                    int.Parse(i.Substring(i.LastIndexOf("/") + 1)))
+                new IPNetwork(IPAddress.Parse(i.Substring(0, i.LastIndexOf("/", StringComparison.Ordinal))),
+                    int.Parse(i.Substring(i.LastIndexOf("/", StringComparison.Ordinal) + 1)))
             ))
                 forwardedHeadersOptions.KnownNetworks.Add(network);
             app.UseForwardedHeaders(forwardedHeadersOptions);
