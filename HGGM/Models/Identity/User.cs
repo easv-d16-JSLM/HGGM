@@ -6,7 +6,6 @@ namespace HGGM.Models.Identity
 {
     public class User : ApplicationUser
     {
-
         public string Biography { get; set; }
 
         [PersonalData] public string Country { get; set; }
@@ -25,6 +24,5 @@ namespace HGGM.Models.Identity
 
         //[BsonRef(nameof(Tag))]
         //public IList<Tag> Tags { get; set; }
-
     }
 }

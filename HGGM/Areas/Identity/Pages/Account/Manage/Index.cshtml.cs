@@ -40,7 +40,6 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
 
         public DateTime DateOfBirth { get; set; }
         
-
         public class InputModel
         {
             [Required]
