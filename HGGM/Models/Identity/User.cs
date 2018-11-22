@@ -2,7 +2,6 @@
 using AspNetCore.Identity.LiteDB.Models;
 using Microsoft.AspNetCore.Identity;
 
-
 namespace HGGM.Models.Identity
 {
     public class User : ApplicationUser
