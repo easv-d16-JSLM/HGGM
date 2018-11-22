@@ -1,15 +1,33 @@
 ﻿@using HGGM.Models.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer lang
 @inject SignInManager<User> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills nav-stacked">
-    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-page="./Index">Profile</a></li>
-    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a id="change-password" asp-page="./ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a id="external-login" asp-page="./ExternalLogins">External logins</a></li>
-    }
-    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="@ManageNavPages.PersonalDataNavClass(ViewContext)"><a asp-page="./PersonalData">Personal data</a></li>
-</ul>
+
+<aside class="menu">
+    <p class="menu-label">
+        @lang["general"]
+    </p>
+    <ul class="menu-list">
+        <li><a class="@ManageNavPages.ProfileNavClass(ViewContext)" asp-page="./Profile">@lang["profile"]</a></li>
+    </ul>
+    <p class="menu-label">
+        @lang["administration"]
+    </p>
+    <ul class="menu-list">
+        <li><a class="@ManageNavPages.IndexNavClass(ViewContext)" asp-page="./Index">@lang["account"]</a></li>
+        @if (hasExternalLogins)
+        {
+            <li><a class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)" id="external-login" asp-page="./ExternalLogins">@lang["externalLogin"]</a></li>
+        }
+        <li><a class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" asp-page="./TwoFactorAuthentication">@lang["twoFactor"]</a></li>
+    </ul>
+    <p class="menu-label">
+        @lang["privacy"]
+    </p>
+    <ul class="menu-list">
+        <li><a class="@ManageNavPages.PersonalDataNavClass(ViewContext)" asp-page="./PersonalData">@lang["personalData"]</a></li>
+    </ul>
+</aside>
