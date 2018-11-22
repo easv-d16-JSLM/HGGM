@@ -3,19 +3,21 @@
 @model HGGM.Models.Identity.Role
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = L["tabTitle"];
 }
 
 <h2>@L["deletePageTitle"]</h2>
 
 <h3>@L["areYouSure"]</h3>
 <div>
+
     <h4>@Model.Name</h4>
-    <hr />
-    <dl class="dl-horizontal"></dl>
+    <hr/>
 
     <form asp-action="Delete">
-        <input type="submit" value="@L["confirmButton"]" class="btn btn-default" />
+        <div>
+            <button type="submit" class="button is-link">@L["confirmButton"]</button>
+        </div>
         <a asp-action="Index">@L["backToListButton"]</a>
     </form>
 </div>

@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer L
+@model HGGM.Models.Tag
+
+@{
+    ViewData["Title"] = L["tabTitle"];
+}
+
+<h2>@L["editPageTitle"]</h2>
+
+<h4>@Model.TagName</h4>
+<hr />
+<div>
+    <div class="field">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="field">
+                <div class="control">
+                    <label asp-for="TagName">@L["tagName"]</label>
+                    <input asp-for="TagName" class="input" type="text"/>
+                    <span asp-validation-for="TagName"></span>
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <button id="Button_Save" type="submit" class="button is-link">@L["saveButton"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">@L["backToListButton"]</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,18 +1,23 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace HGGM.IntegrationTests
 {
     public class StartupTests : IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly WebApplicationFactory<Startup> _factory;
+        private readonly ITestOutputHelper output;
 
-        public StartupTests(WebApplicationFactory<Startup> factory)
+        public StartupTests(WebApplicationFactory<Startup> factory, ITestOutputHelper output)
         {
             _factory = factory;
+            this.output = output;
         }
 
         [Theory]
@@ -25,6 +30,7 @@ namespace HGGM.IntegrationTests
         [InlineData("/swagger/v1/swagger.json")]
         [InlineData("/Identity/Account/Register")]
         [InlineData("/Identity/Account/Login")]
+        [InlineData("/roles")]
         public async Task GetReturnsSuccess(string url)
         {
             // Arrange
@@ -34,7 +40,9 @@ namespace HGGM.IntegrationTests
             var response = await client.GetAsync(url);
 
             // Assert
-            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            output.WriteLine(content);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Theory]
@@ -46,9 +54,17 @@ namespace HGGM.IntegrationTests
 
             // Act
             var response = await client.GetAsync(url);
-
+            
             // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            try
+            {
+                response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            }
+            catch
+            {
+                output.WriteLine(await response.Content.ReadAsStringAsync());
+                throw;
+            }
         }
     }
 }
