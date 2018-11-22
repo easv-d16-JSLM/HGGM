@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HGGM.Models.Identity
+﻿namespace HGGM.Models.Identity
 {
     public interface IPermission
     {

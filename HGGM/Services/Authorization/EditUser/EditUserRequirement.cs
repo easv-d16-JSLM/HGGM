@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AngleSharp.Css;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace HGGM.Services.Authorization.EditUser
 {
@@ -14,6 +9,6 @@ namespace HGGM.Services.Authorization.EditUser
             PropertyName = propertyName;
         }
 
-        public string PropertyName { get; } 
+        public string PropertyName { get; }
     }
 }
