@@ -117,16 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="createNewButton" xml:space="preserve">
-    <value>Create new</value>
+  <data name="areYouSure" xml:space="preserve">
+    <value>Are you sure you want to delete this?</value>
   </data>
-  <data name="indexViewPageTitle" xml:space="preserve">
-    <value>View all</value>
+  <data name="backToListButton" xml:space="preserve">
+    <value>Back to List</value>
   </data>
-  <data name="nameTableHeader" xml:space="preserve">
-    <value>Name</value>
+  <data name="confirmButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="deletePageTitle" xml:space="preserve">
+    <value>Delete tag</value>
   </data>
   <data name="tabTitle" xml:space="preserve">
-    <value>Showing all roles</value>
+    <value>Delete</value>
   </data>
 </root>

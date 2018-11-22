@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer L
-@model HGGM.Models.Identity.Role
+@model HGGM.Models.Tag
 
 @{
     ViewData["Title"] = L["tabTitle"];
@@ -11,8 +11,12 @@
 <h3>@L["areYouSure"]</h3>
 <div>
 
-    <h4>@Model.Name</h4>
-    <hr/>
+    <hr />
+    <dl>
+        <dd class="panel-block">
+            @Html.DisplayFor(model => model.TagName)
+        </dd>
+    </dl>
 
     <form asp-action="Delete">
         <div>
