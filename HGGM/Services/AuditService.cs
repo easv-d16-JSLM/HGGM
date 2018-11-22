@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HGGM.Models;
 using LiteDB;
 
@@ -16,6 +17,11 @@ namespace HGGM.Services
         public void Add(AuditEntryBase item)
         {
             db.Insert(item);
+        }
+
+        public AuditEntryBase Get(Guid id)
+        {
+            return db.SingleById<AuditEntryBase>(id);
         }
 
         public List<AuditEntryBase> GetAll()
