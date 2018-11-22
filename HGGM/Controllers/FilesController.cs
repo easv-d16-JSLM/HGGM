@@ -18,7 +18,7 @@ namespace HGGM.Controllers
         {
             this._db = db;
         }
-        public IActionResult Avatar(string id)
+        [HttpGet] public IActionResult Avatar([FromRoute]string id)
         {
             var file = _db.FileStorage.FindById(id);
             if (file == null)
