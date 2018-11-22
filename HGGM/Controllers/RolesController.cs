@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Identity;
-using Microsoft.AspNetCore.Http;
+using HGGM.Services.Authorization.Simple;
+using HGGM.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,8 +37,6 @@ namespace HGGM.Controllers
 
                 foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
                 if (result.Succeeded) return RedirectToAction(nameof(Index));
-
-
             }
 
             return View();
@@ -53,9 +54,9 @@ namespace HGGM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Role role)
         {
-                await roleManager.DeleteAsync(role);
+            await roleManager.DeleteAsync(role);
 
-                return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Roles/Details/5
@@ -69,23 +70,38 @@ namespace HGGM.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
-            return View(role);
+            var m = new EditRoleViewModel
+            {
+                Name = role.Name, SimplePermissions = SimplePermission.GetAllSimplePermissions.ToDictionary(
+                    k => k.Permission.ToString(),
+                    v => role.Permissions?.OfType<SimplePermission>()?.Contains(v) ?? false)
+            };
+
+            return View(m);
         }
 
         // POST: Roles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Role role)
+        public async Task<ActionResult> Edit([FromRoute] string id, [FromForm] EditRoleViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var result = await roleManager.UpdateAsync(role);
+            if (!ModelState.IsValid) return View(model);
 
-                foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
-                if (result.Succeeded) return RedirectToAction(nameof(Index));
-            }
-                 
-            return View(role);          
+            var role = await roleManager.FindByIdAsync(id);
+            role.Name = model.Name;
+            var newSimplePermissions = model.SimplePermissions
+                .Where(p => p.Value).Select(p =>
+                    new SimplePermission(Enum.Parse<SimplePermission.SimplePermissionType>(p.Key)));
+            role.Permissions = (role.Permissions ?? new List<IPermission>())
+                .Where(p => p.GetType() != typeof(SimplePermission))
+                .Concat(newSimplePermissions)
+                .ToList();
+            var result = await roleManager.UpdateAsync(role);
+
+            foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
+            if (result.Succeeded) return RedirectToAction(nameof(Index));
+
+            return View(model);
         }
 
         // GET: Roles
