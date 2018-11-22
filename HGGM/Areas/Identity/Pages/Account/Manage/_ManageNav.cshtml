@@ -11,23 +11,23 @@
         @lang["general"]
     </p>
     <ul class="menu-list">
-        <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-page="./Profile">@lang["profile"]</a></li>
+        <li><a class="@ManageNavPages.ProfileNavClass(ViewContext)" asp-page="./Profile">@lang["profile"]</a></li>
     </ul>
     <p class="menu-label">
         @lang["administration"]
     </p>
     <ul class="menu-list">
-        <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-page="./Index">@lang["account"]</a></li>
+        <li><a class="@ManageNavPages.IndexNavClass(ViewContext)" asp-page="./Index">@lang["account"]</a></li>
         @if (hasExternalLogins)
         {
-            <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a id="external-login" asp-page="./ExternalLogins">@lang["externalLogin"]</a></li>
+            <li><a class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)" id="external-login" asp-page="./ExternalLogins">@lang["externalLogin"]</a></li>
         }
-        <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-page="./TwoFactorAuthentication">@lang["twoFactor"]</a></li>
+        <li><a class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" asp-page="./TwoFactorAuthentication">@lang["twoFactor"]</a></li>
     </ul>
     <p class="menu-label">
         @lang["privacy"]
     </p>
     <ul class="menu-list">
-        <li class="@ManageNavPages.PersonalDataNavClass(ViewContext)"><a asp-page="./PersonalData">@lang["personalData"]</a></li>
+        <li><a class="@ManageNavPages.PersonalDataNavClass(ViewContext)" asp-page="./PersonalData">@lang["personalData"]</a></li>
     </ul>
 </aside>
