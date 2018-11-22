@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using HGGM.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HGGM.Controllers
@@ -20,7 +16,7 @@ namespace HGGM.Controllers
         // GET: Audit
         public ActionResult Index()
         {
-            return View(_auditService.GetAll().OrderByDescending(a=>a.Time));
+            return View(_auditService.GetAll().OrderByDescending(a => a.Time));
         }
     }
 }

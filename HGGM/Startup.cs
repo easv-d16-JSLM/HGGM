@@ -49,7 +49,7 @@ namespace HGGM
                 .Select(IPAddress.Parse)) forwardedHeadersOptions.KnownProxies.Add(address);
             foreach (var network in Configuration.GetSection("AllowedProxyNetworks").Get<List<string>>().Select(i =>
                 new IPNetwork(IPAddress.Parse(i.Substring(0, i.LastIndexOf("/"))),
-                    int.Parse(i.Substring(i.LastIndexOf("/")+1)))
+                    int.Parse(i.Substring(i.LastIndexOf("/") + 1)))
             ))
                 forwardedHeadersOptions.KnownNetworks.Add(network);
             app.UseForwardedHeaders(forwardedHeadersOptions);
@@ -127,7 +127,7 @@ namespace HGGM
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddHangfire(configuration => configuration.UseLiteDbStorage());
-            
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddMvcLocalization(LanguageViewLocationExpanderFormat.SubFolder)
