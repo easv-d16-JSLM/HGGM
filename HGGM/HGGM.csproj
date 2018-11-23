@@ -23,7 +23,7 @@
     </PackageReference>
     <PackageReference Include="Hangfire.AspNetCore" Version="1.6.21" />
     <PackageReference Include="Hangfire.LiteDB" Version="0.1.0" />
-    <PackageReference Include="Humanizer" Version="2.5.1" />
+    <PackageReference Include="Humanizer" Version="2.5.16" />
     <PackageReference Include="LiteDB" Version="4.1.4" />
     <PackageReference Include="Markdig" Version="0.15.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
