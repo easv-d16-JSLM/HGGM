@@ -16,7 +16,7 @@
             <div asp-validation-summary="ModelOnly"></div>
             <div class="field">
                 <div class="control">
-                    <label asp-for="Name"></label>
+                    @L["nameHeader"]
                     <input asp-for="Name" class="input" type="text"/>
                     <span asp-validation-for="Name"></span>
                 </div>
@@ -28,13 +28,13 @@
                     <div class="control">
                         <label class="checkbox">
                             <input type="checkbox" asp-for="@Model.SimplePermissions[perm]"/>
-                            @perm
+                            @L[perm]
                         </label>
                     </div>
                 }
             </div>
             <div class="field is-grouped">
-                <button id="Button_Save" type="submit" class="button is-link">Save</button>
+                <button id="Button_Save" type="submit" class="button is-link">@L["saveButton"]</button>
             </div>
         </form>
     </div>
