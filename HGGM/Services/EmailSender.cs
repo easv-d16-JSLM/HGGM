@@ -4,40 +4,50 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Serilog;
 using MimeKit;
 using MailKit.Net.Smtp;
+using HGGM.Models.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace HGGM.Services
 {
     public class EmailSender : IEmailSender
     {
+        private readonly MailConfig _setup;
         private readonly ILogger _log = Log.ForContext<EmailSender>();
-        public Task SendEmailAsync(string email, string subject, string message)
+
+        public EmailSender(IConfiguration config)
+        {            
+            this._setup = config.GetSection("EmailSettings").Get<MailConfig>();
+        }
+               
+        public async Task SendEmailAsync(string email, string subject, string message)
         {
             try
             {
                 //From Address    
-                string FromAddress = "myname@company.com";
-                string FromAdressTitle = "My Name";
+                string fromAddress = _setup.Email;
+                string FromAdressTitle = "HGGM";
+
                 //To Address    
                 string ToAddress = email;
-                string ToAdressTitle = "Microsoft ASP.NET Core";
+                string ToAdressTitle = "User";
                 string Subject = subject;
                 string BodyContent = message;
 
-                //Smtp Server    
-                string SmtpServer = "smtp.office365.com";
-                //Smtp Port Number    
-                int SmtpPortNumber = 587;
+                // Setting up server 
+                string SmtpServer = _setup.SMTPServer;
+                int SmtpPortNumber = _setup.Port;
 
                 var mimeMessage = new MimeMessage();
                 mimeMessage.From.Add(new MailboxAddress
                                         (FromAdressTitle,
-                                         FromAddress
+                                         fromAddress
                                          ));
+
                 mimeMessage.To.Add(new MailboxAddress
                                          (ToAdressTitle,
                                          ToAddress
                                          ));
-                mimeMessage.Subject = Subject; //Subject  
+                mimeMessage.Subject = Subject; 
                 mimeMessage.Body = new TextPart("plain")
                 {
                     Text = BodyContent
@@ -47,13 +57,12 @@ namespace HGGM.Services
                 {
                     client.Connect(SmtpServer, SmtpPortNumber, false);
                     client.Authenticate(
-                        "myname@company.com",
-                        "MYPassword"
+                        _setup.Email,
+                        _setup.Password
                         );
                     await client.SendAsync(mimeMessage);
-                    Console.WriteLine("The mail has been sent successfully !!");
-                    Console.ReadLine();
                     await client.DisconnectAsync(true);
+
                 }
             }
             catch (Exception ex)

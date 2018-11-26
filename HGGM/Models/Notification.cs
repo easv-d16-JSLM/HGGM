@@ -10,7 +10,7 @@ namespace HGGM.Models
     {
         public DateTimeOffset DateNotified { get; set; }
         public bool Viewed { get; set; }
-        public string Titel { get; set; }
+        public string Subject { get; set; }
         public string Message { get; set; }
         public string Link { get; set; }
     }
