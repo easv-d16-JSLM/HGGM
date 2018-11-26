@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Identity;
-using HGGM.Services.Authorization;
-using HGGM.Services.Authorization.Simple;
 using HGGM.ViewModels;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HGGM.Controllers
 {
-    [Permission(SimplePermission.SimplePermissionType.GetUsers)]
     public class UsersController : Controller
     {
         private readonly LiteRepository _db;
@@ -25,14 +22,12 @@ namespace HGGM.Controllers
             _db = db;
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
         public async Task<ActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             return View(user);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id, IFormCollection collection)
@@ -48,7 +43,6 @@ namespace HGGM.Controllers
             return View();
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -58,7 +52,6 @@ namespace HGGM.Controllers
             return View(new EditUserViewModel {Username = user.UserName, Roles = roles});
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(string id, EditUserViewModel uvm)

@@ -5,8 +5,13 @@ using HGGM.Models.Identity;
 
 namespace HGGM.Services.Authorization.Simple
 {
-    public partial class SimplePermission : IPermission, IEquatable<SimplePermission>
+    public class SimplePermission : IPermission, IEquatable<SimplePermission>
     {
+        public enum SimplePermissionType
+        {
+            ShowMainMenu,
+            Hangfire
+        }
 
         /// <summary>
         ///     Used by LiteDb
