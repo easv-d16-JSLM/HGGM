@@ -13,13 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="0.9.10" />
+    <PackageReference Include="AngleSharp" Version="0.9.11" />
     <PackageReference Include="AspNet.Security.OpenId.Steam" Version="2.0.0" />
     <PackageReference Include="AspNetCore.Identity.LiteDB" Version="2.6.0" />
-    <PackageReference Include="codeessentials.AspNetCore.Diagnostics.Demystifier" Version="0.1.40" />
+    <PackageReference Include="codeessentials.AspNetCore.Diagnostics.Demystifier" Version="0.1.45" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.6.21" />
     <PackageReference Include="Hangfire.LiteDB" Version="0.1.0" />
-    <PackageReference Include="Humanizer" Version="2.5.1" />
+    <PackageReference Include="Humanizer" Version="2.5.16" />
     <PackageReference Include="LiteDB" Version="4.1.4" />
     <PackageReference Include="Markdig" Version="0.15.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
