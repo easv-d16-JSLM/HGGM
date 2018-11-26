@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HGGM.Models
+﻿namespace HGGM.Models
 {
     public class NotificationConfig
     {
-        public bool EmailNotify { get; set; }
+        /// <summary>
+        ///     Enable in-app notification
+        /// </summary>
         public bool AccountNotify { get; set; }
+
+        /// <summary>
+        ///     Enable email notification
+        /// </summary>
+        public bool EmailNotify { get; set; }
     }
 }

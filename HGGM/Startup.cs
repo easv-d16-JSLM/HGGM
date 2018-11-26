@@ -102,11 +102,10 @@ namespace HGGM
 
             services.AddScoped<IAuthorizationHandler, SimplePermissionHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, SimplePermissionPolicyProvider>();
-            
+
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddSingleton<INotificationService, NotificationService>();
-
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 

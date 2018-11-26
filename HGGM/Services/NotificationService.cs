@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HGGM.Models;
 using HGGM.Models.Identity;
@@ -19,37 +17,27 @@ namespace HGGM.Services
             _emailSender = emailSender;
             _userManager = userManager;
         }
-        // Missing - how to create link
-        public async Task NotifyUsers(string subject, string message, IList<string> userIdList)
-        {
-            var notification = new Notification
-            {
-                DateNotified = DateTimeOffset.Now,
-                Message = message,
-                Subject = subject,
-                Link = ""
-            };
 
+        public async Task NotifyUsers(Notification notification, IList<string> userIdList)
+        {
             foreach (var id in userIdList)
             {
                 var user = await _userManager.FindByIdAsync(id);
                 var setting = user.Config;
                 if (setting.AccountNotify)
                 {
-                    user.Notififcations.Add(notification);
+                    user.Notifications.Add(notification);
                     await _userManager.UpdateAsync(user);
                 }
 
                 if (setting.EmailNotify)
-                {
-                    await _emailSender.SendEmailAsync(user.Email.Address, subject, message);
-                }
+                    await _emailSender.SendEmailAsync(user.Email.Address, notification.Subject, notification.Message);
             }
         }
     }
 
     public interface INotificationService
     {
-        Task NotifyUsers(string subject, string message, IList<string> userIdList);
+        Task NotifyUsers(Notification notification, IList<string> userIdList);
     }
 }
