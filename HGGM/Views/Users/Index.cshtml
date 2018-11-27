@@ -19,6 +19,7 @@
                 <thead>
                 <tr>
                     <th>@lang["username"]</th>
+                    <th>@lang["email"]</th>
                     <th>@lang["roles"]</th>
                     <th>@lang["joinDate"]</th>
                     <th>@lang["action"]</th>
@@ -29,6 +30,7 @@
                 {
                     <tr>
                         <td>@item.UserName</td>
+                        <td>@item.Email.Address</td>
                         <td>@string.Join(", ", item.Roles)</td>
                         <td>@item.JoinDate</td>
                         <td>

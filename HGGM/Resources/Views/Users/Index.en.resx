@@ -132,6 +132,9 @@
   <data name="edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="heading" xml:space="preserve">
     <value>User Overview</value>
   </data>
