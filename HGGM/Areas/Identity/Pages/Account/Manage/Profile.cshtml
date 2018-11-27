@@ -50,7 +50,7 @@
             <label class="label">@lang["country"]</label>
             <div class="control has-icons-left">
                 <div class="select is-fullwidth">
-                    <select asp-for="Input.Country" asp-Items="@((List<SelectListItem>) ViewData["Model.Input.Countries"])">
+                    <select asp-for="Input.Country">
                         <option>Select One</option>
                         @foreach (var inputCountry in Model.CountryList)
                         {

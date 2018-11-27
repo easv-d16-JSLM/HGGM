@@ -7,11 +7,24 @@
 }
 
 
-<div class="column is-three-fifths">
+<div class="column is-three-fifths-fullhd">
     <form asp-action="Edit">
         <div class="column">
             <h3 class="title is-3">@lang["header"]</h3>
             <div asp-validation-summary="All" class="is-danger"></div>
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">@lang["avatar"]</label>
+                </div>
+                <div class="field-body">
+                    <figure class="image is-128x128">
+                        <img src="@Url.Action("Avatar", "Files", new {id = Model.Id})">
+                    </figure>
+                    @{
+                        //TODO: ADD BUTTON TO DELETE PICTURE
+                    }
+                </div>
+            </div>
 
             <div class="field is-horizontal">
                 <div class="field-label is-normal">
@@ -20,7 +33,7 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control has-icons-left">
-                            <input asp-for="Username" class="input" placeholder="@lang["nickname"]" />
+                            <input asp-for="Username" class="input" placeholder="@lang["nickname"]"/>
                             <span asp-validation-for="Username" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-user"></i>
@@ -37,7 +50,7 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input asp-for="Name" class="input" placeholder="@lang["name"]" />
+                            <input asp-for="Name" class="input" placeholder="@lang["name"]"/>
                             <span asp-validation-for="Name" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-user"></i>
@@ -50,7 +63,7 @@
                     </div>
                     <div class="field">
                         <p class="control is-expanded has-icons-left has-icons-right">
-                            <input asp-for="Email" class="input" placeholder="@lang["email"]" />
+                            <input asp-for="Email" class="input" placeholder="@lang["email"]"/>
                             <span asp-validation-for="Email" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-envelope"></i>
@@ -67,7 +80,7 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input asp-for="DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]" />
+                            <input asp-for="DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]"/>
                             <span asp-validation-for="DateOfBirth" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-calendar"></i>
@@ -80,7 +93,7 @@
                     </div>
                     <div class="field">
                         <p class="control is-expanded has-icons-left has-icons-right">
-                            <input asp-for="JoinDate" class="input" type="Date" placeholder="@lang["joinDate"]" />
+                            <input asp-for="JoinDate" class="input" type="Date" placeholder="@lang["joinDate"]"/>
                             <span asp-validation-for="JoinDate" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-calendar"></i>
@@ -97,7 +110,7 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control has-icons-left">
-                            <input asp-for="TeamspeakUID" class="input" placeholder="@lang["teamspeak"]" />
+                            <input asp-for="TeamspeakUID" class="input" placeholder="@lang["teamspeak"]"/>
                             <span asp-validation-for="TeamspeakUID" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fab fa-teamspeak"></i>
@@ -115,7 +128,7 @@
                     <div class="field">
                         <div class="control has-icons-left">
                             <div class="select is-fullwidth">
-                                <select asp-for="Country" asp-Items="@((List<SelectListItem>) ViewData["Model.Input.Countries"])">
+                                <select asp-for="Country">
                                     <option>Select One</option>
                                     @foreach (var inputCountry in Model.CountryList)
                                     {
@@ -141,7 +154,7 @@
                             @foreach (var role in Model.Roles.Keys)
                             {
                                 <label class="checkbox">
-                                    <input type="checkbox" asp-for="@Model.Roles[role]" />
+                                    <input type="checkbox" asp-for="@Model.Roles[role]"/>
                                     @role
                                     &nbsp;&nbsp;
                                 </label>
@@ -158,7 +171,7 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control">
-                            <input asp-for="Headline" class="input" placeholder="@lang["headlineDescription"]" />
+                            <input asp-for="Headline" class="input" placeholder="@lang["headlineDescription"]"/>
                             <span asp-validation-for="Headline" class="has-text-danger"></span>
                         </div>
                     </div>

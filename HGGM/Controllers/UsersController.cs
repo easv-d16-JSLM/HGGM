@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Identity;
+using HGGM.Services;
 using HGGM.ViewModels;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
@@ -13,18 +13,17 @@ namespace HGGM.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly List<string> _countryList = CultureService.GetCountries();
         private readonly LiteRepository _db;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
-        public List<string> _countryList = new List<string>();
-        
+
 
         public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, LiteRepository db)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _db = db;
-            PopulateCountryList();
         }
 
         public async Task<ActionResult> Delete(string id)
@@ -61,7 +60,7 @@ namespace HGGM.Controllers
                 Name = user.Name,
                 Steam64ID = user.Steam64ID,
                 TeamspeakUID = user.TeamspeakUID,
-                Headline = user.Headline,
+                Headline = user.Headline
             });
         }
 
@@ -71,7 +70,10 @@ namespace HGGM.Controllers
             var roles = _roleManager.Roles
                 .Select(r => r.Name)
                 .ToDictionary(r => r, r => user.Roles.Contains(r));
-            return View(new EditUserViewModel {Username = user.UserName,
+            return View(new EditUserViewModel
+            {
+                Id = user.Id,
+                Username = user.UserName,
                 Email = user.Email.Address,
                 Roles = roles,
                 JoinDate = user.JoinDate,
@@ -115,20 +117,6 @@ namespace HGGM.Controllers
         {
             var users = _db.Fetch<User>(collectionName: "users").ToList();
             return View(users);
-        }
-
-        private void PopulateCountryList()
-        {
-            CultureInfo[] CInfoList = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
-            foreach (CultureInfo CInfo in CInfoList)
-            {
-                RegionInfo R = new RegionInfo(CInfo.LCID);
-                if (!(_countryList.Contains(R.EnglishName)))
-                {
-                    _countryList.Add(R.EnglishName);
-                }
-            }
-            _countryList.Sort();
         }
     }
 }

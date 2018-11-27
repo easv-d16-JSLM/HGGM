@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HGGM.Controllers
 {
@@ -18,7 +19,7 @@ namespace HGGM.Controllers
         {
             this._db = db;
         }
-        [HttpGet] public IActionResult Avatar(string id)
+        [HttpGet] public IActionResult Avatar([FromQuery][BindRequired] string id)
         {
             var file = _db.FileStorage.FindById(id);
             if (file == null)
