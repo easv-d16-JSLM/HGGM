@@ -18,12 +18,12 @@ namespace HGGM.Controllers
         {
             this._db = db;
         }
-        [HttpGet] public IActionResult Avatar([FromRoute]string id)
+        [HttpGet] public IActionResult Avatar(string id)
         {
             var file = _db.FileStorage.FindById(id);
             if (file == null)
             {
-                return Redirect("~/images/steamlogin.png");
+                return Redirect("~/images/avatar.png");
             }
             using (var stream = file.OpenRead())
             {
