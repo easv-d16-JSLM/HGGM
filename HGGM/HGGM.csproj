@@ -17,6 +17,7 @@
     <PackageReference Include="AspNet.Security.OpenId.Steam" Version="2.0.0" />
     <PackageReference Include="AspNetCore.Identity.LiteDB" Version="2.6.0" />
     <PackageReference Include="codeessentials.AspNetCore.Diagnostics.Demystifier" Version="0.1.45" />
+    <PackageReference Include="Font.Awesome" Version="5.5.0" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.6.21" />
     <PackageReference Include="Hangfire.LiteDB" Version="0.1.0" />
     <PackageReference Include="Humanizer" Version="2.5.16" />
