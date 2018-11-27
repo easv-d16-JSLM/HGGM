@@ -141,7 +141,7 @@
                             @foreach (var role in Model.Roles.Keys)
                             {
                                 <label class="checkbox">
-                                    <input type="checkbox" name="member" asp-for="@Model.Roles[role]" />
+                                    <input type="checkbox" asp-for="@Model.Roles[role]" />
                                     @role
                                     &nbsp;&nbsp;
                                 </label>

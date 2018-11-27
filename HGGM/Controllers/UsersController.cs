@@ -60,7 +60,8 @@ namespace HGGM.Controllers
                 DateOfBirth = user.DateOfBirth,
                 Name = user.Name,
                 Steam64ID = user.Steam64ID,
-                TeamspeakUID = user.TeamspeakUID
+                TeamspeakUID = user.TeamspeakUID,
+                Headline = user.Headline,
             });
         }
 
@@ -80,6 +81,7 @@ namespace HGGM.Controllers
                 Name = user.Name,
                 Steam64ID = user.Steam64ID,
                 TeamspeakUID = user.TeamspeakUID,
+                Headline = user.Headline,
                 CountryList = _countryList
             });
         }
@@ -97,7 +99,7 @@ namespace HGGM.Controllers
             user.DateOfBirth = uvm.DateOfBirth;
             user.JoinDate = uvm.JoinDate;
             user.Steam64ID = uvm.Steam64ID;
-            user.TeamspeakUID = user.TeamspeakUID;
+            user.TeamspeakUID = uvm.TeamspeakUID;
             user.Headline = uvm.Headline;
             user.Email = uvm.Email;
             user.Roles = uvm.Roles.Where(r => r.Value).Select(h => h.Key).ToList();
