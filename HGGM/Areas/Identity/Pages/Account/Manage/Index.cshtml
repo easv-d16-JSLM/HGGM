@@ -13,8 +13,11 @@
         <div asp-validation-summary="All" class="is-danger"></div>
         <div class="field">
             <label class="label">@lang["username"]</label>
-            <div class="control">
+            <div class="control has-icons-left">
                 <input asp-for="Username" class="input" disabled/>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-user"></i>
+                </span>
             </div>
         </div>
         <div class="field">
@@ -27,14 +30,20 @@
             <label class="label">@lang["email"]</label>
             @if (Model.IsEmailConfirmed)
             {
-                <div class="control">
+                <div class="control has-icons-left">
                     <input asp-for="Input.Email" class="input"/>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-envelope"></i>
+                    </span>
                 </div>
             }
             else
             {
-                <div class="control">
+                <div class="control has-icons-left">
                     <input asp-for="Input.Email" class="input"/>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-envelope"></i>
+                    </span>
                     <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="button is-link" style="margin-top: 0.5rem">@lang["emailVerify"]</button>
                 </div>
             }
@@ -42,8 +51,11 @@
         </div>
         <div class="field">
             <label class="label">@lang["teamspeak"]</label>
-            <div class="control">
+            <div class="control has-icons-left">
                 <input asp-for="Input.TeamspeakUid" class="input"/>
+                <span class="icon is-small is-left">
+                    <i class="fab fa-teamspeak"></i>
+                </span>
             </div>
         </div>
         <div class="control">
