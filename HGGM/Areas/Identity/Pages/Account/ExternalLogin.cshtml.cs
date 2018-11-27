@@ -118,7 +118,7 @@ namespace HGGM.Areas.Identity.Pages.Account
                     UserName = Input.UserName,
                     Email = Input.Email,
                     DateOfBirth = Input.DateOfBirth.Date,
-                    JoinDate = DateTime.Now.ToShortDateString(),
+                    JoinDate = DateTime.Now,
                     TeamspeakUID = Input.TeamspeakUID
                 };
                 var result = await _userManager.CreateAsync(user);

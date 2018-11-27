@@ -20,7 +20,7 @@ namespace HGGM.Models.Identity
 
         [PersonalData] public string TeamspeakUID { get; set; }
 
-        public string JoinDate { get; set; }
+        public DateTime JoinDate { get; set; }
 
         //TODO: Research many to many in LiteDB
 
