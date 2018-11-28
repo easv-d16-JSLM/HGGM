@@ -40,9 +40,12 @@ namespace HGGM.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
-        public IActionResult OnGetAsync()
+        public IActionResult OnGetAsync(string returnUrl = null)
         {
-            return RedirectToPage("./Login");
+            // Request a redirect to the external login provider.
+            var redirectUrl = Url.Page("./ExternalLogin", "Callback", new { returnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Steam", redirectUrl);
+            return new ChallengeResult("Steam", properties);
         }
 
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
