@@ -8,247 +8,229 @@
 
 
 <div class="column is-three-fifths-fullhd">
-    <form asp-action="Edit">
-        <div class="column">
-            <h3 class="title is-3">@lang["header"]</h3>
-            <div asp-validation-summary="All" class="is-danger"></div>
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">@lang["avatar"]</label>
-                </div>
-                <div class="field-body">
-                    <figure class="image is-128x128">
-                        <img id="avatar" src="@Url.Action("Avatar", "Files", new {id = Model.User.Id})">
-                    </figure>
+<form asp-action="Edit">
+<div class="column">
+<h3 class="title is-3">@lang["header"]</h3>
+<div asp-validation-summary="All" class="is-danger"></div>
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label">@lang["avatar"]</label>
+    </div>
+    <div class="field-body">
+        <figure class="image is-128x128">
+            <img id="avatar" src="@Url.Action("Avatar", "Files", new {id = Model.User.Id})">
+        </figure>
+    </div>
+</div>
+
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label"></label>
+    </div>
+    <div class="field-body">
+        <label class="checkbox">
+            <input type="checkbox" id="myCheck" onclick="myFunction()" asp-for="RemoveAvatar"/>
+            @lang["removeAvatar"]
+            &nbsp;&nbsp;
+        </label>
+    </div>
+</div>
+
+
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label">@lang["name"]</label>
+    </div>
+    <div class="field-body">
+        <div class="field">
+            <p class="control is-expanded has-icons-left">
+                <input asp-for="User.Name" class="input" placeholder="@lang["name"]"/>
+                <span asp-validation-for="User.Name" class="is-danger"></span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-user"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field-label is-normal">
+            <label class="label">@lang["nickname"]</label>
+        </div>
+        <div class="field">
+            <div class="control has-icons-left">
+                <input asp-for="User.UserName" class="input" placeholder="@lang["nickname"]"/>
+                <span asp-validation-for="User.UserName" class="is-danger"></span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-user"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label">@lang["dateofbirth"]</label>
+    </div>
+    <div class="field-body">
+        <div class="field">
+            <p class="control is-expanded has-icons-left">
+                <input asp-for="User.DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]"/>
+                <span asp-validation-for="User.DateOfBirth" class="is-danger"></span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field-label is-normal">
+            <label class="label">@lang["email"]</label>
+        </div>
+        <div class="field">
+            <p class="control is-expanded has-icons-left has-icons-right">
+                <input asp-for="Email" asp-format="" class="input" placeholder="@lang["email"]"/>
+                <span asp-validation-for="Email" class="is-danger"></span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label">@lang["joinDate"]</label>
+    </div>
+    <div class="field-body">
+        <div class="field">
+            <p class="control is-expanded has-icons-left has-icons-right">
+                <input asp-for="User.JoinDate" class="input" placeholder="@lang["joinDate"]"/>
+                <span asp-validation-for="User.JoinDate" class="is-danger"></span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label">@lang["teamspeak"]</label>
+    </div>
+    <div class="field-body">
+        <div class="field">
+            <div class="control has-icons-left">
+                <input asp-for="User.TeamspeakUID" class="input" placeholder="@lang["teamspeak"]"/>
+                <span asp-validation-for="User.TeamspeakUID" class="is-danger"></span>
+                <span class="icon is-small is-left">
+                    <i class="fab fa-teamspeak"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label">@lang["country"]</label>
+    </div>
+    <div class="field-body">
+        <div class="field">
+            <div class="control has-icons-left">
+                <div class="select is-fullwidth">
+                    <select asp-for="User.Country">
+                        <option>Select One</option>
+                        @foreach (var inputCountry in Model.CountryList)
+                        {
+                            <option>@inputCountry</option>
+                        }
+                    </select>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-globe"></i>
+                    </span>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label"></label>
-                </div>
-                <div class="field-body">
+<div class="field is-horizontal">
+    <div class="field-label">
+        <label class="label">@lang["roles"]</label>
+    </div>
+    <div class="field-body">
+        <div class="field is-fullwidth">
+            <div class="control">
+                @foreach (var role in Model.Roles.Keys)
+                {
                     <label class="checkbox">
-                        <input type="checkbox" id="myCheck" onclick="myFunction()" asp-for="RemoveAvatar" />
-                        @lang["removeAvatar"]
+                        <input type="checkbox" asp-for="@Model.Roles[role]"/>
+                        @role
                         &nbsp;&nbsp;
                     </label>
-                </div>
-            </div>
-            
-        
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                    <label class="label">@lang["name"]</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                            <input asp-for="User.Name" class="input" placeholder="@lang["name"]" />
-                            <span asp-validation-for="User.Name" class="is-danger"></span>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-user"></i>
-                            </span>
-                        </p>
-                    </div>
-
-                    <div class="field-label is-normal">
-                        <label class="label">@lang["nickname"]</label>
-                    </div>
-                <div class="field">
-                    <div class="control has-icons-left">
-                        <input asp-for="User.UserName" class="input" placeholder="@lang["nickname"]" />
-                        <span asp-validation-for="User.UserName" class="is-danger"></span>
-                        <span class="icon is-small is-left">
-                            <i class="fa fa-user"></i>
-                        </span>
-                    </div>
-                </div>
+                }
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">@lang["dateofbirth"]</label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <p class="control is-expanded has-icons-left">
-                        <input asp-for="User.DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]" />
-                        <span asp-validation-for="User.DateOfBirth" class="is-danger"></span>
-                        <span class="icon is-small is-left">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </p>
-                </div>
-
-                <div class="field-label is-normal">
-                    <label class="label">@lang["email"]</label>
-                </div>
-                <div class="field">
-                    <p class="control is-expanded has-icons-left has-icons-right">
-                        <input asp-for="Email" asp-format="" class="input" placeholder="@lang["email"]" />
-                        <span asp-validation-for="Email" class="is-danger"></span>
-                        <span class="icon is-small is-left">
-                            <i class="fa fa-envelope"></i>
-                        </span>
-                    </p>
-                </div>
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label">@lang["headline"]</label>
+    </div>
+    <div class="field-body">
+        <div class="field">
+            <div class="control">
+                <input asp-for="User.Headline" class="input" placeholder="@lang["headlineDescription"]"/>
+                <span asp-validation-for="User.Headline" class="has-text-danger"></span>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">@lang["joinDate"]</label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <p class="control is-expanded has-icons-left has-icons-right">
-                        <input asp-for="User.JoinDate" class="input" placeholder="@lang["joinDate"]" />
-                        <span asp-validation-for="User.JoinDate" class="is-danger"></span>
-                        <span class="icon is-small is-left">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </p>
-                </div>
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+        <label class="label">@lang["biography"]</label>
+    </div>
+    <div class="field-body">
+        <div class="field">
+            <div class="control">
+                <textarea class="textarea" asp-for="User.Biography" placeholder="@lang["biographyDescription"]"></textarea>
+                <span asp-validation-for="User.Biography" class="has-text-danger"></span>
             </div>
         </div>
+    </div>
+</div>
 
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">@lang["teamspeak"]</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control has-icons-left">
-                            <input asp-for="User.TeamspeakUID" class="input" placeholder="@lang["teamspeak"]" />
-                            <span asp-validation-for="User.TeamspeakUID" class="is-danger"></span>
-                            <span class="icon is-small is-left">
-                                <i class="fab fa-teamspeak"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+<div class="field is-horizontal">
+    <div class="field-label">
+        <!-- Left empty for spacing -->
+    </div>
+    <div class="field-body">
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-link">@lang["save"]</button>
             </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">@lang["country"]</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control has-icons-left">
-                            <div class="select is-fullwidth">
-                                <select asp-for="User.Country">
-                                    <option>Select One</option>
-                                    @foreach (var inputCountry in Model.CountryList)
-                                    {
-                                        <option>@inputCountry</option>
-                                    }
-                                </select>
-                                <span class="icon is-small is-left">
-                                    <i class="fa fa-globe"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <label class="label">@lang["roles"]</label>
-                </div>
-                <div class="field-body">
-                    <div class="field is-fullwidth">
-                        <div class="control">
-                            @foreach (var role in Model.Roles.Keys)
-                            {
-                                <label class="checkbox">
-                                    <input type="checkbox" asp-for="@Model.Roles[role]" />
-                                    @role
-                                    &nbsp;&nbsp;
-                                </label>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">@lang["headline"]</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control">
-                            <input asp-for="User.Headline" class="input" placeholder="@lang["headlineDescription"]" />
-                            <span asp-validation-for="User.Headline" class="has-text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">@lang["biography"]</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control">
-                            <textarea class="textarea" asp-for="User.Biography" placeholder="@lang["biographyDescription"]"></textarea>
-                            <span asp-validation-for="User.Biography" class="has-text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <!-- Left empty for spacing -->
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control">
-                            <button type="submit" class="button is-link">@lang["save"]</button>
-                        </div>
-                        <div class="control" style="margin-top: 1rem">
-                            <a asp-action="Index">@lang["back"]</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="control" style="margin-top: 1rem">
+                <a asp-action="Index">@lang["back"]</a>
             </div>
         </div>
-    </form>
+    </div>
+</div>
+</div>
+</form>
 </div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    <script type="text/javascript">
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#~/images/avatar.png').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#avatar-input").change(function(){
-            readURL(this);
-        });
-    </script>
-    
     <script type="text/javascript">
         function myFunction() {
             var checkBox = document.getElementById("myCheck");
             if (checkBox.checked == true) {
                 $('#avatar').attr('src', '/images/avatar.png');
             } else {
-                $('#avatar').attr('src', '@Url.Action("Avatar", "Files", new { id = Model.User.Id })');
+                $('#avatar').attr('src', '@Url.Action("Avatar", "Files", new {id = Model.User.Id})');
             }
         }
     </script>
