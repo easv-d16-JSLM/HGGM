@@ -17,12 +17,12 @@
             <label class="label">@lang["avatar"]</label>
             <div class="control">
                 <figure class="image is-128x128">
-                    <img src="@Url.Action("Avatar", "Files",new {id = _userManager.GetUserId(User)})">
+                    <img id="avatar" src="@Url.Action("Avatar", "Files",new {id = _userManager.GetUserId(User)})">
                 </figure>
 
                 <div class="file">
                     <label class="file-label">
-                        <input class="file-input" type="file" asp-for="Input.AvatarUpload">
+                        <input id="avatar-input" class="file-input" type="file" asp-for="Input.AvatarUpload">
                         <span class="file-cta">
                             <span class="file-icon">
                                 <i class="fa fa-upload"></i>
@@ -66,14 +66,14 @@
         <div class="field">
             <label class="label">@lang["headline"]</label>
             <div class="control">
-                <input asp-for="Input.Headline" class="input" placeholder="A title for your biography"/>
+                <input asp-for="Input.Headline" class="input" placeholder="@lang["headlineDescription"]"/>
                 <span asp-validation-for="Input.Headline" class="has-text-danger"></span>
             </div>
         </div>
         <div class="field">
             <label class="label">@lang["biography"]</label>
             <div class="control">
-                <textarea class="textarea" asp-for="Input.Biography" placeholder="Write a description of your self, maximum of 500 characters"></textarea>
+                <textarea class="textarea" asp-for="Input.Biography" placeholder="@lang["biographyDescription"]"></textarea>
                 <span asp-validation-for="Input.Biography" class="has-text-danger"></span>
             </div>
         </div>
@@ -85,4 +85,21 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
+    <script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+            
+                reader.onload = function (e) {
+                    $('#avatar').attr('src', e.target.result);
+                }
+            
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    
+        $("#avatar-input").change(function(){
+            readURL(this);
+        });
+    </script>
 }

@@ -87,7 +87,7 @@ namespace HGGM.Areas.Identity.Pages.Account
             if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 Input = new InputModel
                 {
-                    Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                 };
             return Page();
         }
@@ -117,6 +117,7 @@ namespace HGGM.Areas.Identity.Pages.Account
                 {
                     UserName = Input.UserName,
                     Email = Input.Email,
+                    Steam64ID = info.ProviderKey.Substring(37),
                     DateOfBirth = Input.DateOfBirth.Date,
                     JoinDate = DateTime.Now,
                     TeamspeakUID = Input.TeamspeakUID

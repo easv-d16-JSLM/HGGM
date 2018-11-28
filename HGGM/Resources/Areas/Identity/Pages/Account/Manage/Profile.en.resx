@@ -123,11 +123,17 @@
   <data name="biography" xml:space="preserve">
     <value>Biography</value>
   </data>
+  <data name="biographyDescription" xml:space="preserve">
+    <value>Write a description of your self, maximum of 500 characters</value>
+  </data>
   <data name="country" xml:space="preserve">
     <value>Country</value>
   </data>
   <data name="headline" xml:space="preserve">
     <value>Headline</value>
+  </data>
+  <data name="headlineDescription" xml:space="preserve">
+    <value>A title for your biography</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Real Name</value>
