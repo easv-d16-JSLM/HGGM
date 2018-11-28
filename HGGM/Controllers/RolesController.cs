@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HGGM.Models.Audit;
 using HGGM.Models.Identity;
 using HGGM.Services;
+using HGGM.Services.Authorization;
 using HGGM.Services.Authorization.Simple;
 using HGGM.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Newtonsoft.Json;
 
 namespace HGGM.Controllers
 {
+    [Permission(SimplePermission.SimplePermissionType.GetRoles)]
     public class RolesController : Controller
     {
         private readonly AuditService _auditService;
@@ -26,13 +28,13 @@ namespace HGGM.Controllers
             _userManager = userManager;
         }
 
-        // GET: Roles/Create
+        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Roles/Create
+        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind("Name")] Role role)
@@ -48,14 +50,14 @@ namespace HGGM.Controllers
             return View();
         }
 
-        // GET: Roles/Delete/5
+        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
         public async Task<ActionResult> Delete(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
             return View(role);
         }
 
-        // POST: Roles/Delete/5
+        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Role role)
@@ -65,14 +67,14 @@ namespace HGGM.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Roles/Details/5
+
         public async Task<ActionResult> Details(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
             return View(role);
         }
 
-        // GET: Roles/Edit/5
+        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
         public async Task<ActionResult> Edit(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
@@ -86,7 +88,7 @@ namespace HGGM.Controllers
             return View(m);
         }
 
-        // POST: Roles/Edit/5
+        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([FromRoute] string id, [FromForm] EditRoleViewModel model)
@@ -121,7 +123,6 @@ namespace HGGM.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Roles
         public ActionResult Index()
         {
             return View(roleManager.Roles.ToList());

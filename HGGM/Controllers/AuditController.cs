@@ -4,12 +4,15 @@ using System.Linq;
 using System.Reflection;
 using HGGM.Models;
 using HGGM.Services;
+using HGGM.Services.Authorization;
+using HGGM.Services.Authorization.Simple;
 using HGGM.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace HGGM.Controllers
 {
+    [Permission(SimplePermission.SimplePermissionType.GetAuditLog)]
     public class AuditController : Controller
     {
         private readonly AuditService _auditService;

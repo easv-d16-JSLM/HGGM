@@ -137,7 +137,7 @@ namespace HGGM
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Identity/Account/Login";
+                options.LoginPath = "/Identity/Account/ExternalLogin";
                 options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
