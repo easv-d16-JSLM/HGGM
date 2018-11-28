@@ -62,7 +62,7 @@
     <value>Zpátky na seznam</value>
   </data>
   <data name="createNewButton" xml:space="preserve">
-    <value>Vytvořit roli</value>
+    <value>Vytvořit novou roli</value>
   </data>
   <data name="editPageTitle" xml:space="preserve">
     <value>Upravujete roli:</value>
