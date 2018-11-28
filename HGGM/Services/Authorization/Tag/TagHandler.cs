@@ -1,34 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HGGM.Models.Identity;
-using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace HGGM.Services.Authorization.Tag
 {
     public class TagHandler : AuthorizationHandler<TagRequirement>
     {
-        private readonly LiteRepository _db;
+        private readonly ILogger _log = Log.ForContext<TagHandler>();
         private readonly UserManager<User> _userManager;
-        private readonly ILogger _logger;
 
-        public TagHandler(LiteRepository db, UserManager<User> userManager, ILogger logger)
+        public TagHandler(UserManager<User> userManager)
         {
-            _db = db;
             _userManager = userManager;
-            _logger = logger;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, TagRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
+            TagRequirement requirement)
         {
             var user = await _userManager.GetUserAsync(context.User);
+            _log.Verbose("User {username} needs {requirement} at {context}", user?.UserName, requirement.Tag,
+                context.Resource);
+            if (user != null)
+                if (requirement.Tag.Users.Contains(user) && requirement.Tag != null)
 
-
-            // write logic for checking if tag-requirement is forfilled
+                {
+                    _log.Debug("User {username} was granted {requirement}", user?.UserName, requirement.Tag);
+                    context.Succeed(requirement);
+                }
         }
     }
 }
