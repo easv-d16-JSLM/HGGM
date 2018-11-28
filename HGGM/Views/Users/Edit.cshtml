@@ -18,10 +18,9 @@
                 </div>
                 <div class="field-body">
                     <figure class="image is-128x128">
-                        <img id="avatar" src="@Url.Action("Avatar", "Files", new {id = Model.Id})">
+                        <img id="avatar" src="@Url.Action("Avatar", "Files", new {id = Model.User.Id})">
                     </figure>
                 </div>
-
             </div>
 
             <div class="field is-horizontal">
@@ -36,33 +35,17 @@
                     </label>
                 </div>
             </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                    <label class="label">@lang["nickname"]</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control has-icons-left">
-                            <input asp-for="Username" class="input" placeholder="@lang["nickname"]" />
-                            <span asp-validation-for="Username" class="is-danger"></span>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-user"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
+            
+        
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
                     <label class="label">@lang["name"]</label>
                 </div>
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input asp-for="Name" class="input" placeholder="@lang["name"]" />
-                            <span asp-validation-for="Name" class="is-danger"></span>
+                            <input asp-for="User.Name" class="input" placeholder="@lang["name"]" />
+                            <span asp-validation-for="User.Name" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-user"></i>
                             </span>
@@ -70,49 +53,66 @@
                     </div>
 
                     <div class="field-label is-normal">
-                        <label class="label">@lang["email"]</label>
+                        <label class="label">@lang["nickname"]</label>
                     </div>
-                    <div class="field">
-                        <p class="control is-expanded has-icons-left has-icons-right">
-                            <input asp-for="Email" class="input" placeholder="@lang["email"]" />
-                            <span asp-validation-for="Email" class="is-danger"></span>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-envelope"></i>
-                            </span>
-                        </p>
+                <div class="field">
+                    <div class="control has-icons-left">
+                        <input asp-for="User.UserName" class="input" placeholder="@lang["nickname"]" />
+                        <span asp-validation-for="User.UserName" class="is-danger"></span>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-user"></i>
+                        </span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="field is-horizontal">
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">@lang["dateofbirth"]</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control is-expanded has-icons-left">
+                        <input asp-for="User.DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]" />
+                        <span asp-validation-for="User.DateOfBirth" class="is-danger"></span>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </p>
+                </div>
+
                 <div class="field-label is-normal">
-                    <label class="label">@lang["dateofbirth"]</label>
+                    <label class="label">@lang["email"]</label>
                 </div>
-                <div class="field-body">
-                    <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                            <input asp-for="DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]" />
-                            <span asp-validation-for="DateOfBirth" class="is-danger"></span>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                        </p>
-                    </div>
-
-                    <div class="field-label is-normal">
-                        <label class="label">@lang["joinDate"]</label>
-                    </div>
-                    <div class="field">
-                        <p class="control is-expanded has-icons-left has-icons-right">
-                            <input asp-for="JoinDate" class="input" type="Date" placeholder="@lang["joinDate"]" />
-                            <span asp-validation-for="JoinDate" class="is-danger"></span>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                        </p>
-                    </div>
+                <div class="field">
+                    <p class="control is-expanded has-icons-left has-icons-right">
+                        <input asp-for="Email" asp-format="" class="input" placeholder="@lang["email"]" />
+                        <span asp-validation-for="Email" class="is-danger"></span>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                    </p>
                 </div>
             </div>
+        </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">@lang["joinDate"]</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control is-expanded has-icons-left has-icons-right">
+                        <input asp-for="User.JoinDate" class="input" placeholder="@lang["joinDate"]" />
+                        <span asp-validation-for="User.JoinDate" class="is-danger"></span>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
 
             <div class="field is-horizontal">
                 <div class="field-label is-normal">
@@ -121,8 +121,8 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control has-icons-left">
-                            <input asp-for="TeamspeakUID" class="input" placeholder="@lang["teamspeak"]" />
-                            <span asp-validation-for="TeamspeakUID" class="is-danger"></span>
+                            <input asp-for="User.TeamspeakUID" class="input" placeholder="@lang["teamspeak"]" />
+                            <span asp-validation-for="User.TeamspeakUID" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fab fa-teamspeak"></i>
                             </span>
@@ -139,7 +139,7 @@
                     <div class="field">
                         <div class="control has-icons-left">
                             <div class="select is-fullwidth">
-                                <select asp-for="Country">
+                                <select asp-for="User.Country">
                                     <option>Select One</option>
                                     @foreach (var inputCountry in Model.CountryList)
                                     {
@@ -182,8 +182,8 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control">
-                            <input asp-for="Headline" class="input" placeholder="@lang["headlineDescription"]" />
-                            <span asp-validation-for="Headline" class="has-text-danger"></span>
+                            <input asp-for="User.Headline" class="input" placeholder="@lang["headlineDescription"]" />
+                            <span asp-validation-for="User.Headline" class="has-text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -196,8 +196,8 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control">
-                            <textarea class="textarea" asp-for="Biography" placeholder="@lang["biographyDescription"]"></textarea>
-                            <span asp-validation-for="Biography" class="has-text-danger"></span>
+                            <textarea class="textarea" asp-for="User.Biography" placeholder="@lang["biographyDescription"]"></textarea>
+                            <span asp-validation-for="User.Biography" class="has-text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
             if (checkBox.checked == true) {
                 $('#avatar').attr('src', '/images/avatar.png');
             } else {
-                $('#avatar').attr('src', '@Url.Action("Avatar", "Files", new { id = Model.Id })');
+                $('#avatar').attr('src', '@Url.Action("Avatar", "Files", new { id = Model.User.Id })');
             }
         }
     </script>

@@ -6,6 +6,10 @@ namespace HGGM.Models.Identity
 {
     public class User : ApplicationUser
     {
+        public User()
+        {
+            Email = new EmailInfo();
+        }
         public string Biography { get; set; }
 
         [PersonalData] public string Country { get; set; }
@@ -14,13 +18,13 @@ namespace HGGM.Models.Identity
 
         public string Headline { get; set; }
 
+        public DateTime JoinDate { get; set; }
+
         [PersonalData] public string Name { get; set; }
 
         [PersonalData] public string Steam64ID { get; set; }
 
         [PersonalData] public string TeamspeakUID { get; set; }
-
-        public DateTime JoinDate { get; set; }
 
         //TODO: Research many to many in LiteDB
 

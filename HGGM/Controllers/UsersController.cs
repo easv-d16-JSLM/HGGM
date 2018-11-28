@@ -50,16 +50,9 @@ namespace HGGM.Controllers
                 .ToDictionary(r => r, r => user.Roles.Contains(r));
             return View(new EditUserViewModel
             {
-                Username = user.UserName,
-                Email = user.Email.Address,
+                User = user,
                 Roles = roles,
-                JoinDate = user.JoinDate,
-                Biography = user.Biography,
-                Country = user.Country,
-                DateOfBirth = user.DateOfBirth,
-                Name = user.Name,
-                TeamspeakUID = user.TeamspeakUID,
-                Headline = user.Headline
+                Email = user.Email.Address
             });
         }
 
@@ -71,19 +64,24 @@ namespace HGGM.Controllers
                 .ToDictionary(r => r, r => user.Roles.Contains(r));
             return View(new EditUserViewModel
             {
-                Id = user.Id,
-                Username = user.UserName,
-                Email = user.Email.Address,
                 Roles = roles,
-                JoinDate = user.JoinDate,
-                Biography = user.Biography,
-                Country = user.Country,
-                DateOfBirth = user.DateOfBirth,
-                Name = user.Name,
-                TeamspeakUID = user.TeamspeakUID,
-                Headline = user.Headline,
-                CountryList = _countryList
+                User = user,
+                CountryList = _countryList,
+                Email = user.Email.Address
             });
+        }
+
+        private User EditUser(User db, User edited)
+        {
+            db.UserName = edited.UserName;
+            db.Name = edited.Name;
+            db.Biography = edited.Biography;
+            db.Country = edited.Country;
+            db.DateOfBirth = edited.DateOfBirth;
+            db.JoinDate = edited.JoinDate;
+            db.TeamspeakUID = edited.TeamspeakUID;
+            db.Headline = edited.Headline;
+            return db;
         }
 
         [HttpPost]
@@ -91,17 +89,11 @@ namespace HGGM.Controllers
         public async Task<ActionResult> Edit(string id, EditUserViewModel uvm)
         {
             if (!ModelState.IsValid) return View(uvm);
-            var user = await _userManager.FindByIdAsync(id);
-            user.UserName = uvm.Username;
-            user.Name = uvm.Name;
-            user.Biography = uvm.Biography;
-            user.Country = uvm.Country;
-            user.DateOfBirth = uvm.DateOfBirth;
-            user.JoinDate = uvm.JoinDate;
-            user.TeamspeakUID = uvm.TeamspeakUID;
-            user.Headline = uvm.Headline;
+
+            var user = EditUser(await _userManager.FindByIdAsync(id), uvm.User);
             user.Email = uvm.Email;
             user.Roles = uvm.Roles.Where(r => r.Value).Select(h => h.Key).ToList();
+
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
