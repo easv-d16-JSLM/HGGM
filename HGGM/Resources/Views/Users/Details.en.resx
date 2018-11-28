@@ -144,6 +144,9 @@
   <data name="headlineDescription" xml:space="preserve">
     <value>A title for your biography</value>
   </data>
+  <data name="id" xml:space="preserve">
+    <value>ID</value>
+  </data>
   <data name="joinDate" xml:space="preserve">
     <value>Join Date</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="roles" xml:space="preserve">
     <value>Roles</value>
+  </data>
+  <data name="steam" xml:space="preserve">
+    <value>Steam 64</value>
   </data>
   <data name="teamspeak" xml:space="preserve">
     <value>Teamspeak</value>
