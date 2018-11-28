@@ -129,7 +129,9 @@ namespace HGGM
 
             services.AddHangfire(configuration => configuration.UseLiteDbStorage());
 
-            services.AddMvc()
+            services
+                .AddMvc(options =>
+                    options.AllowCombiningAuthorizeFilters = false) //https://github.com/aspnet/Mvc/pull/8068
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddMvcLocalization(LanguageViewLocationExpanderFormat.SubFolder)
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder,
