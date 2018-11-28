@@ -58,7 +58,6 @@ namespace HGGM.Controllers
                 Country = user.Country,
                 DateOfBirth = user.DateOfBirth,
                 Name = user.Name,
-                Steam64ID = user.Steam64ID,
                 TeamspeakUID = user.TeamspeakUID,
                 Headline = user.Headline
             });
@@ -81,7 +80,6 @@ namespace HGGM.Controllers
                 Country = user.Country,
                 DateOfBirth = user.DateOfBirth,
                 Name = user.Name,
-                Steam64ID = user.Steam64ID,
                 TeamspeakUID = user.TeamspeakUID,
                 Headline = user.Headline,
                 CountryList = _countryList
@@ -100,14 +98,19 @@ namespace HGGM.Controllers
             user.Country = uvm.Country;
             user.DateOfBirth = uvm.DateOfBirth;
             user.JoinDate = uvm.JoinDate;
-            user.Steam64ID = uvm.Steam64ID;
             user.TeamspeakUID = uvm.TeamspeakUID;
             user.Headline = uvm.Headline;
             user.Email = uvm.Email;
             user.Roles = uvm.Roles.Where(r => r.Value).Select(h => h.Key).ToList();
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
+            {
+                if (uvm.RemoveAvatar)
+                {
+                    _db.FileStorage.Delete(user.Id);
+                }
                 return RedirectToAction(nameof(Index));
+            }
             foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
 
             return View(uvm);

@@ -18,11 +18,22 @@
                 </div>
                 <div class="field-body">
                     <figure class="image is-128x128">
-                        <img src="@Url.Action("Avatar", "Files", new {id = Model.Id})">
+                        <img id="avatar" src="@Url.Action("Avatar", "Files", new {id = Model.Id})">
                     </figure>
-                    @{
-                        //TODO: ADD BUTTON TO DELETE PICTURE
-                    }
+                </div>
+
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label"></label>
+                </div>
+                <div class="field-body">
+                    <label class="checkbox">
+                        <input type="checkbox" id="myCheck" onclick="myFunction()" asp-for="RemoveAvatar" />
+                        @lang["removeAvatar"]
+                        &nbsp;&nbsp;
+                    </label>
                 </div>
             </div>
 
@@ -33,7 +44,7 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control has-icons-left">
-                            <input asp-for="Username" class="input" placeholder="@lang["nickname"]"/>
+                            <input asp-for="Username" class="input" placeholder="@lang["nickname"]" />
                             <span asp-validation-for="Username" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-user"></i>
@@ -50,7 +61,7 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input asp-for="Name" class="input" placeholder="@lang["name"]"/>
+                            <input asp-for="Name" class="input" placeholder="@lang["name"]" />
                             <span asp-validation-for="Name" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-user"></i>
@@ -63,7 +74,7 @@
                     </div>
                     <div class="field">
                         <p class="control is-expanded has-icons-left has-icons-right">
-                            <input asp-for="Email" class="input" placeholder="@lang["email"]"/>
+                            <input asp-for="Email" class="input" placeholder="@lang["email"]" />
                             <span asp-validation-for="Email" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-envelope"></i>
@@ -80,7 +91,7 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input asp-for="DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]"/>
+                            <input asp-for="DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]" />
                             <span asp-validation-for="DateOfBirth" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-calendar"></i>
@@ -93,7 +104,7 @@
                     </div>
                     <div class="field">
                         <p class="control is-expanded has-icons-left has-icons-right">
-                            <input asp-for="JoinDate" class="input" type="Date" placeholder="@lang["joinDate"]"/>
+                            <input asp-for="JoinDate" class="input" type="Date" placeholder="@lang["joinDate"]" />
                             <span asp-validation-for="JoinDate" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fa fa-calendar"></i>
@@ -110,7 +121,7 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control has-icons-left">
-                            <input asp-for="TeamspeakUID" class="input" placeholder="@lang["teamspeak"]"/>
+                            <input asp-for="TeamspeakUID" class="input" placeholder="@lang["teamspeak"]" />
                             <span asp-validation-for="TeamspeakUID" class="is-danger"></span>
                             <span class="icon is-small is-left">
                                 <i class="fab fa-teamspeak"></i>
@@ -154,7 +165,7 @@
                             @foreach (var role in Model.Roles.Keys)
                             {
                                 <label class="checkbox">
-                                    <input type="checkbox" asp-for="@Model.Roles[role]"/>
+                                    <input type="checkbox" asp-for="@Model.Roles[role]" />
                                     @role
                                     &nbsp;&nbsp;
                                 </label>
@@ -171,7 +182,7 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control">
-                            <input asp-for="Headline" class="input" placeholder="@lang["headlineDescription"]"/>
+                            <input asp-for="Headline" class="input" placeholder="@lang["headlineDescription"]" />
                             <span asp-validation-for="Headline" class="has-text-danger"></span>
                         </div>
                     </div>
@@ -213,4 +224,32 @@
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#~/images/avatar.png').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#avatar-input").change(function(){
+            readURL(this);
+        });
+    </script>
+    
+    <script type="text/javascript">
+        function myFunction() {
+            var checkBox = document.getElementById("myCheck");
+            if (checkBox.checked == true) {
+                $('#avatar').attr('src', '/images/avatar.png');
+            } else {
+                $('#avatar').attr('src', '@Url.Action("Avatar", "Files", new { id = Model.Id })');
+            }
+        }
+    </script>
 }

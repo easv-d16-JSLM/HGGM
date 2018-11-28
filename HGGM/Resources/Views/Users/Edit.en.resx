@@ -156,6 +156,9 @@
   <data name="nickname" xml:space="preserve">
     <value>Nickname</value>
   </data>
+  <data name="removeAvatar" xml:space="preserve">
+    <value>Remove Avatar</value>
+  </data>
   <data name="roles" xml:space="preserve">
     <value>Roles</value>
   </data>

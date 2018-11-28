@@ -5,6 +5,7 @@ namespace HGGM.ViewModels
 {
     public class EditUserViewModel
     {
+        public bool RemoveAvatar { get; set; }
         public string Biography { get; set; }
         public string Country { get; set; }
         public List<string> CountryList { get; set; }
