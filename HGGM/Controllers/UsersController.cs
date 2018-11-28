@@ -18,7 +18,6 @@ namespace HGGM.Controllers
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
 
-
         public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, LiteRepository db)
         {
             _userManager = userManager;
