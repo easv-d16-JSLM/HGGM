@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Identity;
 using HGGM.Services;
+using HGGM.Services.Authorization;
+using HGGM.Services.Authorization.Simple;
 using HGGM.ViewModels;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
