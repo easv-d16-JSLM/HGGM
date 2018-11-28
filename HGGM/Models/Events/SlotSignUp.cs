@@ -1,6 +1,5 @@
 ﻿using System;
 using HGGM.Models.Identity;
-using LiteDB;
 
 namespace HGGM.Models.Events
 {
@@ -8,6 +7,7 @@ namespace HGGM.Models.Events
     {
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Deleted { get; set; }
+        public string Note { get; set; }
         public User User { get; set; }
     }
 }

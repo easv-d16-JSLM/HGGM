@@ -6,6 +6,7 @@ using HGGM.Models.Identity;
 using HGGM.Services;
 using HGGM.Services.Authorization;
 using HGGM.Services.Authorization.Simple;
+using HGGM.Services.Authorization.Tag;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -105,6 +106,9 @@ namespace HGGM
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
+            services.AddSingleton<EventManager>();
+            services.AddScoped<IAuthorizationHandler, TagHandler>();
+            
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddHangfire(configuration => configuration.UseLiteDbStorage());
