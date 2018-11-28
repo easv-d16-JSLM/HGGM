@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer L
+@model HGGM.Models.Tag
+
+@{
+    ViewData["Title"] = L["tabTitle"];
+}
+
+<h2>@L["deletePageTitle"]</h2>
+
+<h3>@L["areYouSure"]</h3>
+<div>
+
+    <hr />
+    <dl>
+        <dd class="panel-block">
+            @Html.DisplayFor(model => model.TagName)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <div>
+            <button type="submit" class="button is-link">@L["confirmButton"]</button>
+        </div>
+        <a asp-action="Index">@L["backToListButton"]</a>
+    </form>
+</div>

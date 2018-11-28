@@ -1,34 +1,33 @@
 ﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
 @model DeletePersonalDataModel
+@inject IViewLocalizer lang
 @{
-    ViewData["Title"] = "Delete Personal Data";
+    ViewData["Title"] = lang["title"];
     ViewData["ActivePage"] = ManageNavPages.DeletePersonalData;
 }
 
-<h4>@ViewData["Title"]</h4>
+<h3 class="title is-3">@ViewData["Title"]</h3>
 
-<div class="alert alert-warning" role="alert">
-    <p>
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-    </p>
+<div class="notification is-warning">
+    <strong>@lang["description"]</strong>
 </div>
 
 <div>
-    <form id="delete-user" method="post" class="form-group">
-        <div asp-validation-summary="All" class="text-danger"></div>
+    <form id="delete-user" method="post">
+        <div asp-validation-summary="All" class="is-danger"></div>
         @if (Model.RequirePassword)
         {
-        <div class="form-group">
-            <label asp-for="Input.Password"></label>
-            <input asp-for="Input.Password" class="form-control" />
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
-        </div>
+            <div>
+                <label>@lang["password"]</label>
+                <input asp-for="Input.Password" class="input" />
+                <span asp-validation-for="Input.Password" class="is-danger"></span>
+            </div>
         }
-        <button class="btn btn-danger" type="submit">Delete data and close my account</button>
+        <button class="button is-link" type="submit">@lang["confirmButton"]</button>
     </form>
 </div>
 
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

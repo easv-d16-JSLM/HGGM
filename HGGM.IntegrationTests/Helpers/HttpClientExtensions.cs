@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AngleSharp.Dom.Html;
+using JetBrains.Annotations;
 using Xunit;
 
 namespace HGGM.IntegrationTests.Helpers
@@ -11,16 +12,16 @@ namespace HGGM.IntegrationTests.Helpers
     {
         public static Task<HttpResponseMessage> SendAsync(
             this HttpClient client,
-            IHtmlFormElement form,
-            IHtmlElement submitButton)
+            [NotNull]IHtmlFormElement form,
+            [NotNull]IHtmlElement submitButton)
         {
             return client.SendAsync(form, submitButton, new Dictionary<string, string>());
         }
 
         public static Task<HttpResponseMessage> SendAsync(
             this HttpClient client,
-            IHtmlFormElement form,
-            IEnumerable<KeyValuePair<string, string>> formValues)
+            [NotNull]IHtmlFormElement form,
+            [NotNull]IEnumerable<KeyValuePair<string, string>> formValues)
         {
             var submitElement = Assert.Single(form.QuerySelectorAll("[type=submit]"));
             var submitButton = Assert.IsAssignableFrom<IHtmlElement>(submitElement);
@@ -30,9 +31,9 @@ namespace HGGM.IntegrationTests.Helpers
 
         public static Task<HttpResponseMessage> SendAsync(
             this HttpClient client,
-            IHtmlFormElement form,
-            IHtmlElement submitButton,
-            IEnumerable<KeyValuePair<string, string>> formValues)
+            [NotNull]IHtmlFormElement form,
+            [NotNull]IHtmlElement submitButton,
+            [NotNull]IEnumerable<KeyValuePair<string, string>> formValues)
         {
             foreach (var kvp in formValues)
             {

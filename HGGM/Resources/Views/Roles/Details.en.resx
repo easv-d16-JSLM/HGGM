@@ -123,4 +123,7 @@
   <data name="detailsPageTitle" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Details</value>
+  </data>
 </root>

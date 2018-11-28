@@ -124,9 +124,21 @@
     <value>Create new</value>
   </data>
   <data name="editPageTitle" xml:space="preserve">
-    <value>Edit</value>
+    <value>Editing role:</value>
+  </data>
+  <data name="nameHeader" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="nameTableHeader" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="saveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="simplePerms" xml:space="preserve">
+    <value>Simple Permissions</value>
+  </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Edit</value>
   </data>
 </root>
