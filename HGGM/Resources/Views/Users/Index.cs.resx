@@ -64,4 +64,10 @@
   <data name="username" xml:space="preserve">
     <value>Uživatelské jméno</value>
   </data>
+  <data name="edit" xml:space="preserve">
+    <value>Upravit</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Přehled uživatele</value>
+  </data>
 </root>
