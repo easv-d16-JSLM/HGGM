@@ -67,4 +67,10 @@
   <data name="title" xml:space="preserve">
     <value>Osobní data</value>
   </data>
+  <data name="description" xml:space="preserve">
+    <value>Tvůj účet obsahuje osobní údaje které jsi poskytl. Tato stránka umožňuje stažení, či odstranění těchto údajů.</value>
+  </data>
+  <data name="descriptionWarning" xml:space="preserve">
+    <value>Odstranění těchto údajů permanentně odstraní tvůj účet, toto již nelze vrátit zpět.</value>
+  </data>
 </root>
