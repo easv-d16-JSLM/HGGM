@@ -28,6 +28,24 @@ namespace HGGM.Services
             
         }
 
+        public List<User> GetUsersFromEvent(Event eEvent)
+        {
+            var rosterList = eEvent.Roster;
+            var listOfUsersSignedUp = new List<User>();
+
+            foreach (var slot in rosterList)
+            {
+                var slotSignUps = slot.SignUps;
+
+                foreach (var user in slotSignUps)
+                {
+                    listOfUsersSignedUp.Add(user.User);
+                }
+            }
+
+            return listOfUsersSignedUp;
+        }
+
         public void AddEvent(Event eEvent)
         {
             eEvent.Created = DateTimeOffset.Now;
@@ -38,36 +56,76 @@ namespace HGGM.Services
                           eEvent.TakesPlace,
                 Subject = "Event" + eEvent.Name + " awaiting approval"
             }, new List<User>(_db.Fetch<User>()));
-
+            //todo Change to specific users with required roles
         }
 
         public void EditEvent(Event eEvent)
         {
             _db.Update(eEvent);
-            // Insert notification service
+            _nService.NotifyUsers(new Notification()
+            {
+                Message = "Event with name: " + eEvent.Name + " updated!",
+                Subject = "Event" + eEvent.Name + " updated"
+            }, GetUsersFromEvent(eEvent));
         }
 
         public void DeleteEvent(Guid id)
         {
-            _db.SingleById<Event>(id);
-            // Insert notification service
+            var eEvent = _db.SingleById<Event>(id);
+            _db.Delete<Event>(id);
+            _nService.NotifyUsers(new Notification()
+            {
+                Message = "Event with name: " + eEvent.Name + " deleted!",
+                Subject = "Event" + eEvent.Name + " deleted"
+            }, GetUsersFromEvent(eEvent));
+
         }
 
         public void PublishEvent(Guid id, User user)
         {
-            _db.Update(_db.SingleById<Event>(id));
-            // Insert notification service
+            var eEvent = _db.SingleById<Event>(id);
+            eEvent.Published = DateTimeOffset.Now;
+            eEvent.Publisher = user;
+            _db.Update(eEvent);
+
+            _nService.NotifyUsers(new Notification()
+            {
+                Message = "Event with name: " + eEvent.Name + " is now published!",
+                Subject = "Event" + eEvent.Name + " published"
+            }, new List<User>(_db.Fetch<User>()));
+            //todo Change to specific users with required roles
 
         }
 
-        public void DeclineEvent()
+        public void DeclineEvent(Guid id, string declineMessage)
         {
+            var eEvent = _db.SingleById<Event>(id);
+            var list = new List<User>
+            {
+                eEvent.Author
+            };
 
-            // Insert notification service
+            _nService.NotifyUsers(new Notification()
+            {
+                Message = declineMessage,
+                Subject = "Event" + eEvent.Name + " declined"
+            }, list);
+
         }
 
-        public void AddToSlot()
+        public void AddToSlot(Event eEvent, User user, string note, Slot chosenSlot)
         {
+            var slotSignUp = new SlotSignUp()
+            {
+                Created = DateTimeOffset.Now,
+                Note = note,
+                User = user
+            };
+            var slot = eEvent.Roster.Equals(chosenSlot);
+            if (eEvent.Roster.Contains(chosenSlot))
+            {
+                
+            }
 
             // Insert notification service
         }
