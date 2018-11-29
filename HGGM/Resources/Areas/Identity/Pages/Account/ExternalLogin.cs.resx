@@ -82,7 +82,10 @@
 Pro dokončení přihlášení, prosím, vyplňte zbývající informace níže a klikněte na tlačítko "Registrovat".</value>
   </data>
   <data name="tos" xml:space="preserve">
-    <value>S kliknutím na "registrovat" souhlasíte s Podmínkami služby a s Podmínkami ochrany osobních údajů</value>
+    <value>Kliknutím na "registrovat" souhlasíte s [Podmínkami služby ](/) a s [Podmínkami ochrany osobních údajů](/privacyPolicy)</value>
   <comment>Markdown enabled</comment>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Zaregistrovat účet</value>
   </data>
 </root>
