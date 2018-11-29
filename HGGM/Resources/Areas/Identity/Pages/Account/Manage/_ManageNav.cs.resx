@@ -79,4 +79,10 @@
   <data name="twoFactor" xml:space="preserve">
     <value>Dvoufaktorová autorizace</value>
   </data>
+  <data name="administration" xml:space="preserve">
+    <value>Správa</value>
+  </data>
+  <data name="externalLogin" xml:space="preserve">
+    <value>Externí přihášení</value>
+  </data>
 </root>
