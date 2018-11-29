@@ -61,4 +61,16 @@
   <data name="areYouSure" xml:space="preserve">
     <value>Jste si jistí, že to chcete odstranit?</value>
   </data>
+  <data name="backToListButton" xml:space="preserve">
+    <value>Zpátky na seznam</value>
+  </data>
+  <data name="confirmButton" xml:space="preserve">
+    <value>Odstranit</value>
+  </data>
+  <data name="deletePageTitle" xml:space="preserve">
+    <value>Odstranit štítek</value>
+  </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Odstranit</value>
+  </data>
 </root>
