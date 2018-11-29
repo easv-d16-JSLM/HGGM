@@ -67,4 +67,13 @@
   <data name="nickname" xml:space="preserve">
     <value>Přezdívka</value>
   </data>
+  <data name="back" xml:space="preserve">
+    <value>Zpátky na seznam</value>
+  </data>
+  <data name="subtitle" xml:space="preserve">
+    <value>Opravdu to chcete odstranit?</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Odstranit uživatele</value>
+  </data>
 </root>
