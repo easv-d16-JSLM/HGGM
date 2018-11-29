@@ -64,4 +64,16 @@
   <data name="save" xml:space="preserve">
     <value>Uložit</value>
   </data>
+  <data name="back" xml:space="preserve">
+    <value>Zpět na seznam</value>
+  </data>
+  <data name="header" xml:space="preserve">
+    <value>Upravit</value>
+  </data>
+  <data name="roles" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Upravit</value>
+  </data>
 </root>
