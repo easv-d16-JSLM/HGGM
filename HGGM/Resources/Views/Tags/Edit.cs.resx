@@ -67,4 +67,10 @@
   <data name="tabTitle" xml:space="preserve">
     <value>Upravit</value>
   </data>
+  <data name="editPageTitle" xml:space="preserve">
+    <value>Upravujete štítek:</value>
+  </data>
+  <data name="tagName" xml:space="preserve">
+    <value>Jméno štítku</value>
+  </data>
 </root>
