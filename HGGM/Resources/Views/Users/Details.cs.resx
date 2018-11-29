@@ -82,4 +82,28 @@
   <data name="roles" xml:space="preserve">
     <value>Role</value>
   </data>
+  <data name="biographyDescription" xml:space="preserve">
+    <value>Napište něco o sobě. Maximálně 500 znaků</value>
+  </data>
+  <data name="headlineDescription" xml:space="preserve">
+    <value>Nadpis životopisu</value>
+  </data>
+  <data name="id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="joinDate" xml:space="preserve">
+    <value>Přidal se</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Jméno</value>
+  </data>
+  <data name="steam" xml:space="preserve">
+    <value>Steam 64</value>
+  </data>
+  <data name="teamspeak" xml:space="preserve">
+    <value>Teamspeak</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Zobrazit uživatele</value>
+  </data>
 </root>
