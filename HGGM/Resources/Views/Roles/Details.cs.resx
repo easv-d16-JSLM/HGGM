@@ -61,4 +61,10 @@
   <data name="backToListButton" xml:space="preserve">
     <value>Zpátky na seznam</value>
   </data>
+  <data name="detailsPageTitle" xml:space="preserve">
+    <value>Detaily</value>
+  </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Detaily</value>
+  </data>
 </root>
