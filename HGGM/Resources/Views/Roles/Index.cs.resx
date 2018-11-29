@@ -67,4 +67,7 @@
   <data name="indexViewPageTitle" xml:space="preserve">
     <value>Zobrazit vše</value>
   </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Zobrazení všech rolí</value>
+  </data>
 </root>
