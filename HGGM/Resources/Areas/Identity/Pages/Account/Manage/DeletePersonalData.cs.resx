@@ -61,4 +61,10 @@
   <data name="password" xml:space="preserve">
     <value>Heslo</value>
   </data>
+  <data name="description" xml:space="preserve">
+    <value>Smazání těchto dat permanentně odstraní tvůj účet, toto nelze již vrátit zpět.</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Smazat osobní data</value>
+  </data>
 </root>
