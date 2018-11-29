@@ -64,4 +64,7 @@
   <data name="nameTableHeader" xml:space="preserve">
     <value>Název</value>
   </data>
+  <data name="indexViewPageTitle" xml:space="preserve">
+    <value>Zobrazit vše</value>
+  </data>
 </root>
