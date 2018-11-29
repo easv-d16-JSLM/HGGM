@@ -70,4 +70,10 @@
   <data name="title" xml:space="preserve">
     <value>Přehled uživatele</value>
   </data>
+  <data name="heading" xml:space="preserve">
+    <value>Přehled uživatele</value>
+  </data>
+  <data name="roles" xml:space="preserve">
+    <value>Role</value>
+  </data>
 </root>
