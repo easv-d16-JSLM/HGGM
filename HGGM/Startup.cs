@@ -125,6 +125,8 @@ namespace HGGM
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
+            services.AddSingleton<INotificationService, NotificationService>();
+
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddHangfire(configuration => configuration.UseLiteDbStorage());
