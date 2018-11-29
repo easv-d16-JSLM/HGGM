@@ -76,4 +76,13 @@
   <data name="username" xml:space="preserve">
     <value>Uživatelské jméno</value>
   </data>
+  <data name="description" xml:space="preserve">
+    <value>Úspěšně jste ověřili svůj &lt;strong&gt;Steam&lt;/strong&gt; účet.
+
+Pro dokončení přihlášení, prosím, vyplňte zbývající informace níže a klikněte na tlačítko "Registrovat".</value>
+  </data>
+  <data name="tos" xml:space="preserve">
+    <value>S kliknutím na "registrovat" souhlasíte s Podmínkami služby a s Podmínkami ochrany osobních údajů</value>
+  <comment>Markdown enabled</comment>
+  </data>
 </root>
