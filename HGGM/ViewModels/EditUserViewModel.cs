@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HGGM.Models.Identity;
 
 namespace HGGM.ViewModels
 {
     public class EditUserViewModel
     {
-        public string Id { get; set; }
+        public List<string> CountryList { get; set; }
+        public bool RemoveAvatar { get; set; }
         public Dictionary<string, bool> Roles { get; set; }
-        public string Username { get; set; }
+        public User User { get; set; }
+        public string Email { get; set; }
     }
 }

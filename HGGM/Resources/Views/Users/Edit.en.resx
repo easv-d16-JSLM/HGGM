@@ -117,20 +117,59 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="avatar" xml:space="preserve">
+    <value>Avatar</value>
+  </data>
   <data name="back" xml:space="preserve">
     <value>Back to list</value>
   </data>
+  <data name="biography" xml:space="preserve">
+    <value>Biography</value>
+  </data>
+  <data name="biographyDescription" xml:space="preserve">
+    <value>Write a description of your self, maximum of 500 characters</value>
+  </data>
+  <data name="country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="dateofbirth" xml:space="preserve">
+    <value>Date of Birth</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="header" xml:space="preserve">
-    <value>Edit</value>
+    <value>Edit User</value>
+  </data>
+  <data name="headline" xml:space="preserve">
+    <value>Headline</value>
+  </data>
+  <data name="headlineDescription" xml:space="preserve">
+    <value>A title for your biography</value>
+  </data>
+  <data name="joinDate" xml:space="preserve">
+    <value>Joined</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="nickname" xml:space="preserve">
     <value>Nickname</value>
+  </data>
+  <data name="removeAvatar" xml:space="preserve">
+    <value>Remove Avatar</value>
   </data>
   <data name="roles" xml:space="preserve">
     <value>Roles</value>
   </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="selectCountry" xml:space="preserve">
+    <value>Select One</value>
+  </data>
+  <data name="teamspeak" xml:space="preserve">
+    <value>Teamspeak</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>Edit</value>

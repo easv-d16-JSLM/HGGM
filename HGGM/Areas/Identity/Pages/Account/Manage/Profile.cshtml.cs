@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Identity;
+using HGGM.Services;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +20,7 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public List<string> CountryList = new List<string>();
+        public List<string> CountryList => CultureService.GetCountries();
         private readonly LiteRepository _db;
 
         public ProfileModel(
@@ -30,7 +31,6 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
             _db = db;
-            PopulateCountryList();
         }
 
         [TempData]
@@ -49,7 +49,7 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Headline")]
             public string Headline { get; set; }
 
-            [RegularExpression("[a-zA-Z]+", ErrorMessage = "The {0} must be letters")]
+            [RegularExpression("^\\D+$", ErrorMessage = "The {0} must be letters")]
             [Display(Name = "Real Name")]
             public string Name { get; set; }
 
@@ -76,25 +76,10 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        private void PopulateCountryList()
-        {
-            CultureInfo[] CInfoList = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
-            foreach (CultureInfo CInfo in CInfoList)
-            {
-                RegionInfo R = new RegionInfo(CInfo.LCID);
-                if (!(CountryList.Contains(R.EnglishName)))
-                {
-                    CountryList.Add(R.EnglishName);
-                }
-            }
-            CountryList.Sort();
-        }
-
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                PopulateCountryList();
                 return Page();
             }
 

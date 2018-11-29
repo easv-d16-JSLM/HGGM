@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HGGM.Controllers
 {
@@ -18,12 +19,12 @@ namespace HGGM.Controllers
         {
             this._db = db;
         }
-        [HttpGet] public IActionResult Avatar([FromRoute]string id)
+        [HttpGet] public IActionResult Avatar([FromQuery][BindRequired] string id)
         {
             var file = _db.FileStorage.FindById(id);
             if (file == null)
             {
-                return Redirect("~/images/steamlogin.png");
+                return Redirect("~/images/avatar.png");
             }
             using (var stream = file.OpenRead())
             {
