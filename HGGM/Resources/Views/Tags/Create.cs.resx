@@ -64,4 +64,16 @@
   <data name="tagCreateButton" xml:space="preserve">
     <value>Vytvořit</value>
   </data>
+  <data name="backToList" xml:space="preserve">
+    <value>Zpátky na seznam</value>
+  </data>
+  <data name="createPageTitle" xml:space="preserve">
+    <value>Vytvořit štítek</value>
+  </data>
+  <data name="tagPageUnderTitle" xml:space="preserve">
+    <value>Štítek</value>
+  </data>
+  <data name="tagTableHeader" xml:space="preserve">
+    <value>Jméno štítku</value>
+  </data>
 </root>
