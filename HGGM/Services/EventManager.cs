@@ -121,19 +121,49 @@ namespace HGGM.Services
                 Note = note,
                 User = user
             };
-            var slot = eEvent.Roster.Equals(chosenSlot);
-            if (eEvent.Roster.Contains(chosenSlot))
-            {
-                
-            }
 
-            // Insert notification service
+            var spot = eEvent.Roster.IndexOf(chosenSlot);
+            chosenSlot.SignUps.Add(slotSignUp);
+            //eEvent.Roster.RemoveAt(spot);
+            eEvent.Roster.Insert(spot, chosenSlot);
+
+            var list = new List<User>
+            {
+                eEvent.Author,
+                user
+            };
+
+            _nService.NotifyUsers(new Notification()
+            {
+                Message = "Added to slot",
+                Subject = "Event" + eEvent.Name + " Slot added"
+            }, list);
         }
 
-        public void RemoveFromSlot()
+        public void RemoveFromSlot(Event eEvent, User user, Slot chosenSlot)
         {
+            //SlotSignUp userSignUp;
+            //foreach (var slot in eEvent.Roster)
+            //{
+            //    foreach (var slotSignUp in slot.SignUps)
+            //    {
+            //        if (slotSignUp.User.Id == user.Id)
+            //        {
+            //            userSignUp = slotSignUp;
+                        
+            //        }
+            //    }
+            //    slot.SignUps.RemoveAt(userSignUp);
+            //}
+            
+            var slot = _db.SingleById<SlotSignUp>(user.Id);
+            slot.Deleted = DateTimeOffset.Now;
+            _db.Update(slot);
 
-            // notify user
+
+
+
+
         }
 
         private bool CanUserJoinSlot(HttpContext context)
