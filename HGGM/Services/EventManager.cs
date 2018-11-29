@@ -4,8 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Events;
 using HGGM.Models.Identity;
+using HGGM.Services.Authorization.Simple;
+using HGGM.Services.Authorization.Tag;
 using LiteDB;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HGGM.Services
 {
@@ -61,11 +66,15 @@ namespace HGGM.Services
             // notify user
         }
 
-        private bool CanUserJoinSlot()
+        private bool CanUserJoinSlot(HttpContext context)
         {
+            var authorizationService = context.RequestServices.GetRequiredService<IAuthorizationService>();
+            var result = authorizationService
+                .AuthorizeAsync(context.User, null, new TagRequirement()).GetAwaiter()
+                .GetResult();
 
-            // taghandler?
-            return true;
+            return result.Succeeded;
+            
         }
 
     }
