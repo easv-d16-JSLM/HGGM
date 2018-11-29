@@ -1,0 +1,80 @@
+﻿@page
+@using HGGM.Models.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@model ProfileModel
+@inject IViewLocalizer lang
+@inject UserManager<User> _userManager
+@{
+    ViewData["Title"] = lang["title"];
+}
+
+<h3 class="title is-3">@ViewData["Title"]</h3>
+<partial name="_StatusMessage" model="Model.StatusMessage"/>
+<div class="column is-half">
+    <form id="profile-form" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="has-text-danger"></div>
+        <div class="field">
+            <label class="label">@lang["avatar"]</label>
+            <div class="control">
+                <figure class="image is-128x128">
+                    <img src="@Url.Action("Avatar", "Files", new {id = _userManager.GetUserId(User)})">
+                </figure>
+
+                <div class="file">
+                    <label class="file-label">
+                        <input class="file-input" type="file" asp-for="Input.AvatarUpload">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fa fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                                @lang["selectAvatar"]
+                            </span>
+                        </span>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">@lang["name"]</label>
+            <div class="control">
+                <input asp-for="Input.Name" class="input"/>
+                <span asp-validation-for="Input.Name" class="has-text-danger"></span>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">@lang["country"]</label>
+            <div class="select is-fullwidth">
+                <select asp-for="Input.Country" asp-Items="@((List<SelectListItem>) ViewData["Model.Input.Countries"])">
+                    <option>Select One</option>
+                    @foreach (var inputCountry in Model.CountryList)
+                    {
+                        <option>@inputCountry</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">@lang["headline"]</label>
+            <div class="control">
+                <input asp-for="Input.Headline" class="input" placeholder="A title for your biography"/>
+                <span asp-validation-for="Input.Headline" class="has-text-danger"></span>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">@lang["biography"]</label>
+            <div class="control">
+                <textarea class="textarea" asp-for="Input.Biography" placeholder="Write a description of your self, maximum of 500 characters"></textarea>
+                <span asp-validation-for="Input.Biography" class="has-text-danger"></span>
+            </div>
+        </div>
+        <div class="control">
+            <button type="submit" class="button is-link">@lang["save"]</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using HGGM.Models;
 using LiteDB;
 
@@ -16,19 +14,24 @@ namespace HGGM.Services
             this.db = db;
         }
 
-        public void Add(AuditBase item)
+        public void Add(AuditEntryBase item)
         {
             db.Insert(item);
         }
 
-        public IList<AuditBase> GetAll()
+        public AuditEntryBase Get(Guid id)
         {
-            return db.Fetch<AuditBase>();
+            return db.SingleById<AuditEntryBase>(id);
         }
 
-        public LiteQueryable<AuditBase> Query()
+        public List<AuditEntryBase> GetAll()
         {
-            return db.Query<AuditBase>();
+            return db.Fetch<AuditEntryBase>();
+        }
+
+        public LiteQueryable<AuditEntryBase> Query()
+        {
+            return db.Query<AuditEntryBase>();
         }
     }
 }

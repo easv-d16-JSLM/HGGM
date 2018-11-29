@@ -1,0 +1,38 @@
+﻿@using System.Globalization
+@using Humanizer
+@using Microsoft.AspNetCore.Mvc.Localization
+@model IEnumerable<AuditEntryBase>
+@inject IViewLocalizer Localize
+
+@{
+    ViewData["Title"] = Localize["title"];
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Localize["timestampHeader"]
+        </th>
+        <th>
+            @Localize["messageHeader"]
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <abbr title="@item.Time.ToString()">@item.Time.Humanize(culture: CultureInfo.CurrentCulture)</abbr>
+            </td>
+            <td>
+                @item.Message
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new {id = item.Id})
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

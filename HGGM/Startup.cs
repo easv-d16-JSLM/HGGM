@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Net;
 using AspNetCore.Identity.LiteDB;
 using Hangfire;
 using Hangfire.LiteDB;
@@ -12,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
@@ -36,6 +41,21 @@ namespace HGGM
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var forwardedHeadersOptions = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All,
+                RequireHeaderSymmetry = false,
+                ForwardLimit = 10
+            };
+            foreach (var address in Configuration.GetSection("AllowedProxyIPs").Get<List<string>>()
+                .Select(IPAddress.Parse)) forwardedHeadersOptions.KnownProxies.Add(address);
+            foreach (var network in Configuration.GetSection("AllowedProxyNetworks").Get<List<string>>().Select(i =>
+                new IPNetwork(IPAddress.Parse(i.Substring(0, i.LastIndexOf("/", StringComparison.Ordinal))),
+                    int.Parse(i.Substring(i.LastIndexOf("/", StringComparison.Ordinal) + 1)))
+            ))
+                forwardedHeadersOptions.KnownNetworks.Add(network);
+            app.UseForwardedHeaders(forwardedHeadersOptions);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -106,14 +126,18 @@ namespace HGGM
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
+            services.AddSingleton<INotificationService, NotificationService>();
+
             services.AddSingleton<EventManager>();
             services.AddScoped<IAuthorizationHandler, TagHandler>();
             
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddHangfire(configuration => configuration.UseLiteDbStorage());
-            
-            services.AddMvc()
+
+            services
+                .AddMvc(options =>
+                    options.AllowCombiningAuthorizeFilters = false) //https://github.com/aspnet/Mvc/pull/8068
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddMvcLocalization(LanguageViewLocationExpanderFormat.SubFolder)
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder,
@@ -121,7 +145,7 @@ namespace HGGM
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Identity/Account/Login";
+                options.LoginPath = "/Identity/Account/ExternalLogin";
                 options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
@@ -129,6 +153,7 @@ namespace HGGM
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "HGGM API", Version = "v1"}); });
 
             services.AddSingleton<MarkdownService>();
+            services.AddSingleton<AuditService>();
         }
     }
 }

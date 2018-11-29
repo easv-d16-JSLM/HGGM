@@ -1,6 +1,6 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer L
-@model HGGM.Models.Identity.Role
+﻿@inject IViewLocalizer L
+@using Microsoft.AspNetCore.Mvc.Localization
+@model HGGM.ViewModels.EditRoleViewModel
 
 @{
     ViewData["Title"] = L["tabTitle"];
@@ -9,20 +9,32 @@
 <h2>@L["editPageTitle"]</h2>
 
 <h4>@Model.Name</h4>
-<hr />
+<hr/>
 <div>
     <div>
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly"></div>
             <div class="field">
                 <div class="control">
-                    <label asp-for="Name"></label>
-                    <input asp-for="Name" class="input" type="text" />
+                    @L["nameHeader"]
+                    <input asp-for="Name" class="input" type="text"/>
                     <span asp-validation-for="Name"></span>
                 </div>
             </div>
+            <div class="field">
+                <label class="label">@L["simplePerms"]</label>
+                @foreach (var perm in Model.SimplePermissions.Keys)
+                {
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" asp-for="@Model.SimplePermissions[perm]"/>
+                            @L[perm]
+                        </label>
+                    </div>
+                }
+            </div>
             <div class="field is-grouped">
-                <button id="Button_Save" type="submit" class="button is-link">Save</button>
+                <button id="Button_Save" type="submit" class="button is-link">@L["saveButton"]</button>
             </div>
         </form>
     </div>
@@ -33,5 +45,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
