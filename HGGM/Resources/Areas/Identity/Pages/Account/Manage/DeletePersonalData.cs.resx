@@ -67,4 +67,7 @@
   <data name="title" xml:space="preserve">
     <value>Smazat osobní data</value>
   </data>
+  <data name="confirmButton" xml:space="preserve">
+    <value>Vymazat data a zrušit můj účet</value>
+  </data>
 </root>
