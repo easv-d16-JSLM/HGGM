@@ -64,4 +64,7 @@
   <data name="timestampHeader" xml:space="preserve">
     <value>Čas</value>
   </data>
+  <data name="title" xml:space="preserve">
+    <value>Audit</value>
+  </data>
 </root>
