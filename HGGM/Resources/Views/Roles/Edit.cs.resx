@@ -73,4 +73,13 @@
   <data name="nameTableHeader" xml:space="preserve">
     <value>Název</value>
   </data>
+  <data name="saveButton" xml:space="preserve">
+    <value>Uložit</value>
+  </data>
+  <data name="simplePerms" xml:space="preserve">
+    <value>Základní práva</value>
+  </data>
+  <data name="tabTitle" xml:space="preserve">
+    <value>Upravit</value>
+  </data>
 </root>
