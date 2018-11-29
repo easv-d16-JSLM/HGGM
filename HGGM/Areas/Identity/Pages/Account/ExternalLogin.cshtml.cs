@@ -120,7 +120,6 @@ namespace HGGM.Areas.Identity.Pages.Account
                 {
                     UserName = Input.UserName,
                     Email = Input.Email,
-                    Steam64ID = info.ProviderKey.Substring(37),
                     DateOfBirth = Input.DateOfBirth.Date,
                     JoinDate = DateTime.Now,
                     TeamspeakUID = Input.TeamspeakUID

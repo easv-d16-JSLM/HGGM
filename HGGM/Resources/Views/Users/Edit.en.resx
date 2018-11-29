@@ -165,6 +165,9 @@
   <data name="save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="selectCountry" xml:space="preserve">
+    <value>Select One</value>
+  </data>
   <data name="teamspeak" xml:space="preserve">
     <value>Teamspeak</value>
   </data>

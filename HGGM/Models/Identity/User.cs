@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AspNetCore.Identity.LiteDB.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -22,9 +23,9 @@ namespace HGGM.Models.Identity
 
         [PersonalData] public string Name { get; set; }
 
-        [PersonalData] public string Steam64ID { get; set; }
-
         [PersonalData] public string TeamspeakUID { get; set; }
+
+        public string Steam64ID => SerializableLogins.SingleOrDefault(l => l.LoginProvider == "Steam")?.ProviderKey?.Split('/')?.Last();
 
         //TODO: Research many to many in LiteDB
 

@@ -144,6 +144,9 @@
   <data name="selectAvatar" xml:space="preserve">
     <value>Choose Avatar</value>
   </data>
+  <data name="selectCountry" xml:space="preserve">
+    <value>Select One</value>
+  </data>
   <data name="title" xml:space="preserve">
     <value>Profile</value>
   </data>

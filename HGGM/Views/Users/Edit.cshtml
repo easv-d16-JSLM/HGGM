@@ -140,7 +140,7 @@
                         <div class="control has-icons-left">
                             <div class="select is-fullwidth">
                                 <select asp-for="User.Country">
-                                    <option>Select One</option>
+                                    <option>@lang["selectCountry"]</option>
                                     @foreach (var inputCountry in Model.CountryList)
                                     {
                                         <option>@inputCountry</option>

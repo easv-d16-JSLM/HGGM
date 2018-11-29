@@ -49,7 +49,7 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Headline")]
             public string Headline { get; set; }
 
-            [RegularExpression("[a-zA-Z\\s]+", ErrorMessage = "The {0} must be letters")]
+            [RegularExpression("^\\D+$", ErrorMessage = "The {0} must be letters")]
             [Display(Name = "Real Name")]
             public string Name { get; set; }
 
