@@ -64,4 +64,7 @@
   <data name="tabTitle" xml:space="preserve">
     <value>Detaily</value>
   </data>
+  <data name="detailsPageTitle" xml:space="preserve">
+    <value>Podrobnosti pro: </value>
+  </data>
 </root>
