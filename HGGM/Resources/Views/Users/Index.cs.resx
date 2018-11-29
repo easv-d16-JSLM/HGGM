@@ -76,4 +76,13 @@
   <data name="roles" xml:space="preserve">
     <value>Role</value>
   </data>
+  <data name="action" xml:space="preserve">
+    <value>Akce</value>
+  </data>
+  <data name="create" xml:space="preserve">
+    <value>Vytvořit nový</value>
+  </data>
+  <data name="details" xml:space="preserve">
+    <value>Detaily</value>
+  </data>
 </root>
