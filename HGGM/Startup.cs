@@ -152,7 +152,7 @@ namespace HGGM
             services.AddSingleton<MarkdownService>();
             services.AddSingleton<AuditService>();
 
-            services.Configure<DiscourseService.Options>("Discourse", Configuration);
+            services.Configure<DiscourseService.Options>(Configuration.GetSection("Discourse"));
             services.AddSingleton<DiscourseService>();
 
         }

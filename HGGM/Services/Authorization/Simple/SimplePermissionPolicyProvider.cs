@@ -8,7 +8,7 @@ namespace HGGM.Services.Authorization.Simple
     {
         public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
         }
 
         public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)

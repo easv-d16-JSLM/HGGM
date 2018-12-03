@@ -9,11 +9,11 @@ namespace HGGM.Services.Discourse
 {
     public class DiscourseService
     {
-        private readonly Options _options;
+        private readonly IOptionsMonitor<Options> _options;
 
-        public DiscourseService(IOptions<Options> options)
+        public DiscourseService(IOptionsMonitor<Options> options)
         {
-            _options = options.Value;
+            _options = options;
         }
 
         public (string payload, string signature) CreatePayload(
@@ -51,14 +51,14 @@ namespace HGGM.Services.Discourse
 
             var payload = Crypto.ConvertStringToBase64(string.Join('&',
                 props.Select(i => $"{i.Key}={WebUtility.UrlEncode(i.Value)}")));
-            var signature = Crypto.CreateHmacsha256(_options.Secret, payload);
+            var signature = Crypto.CreateHmacsha256(_options.CurrentValue.Secret, payload);
 
             return (payload, signature);
         }
 
         public (string nonce, string returnUrl) OpenPayload(string sso, string sig)
         {
-            if (!Crypto.IsSignatureValid(_options.Secret, sso, sig))
+            if (!Crypto.IsSignatureValid(_options.CurrentValue.Secret, sso, sig))
                 throw new ArgumentException("Signature for this payload is invalid");
             var text = Crypto.ConvertBase64ToString(sso);
             var source = text.Split('&').ToList();

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Flurl;
 using HGGM.Models.Identity;
 using HGGM.Services.Discourse;
@@ -22,7 +23,8 @@ namespace HGGM.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> SingleSignOn([FromQuery] string sso, [FromQuery] string sig)
+        [HttpGet("SingleSignOn")]
+        public async Task<RedirectResult> SingleSignOn([FromQuery] string sso, [FromQuery] string sig)
         {
             var (nonce, returnUrl) = _discourseService.OpenPayload(sso, sig);
             var user = await _userManager.GetUserAsync(User);

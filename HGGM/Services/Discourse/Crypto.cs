@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace HGGM.Services.Discourse
 {
@@ -33,7 +34,7 @@ namespace HGGM.Services.Discourse
             return ConvertBytesToString(hMacsha.ComputeHash(ConvertStringToBytes(message)));
         }
 
-        public static bool IsSignatureValid(string secret, string sso, string sig)
+        public static bool IsSignatureValid([NotNull] string secret, [NotNull] string sso, [NotNull] string sig)
         {
             if (string.IsNullOrEmpty(secret) || string.IsNullOrEmpty(sso) || string.IsNullOrEmpty(sig))
                 return false;
