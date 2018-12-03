@@ -20,17 +20,17 @@ namespace HGGM.Services.Discourse
             [NotNull] string nonce,
             [NotNull] string email,
             [NotNull] string externalId,
-            [CanBeNull] string username,
-            [CanBeNull] string fullName,
-            [CanBeNull] string avatarUrl,
-            [CanBeNull] string biography,
-            [CanBeNull] List<string> addGroups,
-            [CanBeNull] List<string> removeGroups,
-            bool? admin,
-            bool? moderator,
-            bool? avatarForceUpdate,
-            bool? emailRequireActivation,
-            bool? suppressWelcomeMessage)
+            [CanBeNull] string username = null,
+            [CanBeNull] string fullName = null,
+            [CanBeNull] string avatarUrl = null,
+            [CanBeNull] string biography = null,
+            [CanBeNull] List<string> addGroups = null,
+            [CanBeNull] List<string> removeGroups = null,
+            bool? admin = null,
+            bool? moderator = null,
+            bool? avatarForceUpdate = null,
+            bool? emailRequireActivation = null,
+            bool? suppressWelcomeMessage = null)
         {
             var props = new Dictionary<string, string>
             {
@@ -47,10 +47,10 @@ namespace HGGM.Services.Discourse
             if (admin == true) props.Add("admin", "true");
             if (moderator == true) props.Add("moderator", "true");
             if (suppressWelcomeMessage == true) props.Add("suppress_welcome_message", "true");
-            if (emailRequireActivation == true) props.Add("&require_activation", "true");
+            if (emailRequireActivation == true) props.Add("require_activation", "true");
 
             var payload = Crypto.ConvertStringToBase64(string.Join('&',
-                props.Select((k, v) => $"{k}={v}")));
+                props.Select(i => $"{i.Key}={WebUtility.UrlEncode(i.Value)}")));
             var signature = Crypto.CreateHmacsha256(_options.Secret, payload);
 
             return (payload, signature);
@@ -63,7 +63,8 @@ namespace HGGM.Services.Discourse
             var text = Crypto.ConvertBase64ToString(sso);
             var source = text.Split('&').ToList();
             var nonce = source.Single(x => x.StartsWith("nonce")).Split('=')[1];
-            var returnUrl = WebUtility.UrlDecode(source.Single(x => x.StartsWith("return_sso_url")).Split('=')[1]);
+            var returnUrl =
+                WebUtility.UrlDecode(source.FirstOrDefault(x => x.StartsWith("return_sso_url"))?.Split('=')[1]);
             return (nonce, returnUrl);
         }
 
