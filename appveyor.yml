@@ -24,10 +24,10 @@ artifacts:
   name: binaries
 
 test_script:
-- cmd: dotnet test "HGGM.UnitTests\HGGM.UnitTests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- cmd: codecov -f "HGGM.UnitTests\coverage.opencover.xml" --flag UnitTests
-- cmd: dotnet test "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- cmd: codecov -f "HGGM.IntegrationTests\coverage.opencover.xml" --flag IntegrationTests
+- cmd: dotnet test "HGGM.UnitTests\HGGM.UnitTests.csproj" /p:AltCover=true
+- cmd: codecov -f "HGGM.UnitTests\coverage.xml" --flag UnitTests
+- cmd: dotnet test "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj" /p:AltCover=true
+- cmd: codecov -f "HGGM.IntegrationTests\coverage.xml" --flag IntegrationTests
 
 after_test:
 - dotnet sonarscanner end /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
