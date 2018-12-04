@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Flurl;
 using HGGM.Models.Identity;
+using HGGM.Services.Authorization.Simple;
 using HGGM.Services.Discourse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,14 +16,19 @@ namespace HGGM.Controllers
     [Authorize]
     public class DiscourseController : ControllerBase
     {
+        private readonly IAuthorizationService _authorizationService;
         private readonly DiscourseService _discourseService;
         private readonly ILogger _log = Log.ForContext<DiscourseController>();
+        private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
 
-        public DiscourseController(DiscourseService discourseService, UserManager<User> userManager)
+        public DiscourseController(DiscourseService discourseService, UserManager<User> userManager,
+            RoleManager<Role> roleManager, IAuthorizationService authorizationService)
         {
             _discourseService = discourseService;
             _userManager = userManager;
+            _roleManager = roleManager;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet("SingleSignOn")]
@@ -32,8 +39,13 @@ namespace HGGM.Controllers
             _log.Information("Login request from {user}", user.UserName, user.Id, nonce, returnUrl);
             var (payload, signature) = _discourseService.CreatePayload(nonce, user.Email.Address, user.Id,
                 user.UserName, user.Name,
-                Url.Action("Avatar", "Files", new {id = user.Id}), user.Biography,
-                emailRequireActivation: user.Email.IsConfirmed);
+                Url.Action("Avatar", "Files", new {id = user.Id}), user.Biography, user.Roles,
+                _roleManager.Roles.Where(r => !user.Roles.Contains(r.Name)).Select(r => r.Name).ToList(),
+                (await _authorizationService.AuthorizeAsync(User, null,
+                    SimplePermissionRequirement.For(SimplePermissionType.DiscourseAdmin))).Succeeded,
+                (await _authorizationService.AuthorizeAsync(User, null,
+                    SimplePermissionRequirement.For(SimplePermissionType.DiscourseModerator))).Succeeded,
+                true, false);
             if (returnUrl == null) returnUrl = Request.Headers["Referer"];
             var url = returnUrl.SetQueryParam("sso", payload).SetQueryParam("sig", signature);
             return Redirect(url);

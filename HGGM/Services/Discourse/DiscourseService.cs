@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using Serilog;
 
 namespace HGGM.Services.Discourse
 {
     public class DiscourseService
     {
+        private readonly ILogger _log = Log.ForContext<DiscourseService>();
         private readonly IOptionsMonitor<Options> _options;
 
         public DiscourseService(IOptionsMonitor<Options> options)
@@ -48,7 +50,7 @@ namespace HGGM.Services.Discourse
             if (moderator == true) props.Add("moderator", "true");
             if (suppressWelcomeMessage == true) props.Add("suppress_welcome_message", "true");
             if (emailRequireActivation == true) props.Add("require_activation", "true");
-
+            _log.Verbose("Constructing payload: {props}", props);
             var payload = Crypto.ConvertStringToBase64(string.Join('&',
                 props.Select(i => $"{i.Key}={WebUtility.UrlEncode(i.Value)}")));
             var signature = Crypto.CreateHmacsha256(_options.CurrentValue.Secret, payload);
