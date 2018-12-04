@@ -10,7 +10,7 @@ namespace HGGM.Services
         {
             return CultureInfo
                 .GetCultures(CultureTypes.SpecificCultures)
-                .Select(c => new RegionInfo(c.LCID).EnglishName)
+                .Select(c => new RegionInfo(c.Name).EnglishName)
                 .Distinct()
                 .OrderBy(r => r)
                 .ToList();

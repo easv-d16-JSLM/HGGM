@@ -39,13 +39,12 @@ namespace HGGM.Controllers
             _log.Information("Login request from {user}", user.UserName, user.Id, nonce, returnUrl);
             var (payload, signature) = _discourseService.CreatePayload(nonce, user.Email.Address, user.Id,
                 user.UserName, user.Name,
-                Url.Action("Avatar", "Files", new {id = user.Id}), user.Biography, user.Roles,
-                _roleManager.Roles.Where(r => !user.Roles.Contains(r.Name)).Select(r => r.Name).ToList(),
+                Url.Action("Avatar", "Files", new {id = user.Id}, Request.Scheme, Request.Host.Value), user.Biography,
+                user.Roles, _roleManager.Roles.Where(r => !user.Roles.Contains(r.Name)).Select(r => r.Name).ToList(),
                 (await _authorizationService.AuthorizeAsync(User, null,
                     SimplePermissionRequirement.For(SimplePermissionType.DiscourseAdmin))).Succeeded,
                 (await _authorizationService.AuthorizeAsync(User, null,
-                    SimplePermissionRequirement.For(SimplePermissionType.DiscourseModerator))).Succeeded,
-                true, false);
+                    SimplePermissionRequirement.For(SimplePermissionType.DiscourseModerator))).Succeeded, true, false);
             if (returnUrl == null) returnUrl = Request.Headers["Referer"];
             var url = returnUrl.SetQueryParam("sso", payload).SetQueryParam("sig", signature);
             return Redirect(url);

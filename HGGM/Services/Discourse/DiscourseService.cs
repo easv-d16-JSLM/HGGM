@@ -41,15 +41,15 @@ namespace HGGM.Services.Discourse
             if (username != null) props.Add("username", username);
             if (fullName != null) props.Add("name", fullName);
             if (avatarUrl != null) props.Add("avatar_url", avatarUrl);
-            if (avatarForceUpdate == true) props.Add("avatar_force_update", "true");
+            if (avatarForceUpdate != null) props.Add("avatar_force_update", avatarForceUpdate.ToString().ToLowerInvariant());
             if (biography != null) props.Add("bio", biography);
-            if (addGroups != null && addGroups.Count > 0) props.Add("&add_groups", string.Join(", ", addGroups));
+            if (addGroups != null && addGroups.Count > 0) props.Add("add_groups", string.Join(", ", addGroups));
             if (removeGroups != null && removeGroups.Count > 0)
-                props.Add("&remove_groups", string.Join(",", removeGroups));
-            if (admin == true) props.Add("admin", "true");
-            if (moderator == true) props.Add("moderator", "true");
-            if (suppressWelcomeMessage == true) props.Add("suppress_welcome_message", "true");
-            if (emailRequireActivation == true) props.Add("require_activation", "true");
+                props.Add("remove_groups", string.Join(",", removeGroups));
+            if (admin != null) props.Add("admin", admin.ToString().ToLowerInvariant());
+            if (moderator != null) props.Add("moderator", moderator.ToString().ToLowerInvariant());
+            if (suppressWelcomeMessage != null) props.Add("suppress_welcome_message", suppressWelcomeMessage.ToString().ToLowerInvariant());
+            if (emailRequireActivation != null) props.Add("require_activation", emailRequireActivation.ToString().ToLowerInvariant());
             _log.Verbose("Constructing payload: {props}", props);
             var payload = Crypto.ConvertStringToBase64(string.Join('&',
                 props.Select(i => $"{i.Key}={WebUtility.UrlEncode(i.Value)}")));
@@ -58,7 +58,7 @@ namespace HGGM.Services.Discourse
             return (payload, signature);
         }
 
-        public (string nonce, string returnUrl) OpenPayload(string sso, string sig)
+        public (string nonce, string returnUrl) OpenPayload([NotNull] string sso, [NotNull] string sig)
         {
             if (!Crypto.IsSignatureValid(_options.CurrentValue.Secret, sso, sig))
                 throw new ArgumentException("Signature for this payload is invalid");
