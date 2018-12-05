@@ -4,11 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using HGGM.Models;
+using HGGM.Models.Audit;
 using HGGM.Models.Identity;
+using HGGM.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace HGGM.Areas.Identity.Pages.Account.Manage
 {
@@ -17,15 +21,17 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly AuditService _audit;
 
         public IndexModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender, AuditService audit)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _audit = audit;
         }
 
         public string Username { get; set; }
@@ -84,6 +90,7 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             }
 
             var user = await _userManager.GetUserAsync(User);
+            var before = JsonConvert.SerializeObject(user, Formatting.Indented);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -106,6 +113,8 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             if (!result.Succeeded)
                 return NotFound($"Unable to load update profile.");
             foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
+
+            _audit.Add(new UserProfileAudit() { User = user.UserName, UserId = user.Id, Before = before, After = JsonConvert.SerializeObject(user,Formatting.Indented)});
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

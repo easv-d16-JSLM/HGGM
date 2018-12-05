@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HGGM.Models.Audit;
 using HGGM.Models.Identity;
 using HGGM.Services;
 using HGGM.Services.Authorization;
@@ -10,6 +11,7 @@ using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace HGGM.Controllers
 {
@@ -20,12 +22,14 @@ namespace HGGM.Controllers
         private readonly LiteRepository _db;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly AuditService _audit;
 
-        public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, LiteRepository db)
+        public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, LiteRepository db, AuditService audit)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _db = db;
+            _audit = audit;
         }
 
         [Permission(SimplePermission.SimplePermissionType.EditUsers)]
@@ -39,9 +43,19 @@ namespace HGGM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id, IFormCollection collection)
-        {
+        {       
             var user = await _userManager.FindByIdAsync(id);
+            var before = JsonConvert.SerializeObject(user);
             await _userManager.DeleteAsync(user);
+            _audit.Add(new AdminEditUserAudit()
+            {
+                Before = before,
+                After = "User Deleted",
+                EditedUser = user.UserName,
+                EditedUserId = user.Id,
+                User = _userManager.GetUserName(User),
+                UserId = _userManager.GetUserId(User)
+            });
 
             return RedirectToAction(nameof(Index));
         }
@@ -97,10 +111,21 @@ namespace HGGM.Controllers
             if (!ModelState.IsValid) return View(uvm);
 
             var user = EditUser(await _userManager.FindByIdAsync(id), uvm.User);
+            var before = JsonConvert.SerializeObject(user, Formatting.Indented);
             user.Email = uvm.Email;
             user.Roles = uvm.Roles.Where(r => r.Value).Select(h => h.Key).ToList();
 
             var result = await _userManager.UpdateAsync(user);
+
+            _audit.Add(new AdminEditUserAudit()
+            {
+                Before = before,
+                EditedUser = user.UserName,
+                EditedUserId = user.Id,
+                After = JsonConvert.SerializeObject(user, Formatting.Indented),
+                User = _userManager.GetUserName(User),
+                UserId = _userManager.GetUserId(User)
+            });
             if (result.Succeeded)
             {
                 if (uvm.RemoveAvatar)
