@@ -105,14 +105,14 @@ namespace HGGM.Controllers
             if (ModelState.IsValid)
             {
                 var tagOld = db.SingleById<Tag>(tag.Id);
-                var before = JsonConvert.SerializeObject(tagOld);
+                var before = JsonConvert.SerializeObject(tagOld, Formatting.Indented);
                 db.Update(tag);
                 _audit.Add(new TagEditAudit()
                 {
                     Tag = tagOld.TagName,
                     TagId = tag.Id.ToString(),
                     Before = before,
-                    After = JsonConvert.SerializeObject(tag),
+                    After = JsonConvert.SerializeObject(tag, Formatting.Indented),
                     Type = "changes",
                     User = _userManager.GetUserName(User),
                     UserId = _userManager.GetUserId(User)

@@ -133,8 +133,9 @@ namespace HGGM.Controllers
             {
                 User = _userManager.GetUserName(User), UserId = _userManager.GetUserId(User), Role = role.Name,
                 Type = "changed",
-                RoleId = role.Id, Before = JsonConvert.SerializeObject(before),
-                After = JsonConvert.SerializeObject(after)
+                RoleId = role.Id,
+                Before = JsonConvert.SerializeObject(before, Formatting.Indented),
+                After = JsonConvert.SerializeObject(after, Formatting.Indented)
             });
 
             return RedirectToAction(nameof(Index));

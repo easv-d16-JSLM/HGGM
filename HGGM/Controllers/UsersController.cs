@@ -23,13 +23,15 @@ namespace HGGM.Controllers
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly AuditService _audit;
+        private readonly SignInManager<User> _signInManager;
 
-        public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, LiteRepository db, AuditService audit)
+        public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, LiteRepository db, AuditService audit, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _db = db;
             _audit = audit;
+            _signInManager = signInManager;
         }
 
         [Permission(SimplePermission.SimplePermissionType.EditUsers)]
@@ -111,6 +113,7 @@ namespace HGGM.Controllers
             if (!ModelState.IsValid) return View(uvm);
 
             var user = EditUser(await _userManager.FindByIdAsync(id), uvm.User);
+            var userOld = _userManager.FindByIdAsync(id);
             var before = JsonConvert.SerializeObject(user, Formatting.Indented);
             user.Email = uvm.Email;
             user.Roles = uvm.Roles.Where(r => r.Value).Select(h => h.Key).ToList();
@@ -120,7 +123,7 @@ namespace HGGM.Controllers
             _audit.Add(new AdminEditUserAudit()
             {
                 Before = before,
-                EditedUser = user.UserName,
+                EditedUser = userOld.Result.UserName,
                 EditedUserId = user.Id,
                 After = JsonConvert.SerializeObject(user, Formatting.Indented),
                 User = _userManager.GetUserName(User),
@@ -128,6 +131,7 @@ namespace HGGM.Controllers
             });
             if (result.Succeeded)
             {
+                await _signInManager.RefreshSignInAsync(user);
                 if (uvm.RemoveAvatar)
                 {
                     _db.FileStorage.Delete(user.Id);

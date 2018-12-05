@@ -11,6 +11,6 @@ namespace HGGM.Models.Audit
         public string EditedUserId { get; set; }
         public string Before { get; set; }
         public string After { get; set; }
-        public override string Message => $"User {User} edited user {EditedUser}";
+        public override string Message => $"User '{User}' edited user '{EditedUser}'";
     }
 }

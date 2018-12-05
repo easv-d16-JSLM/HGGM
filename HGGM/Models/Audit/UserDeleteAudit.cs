@@ -9,6 +9,6 @@ namespace HGGM.Models.Audit
     {
         public string Before { get; set; }
         public string After { get; set; }
-        public override string Message => $"User {User} deleted his/herself";
+        public override string Message => $"User '{User}' deleted his/herself";
     }
 }
