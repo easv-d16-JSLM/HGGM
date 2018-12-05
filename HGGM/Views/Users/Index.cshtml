@@ -19,7 +19,9 @@
                 <thead>
                 <tr>
                     <th>@lang["username"]</th>
+                    <th>@lang["email"]</th>
                     <th>@lang["roles"]</th>
+                    <th>@lang["joinDate"]</th>
                     <th>@lang["action"]</th>
                 </tr>
                 </thead>
@@ -28,7 +30,9 @@
                 {
                     <tr>
                         <td>@item.UserName</td>
+                        <td>@item.Email.Address</td>
                         <td>@string.Join(", ", item.Roles)</td>
+                        <td>@item.JoinDate</td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
                             <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |

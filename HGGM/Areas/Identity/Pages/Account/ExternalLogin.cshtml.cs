@@ -90,7 +90,7 @@ namespace HGGM.Areas.Identity.Pages.Account
             if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 Input = new InputModel
                 {
-                    Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                 };
             return Page();
         }
@@ -118,7 +118,10 @@ namespace HGGM.Areas.Identity.Pages.Account
             {
                 var user = new User
                 {
-                    UserName = Input.UserName, Email = Input.Email, DateOfBirth = Input.DateOfBirth.Date,
+                    UserName = Input.UserName,
+                    Email = Input.Email,
+                    DateOfBirth = Input.DateOfBirth.Date,
+                    JoinDate = DateTime.Now,
                     TeamspeakUID = Input.TeamspeakUID
                 };
                 var result = await _userManager.CreateAsync(user);

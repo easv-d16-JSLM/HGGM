@@ -11,6 +11,7 @@ using HGGM.Models.Identity;
 using HGGM.Services;
 using HGGM.Services.Authorization;
 using HGGM.Services.Authorization.Simple;
+using HGGM.Services.Discourse;
 using HGGM.Services.Authorization.Tag;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
@@ -156,6 +157,10 @@ namespace HGGM
 
             services.AddSingleton<MarkdownService>();
             services.AddSingleton<AuditService>();
+
+            services.Configure<DiscourseService.Options>(Configuration.GetSection("Discourse"));
+            services.AddSingleton<DiscourseService>();
+
         }
     }
 }

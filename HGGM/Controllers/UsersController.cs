@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Identity;
+using HGGM.Services;
 using HGGM.Services.Authorization;
 using HGGM.Services.Authorization.Simple;
 using HGGM.ViewModels;
@@ -11,9 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HGGM.Controllers
 {
-    [Permission(SimplePermission.SimplePermissionType.GetUsers)]
+    [Permission(SimplePermissionType.GetUsers)]
     public class UsersController : Controller
     {
+        private readonly List<string> _countryList = CultureService.GetCountries();
         private readonly LiteRepository _db;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
@@ -25,14 +28,14 @@ namespace HGGM.Controllers
             _db = db;
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
+        [Permission(SimplePermissionType.EditUsers)]
         public async Task<ActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             return View(user);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
+        [Permission(SimplePermissionType.EditUsers)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id, IFormCollection collection)
@@ -43,33 +46,69 @@ namespace HGGM.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            var user = await _userManager.FindByIdAsync(id);
+            var roles = _roleManager.Roles
+                .Select(r => r.Name)
+                .ToDictionary(r => r, r => user.Roles.Contains(r));
+            return View(new EditUserViewModel
+            {
+                User = user,
+                Roles = roles,
+                Email = user.Email.Address
+            });
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
+        [Permission(SimplePermissionType.EditUsers)]
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             var roles = _roleManager.Roles
                 .Select(r => r.Name)
                 .ToDictionary(r => r, r => user.Roles.Contains(r));
-            return View(new EditUserViewModel {Username = user.UserName, Roles = roles});
+            return View(new EditUserViewModel
+            {
+                Roles = roles,
+                User = user,
+                CountryList = _countryList,
+                Email = user.Email.Address
+            });
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
+        private User EditUser(User db, User edited)
+        {
+            db.UserName = edited.UserName;
+            db.Name = edited.Name;
+            db.Biography = edited.Biography;
+            db.Country = edited.Country;
+            db.DateOfBirth = edited.DateOfBirth;
+            db.JoinDate = edited.JoinDate;
+            db.TeamspeakUID = edited.TeamspeakUID;
+            db.Headline = edited.Headline;
+            return db;
+        }
+
+        [Permission(SimplePermissionType.EditUsers)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(string id, EditUserViewModel uvm)
         {
             if (!ModelState.IsValid) return View(uvm);
-            var user = await _userManager.FindByIdAsync(id);
-            user.UserName = uvm.Username;
+
+            var user = EditUser(await _userManager.FindByIdAsync(id), uvm.User);
+            user.Email = uvm.Email;
             user.Roles = uvm.Roles.Where(r => r.Value).Select(h => h.Key).ToList();
+
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
+            {
+                if (uvm.RemoveAvatar)
+                {
+                    _db.FileStorage.Delete(user.Id);
+                }
                 return RedirectToAction(nameof(Index));
+            }
             foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
 
             return View(uvm);
