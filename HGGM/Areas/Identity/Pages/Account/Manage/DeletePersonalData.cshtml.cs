@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using HGGM.Models.Audit;
 using HGGM.Models.Identity;
+using HGGM.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace HGGM.Areas.Identity.Pages.Account.Manage
 {
@@ -14,15 +17,17 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly AuditService _audit;
 
         public DeletePersonalDataModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger, AuditService audit)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _audit = audit;
         }
 
         [BindProperty]
@@ -52,6 +57,7 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+            var before = JsonConvert.SerializeObject(user);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -71,8 +77,16 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"Unexpected error occurred deleteing user with ID '{userId}'.");
+                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
             }
+
+            _audit.Add(new UserDeleteAudit()
+            {
+                After = "Account Deleted",
+                Before = before,
+                User = user.UserName,
+                UserId = user.Id
+            });
 
             await _signInManager.SignOutAsync();
 

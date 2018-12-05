@@ -114,7 +114,14 @@ namespace HGGM.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load update profile.");
             foreach (var error in result.Errors) ModelState.AddModelError(error.Code, error.Description);
 
-            _audit.Add(new UserProfileAudit() { User = user.UserName, UserId = user.Id, Before = before, After = JsonConvert.SerializeObject(user,Formatting.Indented)});
+            _audit.Add(new UserProfileAudit()
+            {
+                User = user.UserName,
+                UserId = user.Id,
+                Type = "account",
+                Before = before,
+                After = JsonConvert.SerializeObject(user,Formatting.Indented)
+            });
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
