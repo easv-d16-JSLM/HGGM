@@ -42,10 +42,11 @@ namespace HGGM.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _roleManager.CreateAsync(role);
-                _auditService.Add(new RoleCreateAudit()
+                _auditService.Add(new RoleAudit()
                 {
                     Role = role.Name,
                     RoleId = role.Id,
+                    Type = "created",
                     User = _userManager.GetUserName(User),
                     UserId = _userManager.GetUserId(User)
                 });
@@ -71,9 +72,10 @@ namespace HGGM.Controllers
         {
             var roleName = await _roleManager.FindByIdAsync(role.Id);
             await _roleManager.DeleteAsync(role);
-            _auditService.Add(new RoleDeleteAudit()
+            _auditService.Add(new RoleAudit()
             {
                 Role = roleName.Name,
+                Type = "deleted",
                 RoleId = role.Id,
                 User = _userManager.GetUserName(User),
                 UserId = _userManager.GetUserId(User)
@@ -130,6 +132,7 @@ namespace HGGM.Controllers
             _auditService.Add(new RoleEditAudit
             {
                 User = _userManager.GetUserName(User), UserId = _userManager.GetUserId(User), Role = role.Name,
+                Type = "changed",
                 RoleId = role.Id, Before = JsonConvert.SerializeObject(before),
                 After = JsonConvert.SerializeObject(after)
             });
