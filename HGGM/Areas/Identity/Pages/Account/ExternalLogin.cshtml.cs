@@ -125,6 +125,7 @@ namespace HGGM.Areas.Identity.Pages.Account
                     TeamspeakUID = Input.TeamspeakUID
                 };
                 var result = await _userManager.CreateAsync(user);
+                _auditService.Add(new UserRegisterAudit(){User = user.UserName, UserId = user.Id});
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);

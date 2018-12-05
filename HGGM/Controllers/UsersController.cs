@@ -55,6 +55,7 @@ namespace HGGM.Controllers
                 After = "User Deleted",
                 EditedUser = user.UserName,
                 EditedUserId = user.Id,
+                Type = "deleted",
                 User = _userManager.GetUserName(User),
                 UserId = _userManager.GetUserId(User)
             });
@@ -125,6 +126,7 @@ namespace HGGM.Controllers
                 Before = before,
                 EditedUser = userOld.Result.UserName,
                 EditedUserId = user.Id,
+                Type = "edited",
                 After = JsonConvert.SerializeObject(user, Formatting.Indented),
                 User = _userManager.GetUserName(User),
                 UserId = _userManager.GetUserId(User)
