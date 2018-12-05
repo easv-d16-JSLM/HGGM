@@ -6,6 +6,7 @@ using System.Net;
 using AspNetCore.Identity.LiteDB;
 using Hangfire;
 using Hangfire.LiteDB;
+using HGGM.Models.Configuration;
 using HGGM.Models.Identity;
 using HGGM.Services;
 using HGGM.Services.Authorization;
@@ -124,11 +125,12 @@ namespace HGGM
             services.AddScoped<IAuthorizationHandler, SimplePermissionHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, SimplePermissionPolicyProvider>();
 
+            services.Configure<MailConfig>(Configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailSender, EmailSender>();
 
-            services.AddSingleton<INotificationService, NotificationService>();
+            services.AddTransient<INotificationService, NotificationService>();
 
-            services.AddSingleton<EventManager>();
+            services.AddTransient<EventManager>();
             services.AddScoped<IAuthorizationHandler, TagHandler>();
             
             services.AddLocalization(options => options.ResourcesPath = "Resources");

@@ -11,7 +11,8 @@
             GetTags,
             EditTags,
             GetUsers,
-            EditUsers
+            EditUsers,
+            PublishEvents,
 
         }
     }

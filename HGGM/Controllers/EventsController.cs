@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Events;
 using HGGM.Models.Identity;
+using HGGM.Services;
 using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -16,11 +17,13 @@ namespace HGGM.Controllers
 
         private readonly LiteRepository _db;
         private readonly UserManager<User> _userManager;
+        private readonly EventManager _eventManager;
 
-        public EventsController(LiteRepository db, UserManager<User> userManager)
+        public EventsController(LiteRepository db, UserManager<User> userManager, EventManager eventManager)
         {
             _db = db;
             _userManager = userManager;
+            _eventManager = eventManager;
         }
         // GET: Event
         public ActionResult Index()
