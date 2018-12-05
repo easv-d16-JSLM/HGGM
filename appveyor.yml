@@ -5,7 +5,7 @@ configuration: Release
 
 install:
   - ps: dotnet --info
-  - ps: Get-ChildItem Env:
+  - ps: "Get-ChildItem Env:"
   - ps: choco install gitversion.portable -pre -y
   - ps: choco install codecov
   - ps: dotnet tool install --global dotnet-sonarscanner
