@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace HGGM.Models.Audit
 {
-    public class RoleEditAudit : AuditEntryBase
+    public class RoleEditAudit : UserActionAudit
     {
-        public string User { get; set; }
-        public string UserId { get; set; }
         public string Role { get; set; }
         public string RoleId { get; set; }
         public string Before { get; set; }
