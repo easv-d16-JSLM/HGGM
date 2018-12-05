@@ -14,7 +14,7 @@ namespace HGGM.Services.Authorization
             var result = authorizationService
                 .AuthorizeAsync(httpContext.User, null,
                     new SimplePermissionRequirement(
-                        new SimplePermission(SimplePermission.SimplePermissionType.Hangfire))).GetAwaiter()
+                        new SimplePermission(SimplePermissionType.Hangfire))).GetAwaiter()
                 .GetResult();
 
             return result.Succeeded;

@@ -10,5 +10,10 @@ namespace HGGM.Services.Authorization.Simple
         }
 
         public SimplePermission Permission { get; }
+
+        public static SimplePermissionRequirement For(SimplePermissionType permission)
+        {
+            return new SimplePermissionRequirement(new SimplePermission(permission));
+        }
     }
 }

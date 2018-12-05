@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HGGM.Controllers
 {
-    [Permission(SimplePermission.SimplePermissionType.GetUsers)]
+    [Permission(SimplePermissionType.GetUsers)]
     public class UsersController : Controller
     {
         private readonly List<string> _countryList = CultureService.GetCountries();
@@ -28,14 +28,14 @@ namespace HGGM.Controllers
             _db = db;
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
+        [Permission(SimplePermissionType.EditUsers)]
         public async Task<ActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             return View(user);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
+        [Permission(SimplePermissionType.EditUsers)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id, IFormCollection collection)
@@ -60,7 +60,7 @@ namespace HGGM.Controllers
             });
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
+        [Permission(SimplePermissionType.EditUsers)]
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -89,7 +89,7 @@ namespace HGGM.Controllers
             return db;
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditUsers)]
+        [Permission(SimplePermissionType.EditUsers)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(string id, EditUserViewModel uvm)

@@ -8,7 +8,7 @@ namespace HGGM.Services.Authorization.Simple
     {
         public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
         }
 
         public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
@@ -16,7 +16,7 @@ namespace HGGM.Services.Authorization.Simple
             if (policyName.StartsWith("Permission"))
             {
                 var permission = new SimplePermission(
-                    Enum.Parse<SimplePermission.SimplePermissionType>(policyName.Substring("Permission".Length)));
+                    Enum.Parse<SimplePermissionType>(policyName.Substring("Permission".Length)));
                 return Task.FromResult(new AuthorizationPolicyBuilder()
                     .AddRequirements(new SimplePermissionRequirement(permission)).Build());
             }
