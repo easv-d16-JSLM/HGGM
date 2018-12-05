@@ -4,30 +4,32 @@ image: Visual Studio 2017
 configuration: Release
 
 install:
-  - choco install gitversion.portable -pre -y
-  - choco install codecov
-  - dotnet tool install --global dotnet-sonarscanner
+  - ps: choco install gitversion.portable -pre -y
+  - ps: choco install codecov -y
+  - ps: dotnet tool install --global dotnet-sonarscanner
+  - ps: dotnet --info
+  - ps: "Get-ChildItem Env:"
 
 before_build:
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-  - dotnet sonarscanner begin /k:"HGGM" /d:sonar.organization="j2ghz-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
+  - ps: if ($Env:APPVEYOR_PULL_REQUEST_NUMBER -like "") { dotnet sonarscanner begin /k:"HGGM" /d:sonar.organization="j2ghz-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc" /d:sonar.branch.name="$Env:APPVEYOR_REPO_BRANCH" /v:"$Env:GitVersion_InformationalVersion" } else { dotnet sonarscanner begin /k:"HGGM" /d:sonar.organization="j2ghz-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc" /d:sonar.pullrequest.base="$Env:APPVEYOR_REPO_BRANCH" /d:sonar.pullrequest.branch="$Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" /d:sonar.pullrequest.key="$Env:APPVEYOR_PULL_REQUEST_NUMBER" /d:sonar.pullrequest.provider="GitHub" /d:sonar.pullrequest.github.repository="$Env:APPVEYOR_REPO_NAME" /v:"$Env:GitVersion_InformationalVersion" }
   - ps: msbuild /t:Restore /v:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 build:
   verbosity: minimal
   
 after_build:
-  - dotnet publish -f netcoreapp2.1 -c Release HGGM
+  - ps: dotnet publish -f netcoreapp2.1 -c Release HGGM
 
 artifacts:
 - path: HGGM/bin/Release/netcoreapp2.1/publish
   name: binaries
 
 test_script:
-- cmd: dotnet test "HGGM.UnitTests\HGGM.UnitTests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- cmd: codecov -f "HGGM.UnitTests\coverage.opencover.xml" --flag UnitTests
-- cmd: dotnet test "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj" --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- cmd: codecov -f "HGGM.IntegrationTests\coverage.opencover.xml" --flag IntegrationTests
+- ps: dotnet test "HGGM.UnitTests\HGGM.UnitTests.csproj" /p:AltCover=true
+- ps: codecov -f "HGGM.UnitTests\coverage.xml" --flag UnitTests
+- ps: dotnet test "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj" /p:AltCover=true
+- ps: codecov -f "HGGM.IntegrationTests\coverage.xml" --flag IntegrationTests
 
 after_test:
-- dotnet sonarscanner end /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
+- ps: dotnet sonarscanner end /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
