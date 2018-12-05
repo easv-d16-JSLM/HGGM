@@ -4,9 +4,11 @@ image: Visual Studio 2017
 configuration: Release
 
 install:
-  - choco install gitversion.portable -pre -y
-  - choco install codecov
-  - dotnet tool install --global dotnet-sonarscanner
+  - ps: dotnet --info
+  - ps: Get-ChildItem Env:
+  - ps: choco install gitversion.portable -pre -y
+  - ps: choco install codecov
+  - ps: dotnet tool install --global dotnet-sonarscanner
 
 before_build:
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
@@ -17,17 +19,17 @@ build:
   verbosity: minimal
   
 after_build:
-  - dotnet publish -f netcoreapp2.1 -c Release HGGM
+  - ps: dotnet publish -f netcoreapp2.1 -c Release HGGM
 
 artifacts:
 - path: HGGM/bin/Release/netcoreapp2.1/publish
   name: binaries
 
 test_script:
-- cmd: dotnet test "HGGM.UnitTests\HGGM.UnitTests.csproj" /p:AltCover=true
-- cmd: codecov -f "HGGM.UnitTests\coverage.xml" --flag UnitTests
-- cmd: dotnet test "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj" /p:AltCover=true
-- cmd: codecov -f "HGGM.IntegrationTests\coverage.xml" --flag IntegrationTests
+- ps: dotnet test "HGGM.UnitTests\HGGM.UnitTests.csproj" /p:AltCover=true
+- ps: codecov -f "HGGM.UnitTests\coverage.xml" --flag UnitTests
+- ps: dotnet test "HGGM.IntegrationTests\HGGM.IntegrationTests.csproj" /p:AltCover=true
+- ps: codecov -f "HGGM.IntegrationTests\coverage.xml" --flag IntegrationTests
 
 after_test:
-- dotnet sonarscanner end /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
+- ps: dotnet sonarscanner end /d:sonar.login="b115314e7aa3ce0289a0691e0b78933b721288bc"
