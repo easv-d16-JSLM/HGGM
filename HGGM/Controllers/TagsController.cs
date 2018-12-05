@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Linq;
 using HGGM.Models;
+using HGGM.Models.Audit;
+using HGGM.Models.Identity;
+using HGGM.Services;
 using HGGM.Services.Authorization;
 using HGGM.Services.Authorization.Simple;
 using LiteDB;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace HGGM.Controllers
 {
@@ -11,10 +17,14 @@ namespace HGGM.Controllers
     public class TagsController : Controller
     {
         private readonly LiteRepository db;
+        private readonly AuditService _audit;
+        private readonly UserManager<User> _userManager;
 
-        public TagsController(LiteRepository db)
+        public TagsController(LiteRepository db, AuditService audit, UserManager<User> userManager)
         {
             this.db = db;
+            _audit = audit;
+            _userManager = userManager;
         }
 
         [Permission(SimplePermission.SimplePermissionType.EditTags)]
@@ -31,7 +41,14 @@ namespace HGGM.Controllers
             if (ModelState.IsValid)
             {
                 db.Insert(tag);
-
+                _audit.Add(new TagAudit()
+                {
+                    Tag = tag.TagName,
+                    TagId = tag.Id.ToString(),
+                    Type = "created",
+                    User = _userManager.GetUserName(User),
+                    UserId = _userManager.GetUserId(User)
+                });
                 return RedirectToAction(nameof(Index));
             }
 
@@ -52,7 +69,17 @@ namespace HGGM.Controllers
         public ActionResult Delete([Bind(nameof(Tag.Id))] [FromRoute] Tag tag)
         {
             var tagId = tag.Id;
+            var tagObj = db.SingleById<Tag>(tag.Id);
             db.Delete<Tag>(tagId);
+
+            _audit.Add(new TagAudit()
+            {
+                Tag = tagObj.TagName,
+                TagId = tag.Id.ToString(),
+                Type = "deleted",
+                User = _userManager.GetUserName(User),
+                UserId = _userManager.GetUserId(User)
+            });
 
             return RedirectToAction(nameof(Index));
         }
@@ -77,8 +104,19 @@ namespace HGGM.Controllers
         {
             if (ModelState.IsValid)
             {
+                var tagOld = db.SingleById<Tag>(tag.Id);
+                var before = JsonConvert.SerializeObject(tagOld);
                 db.Update(tag);
-
+                _audit.Add(new TagEditAudit()
+                {
+                    Tag = tagOld.TagName,
+                    TagId = tag.Id.ToString(),
+                    Before = before,
+                    After = JsonConvert.SerializeObject(tag),
+                    Type = "changes",
+                    User = _userManager.GetUserName(User),
+                    UserId = _userManager.GetUserId(User)
+                });
                 return RedirectToAction(nameof(Index));
             }
 
