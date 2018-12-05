@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace HGGM.Controllers
 {
-    [Permission(SimplePermission.SimplePermissionType.GetAuditLog)]
+    [Permission(SimplePermissionType.GetAuditLog)]
     public class AuditController : Controller
     {
         private readonly AuditService _auditService;

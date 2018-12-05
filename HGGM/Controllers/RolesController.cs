@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace HGGM.Controllers
 {
-    [Permission(SimplePermission.SimplePermissionType.GetRoles)]
+    [Permission(SimplePermissionType.GetRoles)]
     public class RolesController : Controller
     {
         private readonly AuditService _auditService;
@@ -28,13 +28,13 @@ namespace HGGM.Controllers
             _userManager = userManager;
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
+        [Permission(SimplePermissionType.EditRoles)]
         public ActionResult Create()
         {
             return View();
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
+        [Permission(SimplePermissionType.EditRoles)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind("Name")] Role role)
@@ -58,14 +58,14 @@ namespace HGGM.Controllers
             return View();
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
+        [Permission(SimplePermissionType.EditRoles)]
         public async Task<ActionResult> Delete(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
             return View(role);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
+        [Permission(SimplePermissionType.EditRoles)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Role role)
@@ -90,7 +90,7 @@ namespace HGGM.Controllers
             return View(role);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
+        [Permission(SimplePermissionType.EditRoles)]
         public async Task<ActionResult> Edit(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -104,7 +104,7 @@ namespace HGGM.Controllers
             return View(m);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditRoles)]
+        [Permission(SimplePermissionType.EditRoles)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([FromRoute] string id, [FromForm] EditRoleViewModel model)
@@ -117,7 +117,7 @@ namespace HGGM.Controllers
             var before = role.Permissions ?? new List<IPermission>();
             var after = model.SimplePermissions
                 .Where(p => p.Value).Select(p =>
-                    new SimplePermission(Enum.Parse<SimplePermission.SimplePermissionType>(p.Key)));
+                    new SimplePermission(Enum.Parse<SimplePermissionType>(p.Key)));
             role.Permissions = before
                 .Where(p => p.GetType() != typeof(SimplePermission))
                 .Concat(after)

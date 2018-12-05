@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace HGGM.Controllers
 {
-    [Permission(SimplePermission.SimplePermissionType.GetTags)]
+    [Permission(SimplePermissionType.GetTags)]
     public class TagsController : Controller
     {
         private readonly LiteRepository db;
@@ -27,13 +27,13 @@ namespace HGGM.Controllers
             _userManager = userManager;
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditTags)]
+        [Permission(SimplePermissionType.EditTags)]
         public ActionResult Create()
         {
             return View();
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditTags)]
+        [Permission(SimplePermissionType.EditTags)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("TagName")] Tag tag)
@@ -56,14 +56,14 @@ namespace HGGM.Controllers
         }
 
 
-        [Permission(SimplePermission.SimplePermissionType.EditTags)]
+        [Permission(SimplePermissionType.EditTags)]
         public ActionResult Delete(Guid id)
         {
             var tag = db.SingleById<Tag>(id);
             return View(tag);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditTags)]
+        [Permission(SimplePermissionType.EditTags)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete([Bind(nameof(Tag.Id))] [FromRoute] Tag tag)
@@ -90,14 +90,14 @@ namespace HGGM.Controllers
             return View(tag);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditTags)]
+        [Permission(SimplePermissionType.EditTags)]
         public ActionResult Edit(Guid id)
         {
             var tag = db.SingleById<Tag>(id);
             return View(tag);
         }
 
-        [Permission(SimplePermission.SimplePermissionType.EditTags)]
+        [Permission(SimplePermissionType.EditTags)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Tag tag)
