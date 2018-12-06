@@ -7,7 +7,7 @@ install:
   - choco install gitversion.portable -pre -y
   - choco install codecov -y
   - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
-  - ps: ./dotnet-install.ps1 -Version '2.2'
+  - ps: ./dotnet-install.ps1 -Version '2.2.100'
   - ps: dotnet tool install --global dotnet-sonarscanner
   - ps: dotnet --info
   - ps: "Get-ChildItem Env:"
