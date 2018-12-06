@@ -264,7 +264,7 @@
         </div>
 
         <div class="tabcontent" id="Auditlog">
-            <div class="tabs is-toggle" style="margin-bottom: 0rem">
+            <div class="tabs is-boxed" style="margin-bottom: 0rem">
                 <ul>
                     <li class="auditlinks is-active" onclick="auditTab(event, 'UserActions')">
                         <a>
@@ -289,7 +289,7 @@
                     <nav class="panel">
                         <p class="panel-heading">@lang["heading"]</p>
                         <div class="panel-block">
-                            <table class="table">
+                            <table class="table is-fullwidth is-hoverable" id="auditAction">
                                 <thead>
                                     <tr>
                                         <th>
@@ -298,6 +298,7 @@
                                         <th>
                                             @lang["messageHeader"]
                                         </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -329,7 +330,7 @@
                 <nav class="panel">
                     <p class="panel-heading">@lang["User Affected"]</p>
                     <div class="panel-block">
-                        <table class="table">
+                        <table class="table is-fullwidth is-hoverable" id="auditAffected">
                             <thead>
                                 <tr>
                                     <th>
@@ -338,6 +339,7 @@
                                     <th>
                                         @lang["messageHeader"]
                                     </th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -398,4 +400,12 @@
             evt.currentTarget.className += " is-active";
         }
     </script>
+
+<script language="javascript">
+    $("#auditAction").DataTable();
+</script>
+
+<script language="javascript">
+    $("#auditAffected").DataTable();
+</script>
 }

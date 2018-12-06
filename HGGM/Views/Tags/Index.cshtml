@@ -15,7 +15,7 @@
         <p class="panel-heading">@L["indexViewPageTitle"]</p>
 
         <div class="panel-block">
-            <table class="table" style="width: 100%">
+            <table class="table is-fullwidth is-hoverable" id="tagTable">
                 <thead>
                     <tr>
                         <th>
@@ -43,3 +43,9 @@
         </div>
     </nav>
 </div>
+
+@section Scripts{
+    <script language="javascript">
+        $("#tagTable").DataTable();
+    </script>
+}
