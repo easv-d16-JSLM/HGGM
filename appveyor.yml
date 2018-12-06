@@ -21,10 +21,10 @@ build:
   verbosity: minimal
   
 after_build:
-  - ps: dotnet publish -f netcoreapp2.1 -c Release HGGM
+  - ps: dotnet publish -f netcoreapp2.2 -c Release HGGM
 
 artifacts:
-- path: HGGM/bin/Release/netcoreapp2.1/publish
+- path: HGGM/bin/Release/netcoreapp2.2/publish
   name: binaries
 
 test_script:
