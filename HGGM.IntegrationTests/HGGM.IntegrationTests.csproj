@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AltCover" Version="4.0.659" />
     <PackageReference Include="FluentAssertions" Version="5.5.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
