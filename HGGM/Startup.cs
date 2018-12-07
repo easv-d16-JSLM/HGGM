@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using AspNetCore.Identity.LiteDB;
+using AspNetCore.Identity.LiteDB.Data;
 using Hangfire;
 using Hangfire.LiteDB;
 using HGGM.Models.Identity;
@@ -112,7 +113,7 @@ namespace HGGM
 
             services.AddSingleton(new LiteDatabase(Configuration.GetConnectionString("LiteDb")));
             services.AddSingleton<LiteRepository>();
-            services.AddSingleton<LiteDbContext, Services.LiteDbContext>();
+            services.AddSingleton<ILiteDbContext, Services.LiteDbContext>();
 
             services.AddAuthentication()
                 .AddSteam();
@@ -154,7 +155,6 @@ namespace HGGM
 
             services.Configure<DiscourseService.Options>(Configuration.GetSection("Discourse"));
             services.AddSingleton<DiscourseService>();
-
         }
     }
 }
