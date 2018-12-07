@@ -71,9 +71,12 @@ namespace HGGM.Areas.Identity.Pages.Account
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name,
                     info.LoginProvider);
+                var user = _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
                 _auditService.Add(new LoginAudit
                 {
-                    Identity = _userManager.GetUserId(info.Principal), Provider = info.LoginProvider,
+                    Identity = _userManager.GetUserId(info.Principal),
+                    Name = user.Result.UserName,
+                    Provider = info.LoginProvider,
                     Ip = HttpContext.Connection.RemoteIpAddress.ToString()
                 });
                 return LocalRedirect(returnUrl);
