@@ -113,7 +113,7 @@ namespace HGGM.Controllers
                     TagId = tag.Id.ToString(),
                     Before = before,
                     After = JsonConvert.SerializeObject(tag, Formatting.Indented),
-                    Type = "changes",
+                    Type = "changed",
                     User = _userManager.GetUserName(User),
                     UserId = _userManager.GetUserId(User)
                 });
