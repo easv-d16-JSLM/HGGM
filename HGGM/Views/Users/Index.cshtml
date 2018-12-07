@@ -10,38 +10,38 @@
     <nav class="panel">
         <p class="panel-heading">@lang["heading"]</p>
         <div class="panel-block">
-            <table class="table" style="width: 100%">
-                @*<colgroup>
-                    <col span="1" style="width: 40%"/>
-                    <col span="1" style="width: auto"/>
-                    <col span="1" style="width: 15%"/>
-                </colgroup>*@
-                <thead>
-                <tr>
-                    <th>@lang["username"]</th>
-                    <th>@lang["email"]</th>
-                    <th>@lang["roles"]</th>
-                    <th>@lang["joinDate"]</th>
-                    <th>@lang["action"]</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.UserName</td>
-                        <td>@item.Email.Address</td>
-                        <td>@string.Join(", ", item.Roles)</td>
-                        <td>@item.JoinDate</td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
-                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
+                <table id="userTable" class="table is-fullwidth is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>@lang["username"]</th>
+                            <th>@lang["email"]</th>
+                            <th>@lang["roles"]</th>
+                            <th>@lang["joinDate"]</th>
+                            <th>@lang["action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.UserName</td>
+                                <td>@item.Email.Address</td>
+                                <td>@string.Join(", ", item.Roles)</td>
+                                <td>@item.JoinDate</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
     </nav>
 </div>
+@section Scripts{
+    <script language="javascript">
+        $("#userTable").DataTable();
+    </script>
+}

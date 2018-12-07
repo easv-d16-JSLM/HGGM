@@ -13,32 +13,38 @@
         </p>
         <p class="panel-heading">@L["indexViewPageTitle"]</p>
         <div class="panel-block">
-            <table class="table" style="width: 100%">
+            <table class="table is-fullwidth is-hoverable" id="roleTable">
                 <thead>
-                <tr>
-                    <th>@L["nameTableHeader"]</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>@L["nameTableHeader"]</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @item.Name
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
-                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
-                        </td>
-                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
+                            </td>
+                        </tr>
 
-                }
+                    }
 
                 </tbody>
             </table>
         </div>
     </nav>
 </div>
+
+@section Scripts{
+    <script language="javascript">
+        $("#roleTable").DataTable();
+    </script>
+}
 

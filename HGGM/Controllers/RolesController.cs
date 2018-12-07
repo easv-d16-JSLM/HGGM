@@ -19,11 +19,11 @@ namespace HGGM.Controllers
     {
         private readonly AuditService _auditService;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> roleManager;
+        private readonly RoleManager<Role> _roleManager;
 
         public RolesController(RoleManager<Role> roleManager, AuditService auditService, UserManager<User> userManager)
         {
-            this.roleManager = roleManager;
+            this._roleManager = roleManager;
             _auditService = auditService;
             _userManager = userManager;
         }
@@ -41,7 +41,15 @@ namespace HGGM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await roleManager.CreateAsync(role);
+                var result = await _roleManager.CreateAsync(role);
+                _auditService.Add(new RoleAudit()
+                {
+                    Role = role.Name,
+                    RoleId = role.Id,
+                    Type = "created",
+                    User = _userManager.GetUserName(User),
+                    UserId = _userManager.GetUserId(User)
+                });
 
                 foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
                 if (result.Succeeded) return RedirectToAction(nameof(Index));
@@ -53,7 +61,7 @@ namespace HGGM.Controllers
         [Permission(SimplePermissionType.EditRoles)]
         public async Task<ActionResult> Delete(string id)
         {
-            var role = await roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id);
             return View(role);
         }
 
@@ -62,22 +70,30 @@ namespace HGGM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Role role)
         {
-            await roleManager.DeleteAsync(role);
-
+            var roleName = await _roleManager.FindByIdAsync(role.Id);
+            await _roleManager.DeleteAsync(role);
+            _auditService.Add(new RoleAudit()
+            {
+                Role = roleName.Name,
+                Type = "deleted",
+                RoleId = role.Id,
+                User = _userManager.GetUserName(User),
+                UserId = _userManager.GetUserId(User)
+            });
             return RedirectToAction(nameof(Index));
         }
 
 
         public async Task<ActionResult> Details(string id)
         {
-            var role = await roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id);
             return View(role);
         }
 
         [Permission(SimplePermissionType.EditRoles)]
         public async Task<ActionResult> Edit(string id)
         {
-            var role = await roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id);
             var m = new EditRoleViewModel
             {
                 Name = role.Name, SimplePermissions = SimplePermission.GetAllSimplePermissions.ToDictionary(
@@ -95,7 +111,7 @@ namespace HGGM.Controllers
         {
             if (!ModelState.IsValid) return View(model);
             // Get original role
-            var role = await roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id);
             // Change properties
             role.Name = model.Name;
             var before = role.Permissions ?? new List<IPermission>();
@@ -107,7 +123,7 @@ namespace HGGM.Controllers
                 .Concat(after)
                 .ToList();
             //Save
-            var result = await roleManager.UpdateAsync(role);
+            var result = await _roleManager.UpdateAsync(role);
 
             foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
@@ -115,9 +131,11 @@ namespace HGGM.Controllers
 
             _auditService.Add(new RoleEditAudit
             {
-                User = _userManager.GetUserName(User), UserId = _userManager.GetUserName(User), Role = role.Name,
-                RoleId = role.Id, Before = JsonConvert.SerializeObject(before),
-                After = JsonConvert.SerializeObject(after)
+                User = _userManager.GetUserName(User), UserId = _userManager.GetUserId(User), Role = role.Name,
+                Type = "changed",
+                RoleId = role.Id,
+                Before = JsonConvert.SerializeObject(before, Formatting.Indented),
+                After = JsonConvert.SerializeObject(after, Formatting.Indented)
             });
 
             return RedirectToAction(nameof(Index));
@@ -125,7 +143,7 @@ namespace HGGM.Controllers
 
         public ActionResult Index()
         {
-            return View(roleManager.Roles.ToList());
+            return View(_roleManager.Roles.ToList());
         }
     }
 }

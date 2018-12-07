@@ -138,6 +138,9 @@
   <data name="header" xml:space="preserve">
     <value />
   </data>
+  <data name="heading" xml:space="preserve">
+    <value>User Actions</value>
+  </data>
   <data name="headline" xml:space="preserve">
     <value>Headline</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="joinDate" xml:space="preserve">
     <value>Join Date</value>
+  </data>
+  <data name="messageHeader" xml:space="preserve">
+    <value>Message</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
@@ -164,6 +170,9 @@
   </data>
   <data name="teamspeak" xml:space="preserve">
     <value>Teamspeak</value>
+  </data>
+  <data name="timestampHeader" xml:space="preserve">
+    <value>Time</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>View User</value>
