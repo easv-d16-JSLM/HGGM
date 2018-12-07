@@ -8,7 +8,7 @@
     ViewData["Title"] = Localize["title"];
 }
 
-<table class="table">
+<table class="table is-fullwidth is-hoverable" id="auditTable" data-order='[[ 0, "desc" ]]'>
     <thead>
     <tr>
         <th>
@@ -17,13 +17,14 @@
         <th>
             @Localize["messageHeader"]
         </th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td data-order="@item.Time.ToUnixTimeSeconds()">
                 <abbr title="@item.Time.ToString()">@item.Time.Humanize(culture: CultureInfo.CurrentCulture)</abbr>
             </td>
             <td>
@@ -36,3 +37,9 @@
     }
     </tbody>
 </table>
+
+@section Scripts{
+    <script language="javascript">
+        $("#auditTable").DataTable();
+    </script>
+}
