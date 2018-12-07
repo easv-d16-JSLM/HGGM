@@ -4,8 +4,10 @@ image: Visual Studio 2017
 configuration: Release
 
 install:
-  - ps: choco install gitversion.portable -pre -y
-  - ps: choco install codecov -y
+  - choco install gitversion.portable -pre -y
+  - choco install codecov -y
+  - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
+  - ps: ./dotnet-install.ps1 -Version '2.2.100'
   - ps: dotnet tool install --global dotnet-sonarscanner
   - ps: dotnet --info
   - ps: "Get-ChildItem Env:"
@@ -19,10 +21,10 @@ build:
   verbosity: minimal
   
 after_build:
-  - ps: dotnet publish -f netcoreapp2.1 -c Release HGGM
+  - ps: dotnet publish -f netcoreapp2.2 -c Release HGGM
 
 artifacts:
-- path: HGGM/bin/Release/netcoreapp2.1/publish
+- path: HGGM/bin/Release/netcoreapp2.2/publish
   name: binaries
 
 test_script:
