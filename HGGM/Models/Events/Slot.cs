@@ -9,6 +9,7 @@ namespace HGGM.Models.Events
         public ApprovalType CanApprove { get; set; }
         public string Name { get; set; }
         public IList<IAuthorizationRequirement> Requirements { get; set; }
+        public int AmountOfSignup { get; set; }
         public IList<SlotSignUp> SignUps { get; set; }
         public IList<Slot> SubSlots { get; set; }
     }

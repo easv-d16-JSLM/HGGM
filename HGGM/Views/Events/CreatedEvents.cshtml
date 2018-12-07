@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer L
+@model IEnumerable<HGGM.Models.Events.Event>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<nav>
+    <div class="tabs">
+        <ul>
+            <li >
+                <a asp-area="" asp-controller="Events" asp-action="PublishedIndex">
+                    Published Events
+                </a>
+            </li>
+            <li class="is-active">
+                <a asp-area="" asp-controller="Events" asp-action="CreatedEvents">
+                    Created Events
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Events" asp-action="AuditLogIndex">
+                    Audit Log
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

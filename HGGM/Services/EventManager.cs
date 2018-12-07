@@ -1,49 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using HGGM.Models;
 using HGGM.Models.Events;
 using HGGM.Models.Identity;
-using HGGM.Services.Authorization.Tag;
+using HGGM.Services.Authorization.Simple;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
 namespace HGGM.Services
 {
     public class EventManager
     {
+        private readonly IAuthorizationService _authorization;
         private readonly LiteRepository _db;
+        private readonly IUserClaimsPrincipalFactory<User> _factory;
         private readonly IStringLocalizer<EventManager> _localizer;
         private readonly INotificationService _nService;
-        private readonly IAuthorizationService _authorization;
 
-        public EventManager(LiteRepository db, INotificationService nService, IStringLocalizer<EventManager> localizer, IAuthorizationService authorization)
+        public EventManager(LiteRepository db, INotificationService nService, IStringLocalizer<EventManager> localizer,
+            IAuthorizationService authorization, IUserClaimsPrincipalFactory<User> factory)
         {
             _db = db;
             _nService = nService;
             _localizer = localizer;
             _authorization = authorization;
+            _factory = factory;
         }
 
-        public void AddEvent(Event eEvent)
+        public async Task AddEvent(Event eEvent)
         {
+            // Create & insert event into DB
             eEvent.Created = DateTimeOffset.Now;
             _db.Insert(eEvent);
 
-            
-
-            _nService.NotifyUsers(new Notification
+            // Notify Users
+            var list = await PermissionCheck(SimplePermissionType.PublishEvents);
+            await _nService.NotifyUsers(new Notification
             {
                 Message = _localizer["createEventMessage", eEvent.Author, eEvent.TakesPlace],
                 Subject = _localizer["createEventSubject", eEvent.Name]
-            }, new List<User>(_db.Fetch<User>()));
-            //todo Change to specific users with required roles
+            }, list);
         }
 
         public void AddToSlot(Event eEvent, User user, string note, Slot chosenSlot)
         {
+            // Create SignUp to be inserted into event.
             var slotSignUp = new SlotSignUp
             {
                 Created = DateTimeOffset.Now,
@@ -51,32 +55,38 @@ namespace HGGM.Services
                 User = user
             };
 
-            var spot = eEvent.Roster.IndexOf(chosenSlot);
+            // Updates DB with new SignUp. 
+            var spot = eEvent.Roster.IndexOf(chosenSlot); // Test to see if .IndexOf finds the indext of slot. 
             chosenSlot.SignUps.Add(slotSignUp);
-            //eEvent.Roster.RemoveAt(spot);
-            eEvent.Roster.Insert(spot, chosenSlot);
+            eEvent.Roster.Insert(spot, chosenSlot); // Test to see if .Insert removes the spot it is inserted to.
+            _db.Update(eEvent);
 
+            // Notify users involved
             var list = new List<User>
             {
                 eEvent.Author,
                 user
             };
-
             _nService.NotifyUsers(new Notification
             {
-                Message = "Added to slot",
-                Subject = "Event" + eEvent.Name + " Slot added"
+                Message = _localizer["signUpMessage", user.Name, chosenSlot.Name],
+                Subject = _localizer["signUpSubject", eEvent.Name]
             }, list);
         }
 
-        private bool CanUserJoinSlot(HttpContext context)
+        public async Task<bool> CanUserJoinSlot(Slot slot, User user)
         {
-            var authorizationService = context.RequestServices.GetRequiredService<IAuthorizationService>();
-            var result = authorizationService
-                .AuthorizeAsync(context.User, null, new TagRequirement()).GetAwaiter()
-                .GetResult();
+            if (slot.AmountOfSignup == 0 || slot.AmountOfSignup < slot.SignUps.Count) return false;
+            var claimsPrincipal = await _factory.CreateAsync(user);
 
-            return result.Succeeded;
+            foreach (var requirement in slot.Requirements)
+            {
+                var result = (await _authorization.AuthorizeAsync(claimsPrincipal, null,
+                    requirement)).Succeeded;
+                if (result == false) return false;
+            }
+
+            return true;
         }
 
         public void DeclineEvent(Guid id, string declineMessage)
@@ -90,28 +100,28 @@ namespace HGGM.Services
             _nService.NotifyUsers(new Notification
             {
                 Message = declineMessage,
-                Subject = "Event" + eEvent.Name + " declined"
+                Subject = _localizer["declineEventSubject", eEvent.Name]
             }, list);
         }
 
-        public void DeleteEvent(Guid id)
+        public void DeleteEvent(Guid id, User userWhoDeleted)
         {
             var eEvent = _db.SingleById<Event>(id);
             _db.Delete<Event>(id);
             _nService.NotifyUsers(new Notification
             {
-                Message = "Event with name: " + eEvent.Name + " deleted!",
-                Subject = "Event" + eEvent.Name + " deleted"
+                Message = _localizer["deleteEventMessage", userWhoDeleted.Name],
+                Subject = _localizer["deleteEventSubject", eEvent.Name]
             }, GetUsersFromEvent(eEvent));
         }
 
-        public void EditEvent(Event eEvent)
+        public void EditEvent(Event eEvent, User UserWhoEdited)
         {
             _db.Update(eEvent);
             _nService.NotifyUsers(new Notification
             {
-                Message = "Event with name: " + eEvent.Name + " updated!",
-                Subject = "Event" + eEvent.Name + " updated"
+                Message = _localizer["editEventMessage", UserWhoEdited.Name],
+                Subject = _localizer["editEventSubject", eEvent.Name]
             }, GetUsersFromEvent(eEvent));
         }
 
@@ -130,6 +140,21 @@ namespace HGGM.Services
             return listOfUsersSignedUp;
         }
 
+        private async Task<List<User>> PermissionCheck(SimplePermissionType type)
+        {
+            var list = new List<User>();
+
+            foreach (var user in _db.Fetch<User>())
+            {
+                var claimsPrincipal = await _factory.CreateAsync(user);
+                var notify = (await _authorization.AuthorizeAsync(claimsPrincipal, null,
+                    SimplePermissionRequirement.For(type))).Succeeded;
+                if (notify) list.Add(user);
+            }
+
+            return list;
+        }
+
         public void PublishEvent(Guid id, User user)
         {
             var eEvent = _db.SingleById<Event>(id);
@@ -139,8 +164,8 @@ namespace HGGM.Services
 
             _nService.NotifyUsers(new Notification
             {
-                Message = "Event with name: " + eEvent.Name + " is now published!",
-                Subject = "Event" + eEvent.Name + " published"
+                Message = _localizer["publishEventMessage", eEvent.Name, eEvent.Published],
+                Subject = _localizer["publishEventSubject", eEvent.Name]
             }, new List<User>(_db.Fetch<User>()));
             //todo Change to specific users with required roles
         }

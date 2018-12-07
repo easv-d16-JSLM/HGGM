@@ -1,0 +1,30 @@
+﻿@model IEnumerable<HGGM.Models.Events.Event>
+
+<nav>
+    <div class="tabs">
+        <ul>
+            <li class="is-active">
+                <a asp-area="" asp-controller="Events" asp-action="PublishedIndex">
+                    Published Events
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Events" asp-action="CreatedEvents">
+                    Created Events
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Events" asp-action="AuditLogIndex">
+                    Audit Log
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="columns">
+    <div class="column is-two-thirds">is-two-thirds</div>
+    <div class="column">Auto</div>
+    <div class="column">Auto</div>
+</div>

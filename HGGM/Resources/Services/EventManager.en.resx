@@ -125,6 +125,10 @@
     <value>Event: {0} awaiting approval</value>
     <comment>0=Event Name</comment>
   </data>
+  <data name="declineEventSubject" xml:space="preserve">
+    <value>Event: {0} has been declined</value>
+    <comment>Event=Event Name</comment>
+  </data>
   <data name="deleteEventMessage" xml:space="preserve">
     <value>The event has been deleted by {0}</value>
     <comment>0=User who deleted event</comment>
@@ -142,9 +146,19 @@
     <comment>0=Event Name</comment>
   </data>
   <data name="publishEventMessage" xml:space="preserve">
-    <value>Now available for signups!</value>
+    <value>'{0}' is taking place the {1}, sign-up now to secure your spot! </value>
+    <comment>0=Event Name, 1=Date</comment>
   </data>
   <data name="publishEventSubject" xml:space="preserve">
-    <value />
+    <value>Event: {0} published </value>
+    <comment>0=Event Name</comment>
+  </data>
+  <data name="signUpMessage" xml:space="preserve">
+    <value>{0} has just signed up as {1}</value>
+    <comment>0=User SignUp, 1=Name of Slot</comment>
+  </data>
+  <data name="signUpSubject" xml:space="preserve">
+    <value>Event: {0} signup </value>
+    <comment>0=Event Name</comment>
   </data>
 </root>

@@ -130,9 +130,8 @@ namespace HGGM
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddTransient<INotificationService, NotificationService>();
-
-            services.AddTransient<EventManager>();
             services.AddScoped<IAuthorizationHandler, TagHandler>();
+
             
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -160,7 +159,7 @@ namespace HGGM
 
             services.Configure<DiscourseService.Options>(Configuration.GetSection("Discourse"));
             services.AddSingleton<DiscourseService>();
-
+            services.AddTransient<EventManager>();
         }
     }
 }

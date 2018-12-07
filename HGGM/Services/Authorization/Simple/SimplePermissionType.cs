@@ -13,6 +13,7 @@
         EditUsers,
         DiscourseAdmin,
         DiscourseModerator,
-        PublishEvents
+        PublishEvents,
+        MemberEvent
     }
 }
