@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:sdk AS build-env
+FROM microsoft/dotnet:2.2-sdk AS build-env
 WORKDIR /app
 
 #Fix from: https://github.com/GitTools/GitVersion/issues/1473
@@ -12,7 +12,7 @@ RUN cd HGGM; dotnet restore
 RUN cd HGGM; dotnet publish -c Release -o out /p:NCrunch=true
 
 # Build runtime image
-FROM microsoft/dotnet:aspnetcore-runtime
+FROM microsoft/dotnet:2.2-aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/HGGM/out .
 EXPOSE 80
