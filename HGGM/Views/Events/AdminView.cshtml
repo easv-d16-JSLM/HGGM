@@ -1,59 +1,49 @@
 ﻿@model IEnumerable<HGGM.Models.Events.Event>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer lang
 
 @{
-    ViewData["Title"] = "AdminView";
+    ViewData["Title"] = lang["title"];
 }
 
-<h2>AdminView</h2>
+<div class="column is-centered">
+    <nav class="panel">
+        <p class="panel-heading">@lang["tableHeading"]</p>
+        <div class="panel-block">
+            <table id="eventTable" class="table is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <th>@lang["eventName"]</th>
+                        <th>@lang["eventAuthor"]</th>
+                        <th>@lang["eventPublisher"]</th>
+                        <th>@lang["creationDate"]</th>
+                        <th>@lang["publishedDate"]</th>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Published)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TakesPlace)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Published)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TakesPlace)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Author</td>
+                        <td>@item.Publisher</td>
+                        <td>@item.Created</td>
+                        <td>@item.Published</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </nav>
+</div>
+@section Scripts{
+    <script language="javascript">
+        $("#eventTable").DataTable();
+    </script>
 }
-    </tbody>
-</table>
