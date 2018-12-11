@@ -1,41 +1,48 @@
 ﻿@using Microsoft.AspNetCore.Http.Features
-
 @{
     var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
     var showBanner = !consentFeature?.CanTrack ?? false;
     var cookieString = consentFeature?.CreateConsentCookie();
 }
 
-@if (showBanner)
+@if (showBanner && Context.Request.Path != "/Home/Privacy")
 {
-    <nav id="cookieConsent" class="navbar navbar-default navbar-fixed-top" role="alert">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#cookieConsent .navbar-collapse">
-                    <span class="sr-only">Toggle cookie consent banner</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <span class="navbar-brand"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></span>
-            </div>
-            <div class="collapse navbar-collapse">
-                <p class="navbar-text">
-                    Use this space to summarize your privacy and cookie use policy.
-                </p>
-                <div class="navbar-right">
-                    <a asp-controller="Home" asp-action="Privacy" class="btn btn-info navbar-btn">Learn More</a>
-                    <button type="button" class="btn btn-default navbar-btn" data-cookie-string="@cookieString">Accept</button>
-                </div>
+    <nav id="cookieConsent" class="navbar" role="alert">
+        <div class="modal is-active" id="modal-bis">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <div class="title">
+                        <h3 class="title is-3 has-text-weight-bold">
+                            <i class="fas fa-info-circle"></i>
+                            Privacy & Data
+                        </h3>
+                    </div>
+                </header>
+                <section class="modal-card-body">
+                    <h5 class="subtitle is-5">
+                        This website uses cookies to ensure you get the best experience.
+                    </h5>
+                    <div class="navbar-end">
+                        <a asp-controller="Home" asp-action="Privacy" class="button is-white">Learn More</a>
+                        <button type="button" class="button is-info" data-cookie-string="@cookieString">Accept</button>
+                    </div>
+                </section>
             </div>
         </div>
     </nav>
+
+
+
     <script>
-        (function () {
-            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
-                document.cookie = el.target.dataset.cookieString;
-                document.querySelector("#cookieConsent").classList.add("hidden");
-            }, false);
-        })();
+        $(document).ready(function() {
+            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click",
+                function(el) {
+                    document.cookie = el.target.dataset.cookieString;
+                    $("#cookieConsent").addClass("hidden");
+                    $("#modal-bis.is-active").removeClass("is-active");
+                },
+                false);
+        });
     </script>
 }

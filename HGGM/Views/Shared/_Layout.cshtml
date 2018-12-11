@@ -91,8 +91,6 @@
     </div>
 </nav>
 
-<partial name="_CookieConsentPartial"/>
-
 <section class="section">
     <div class="container">
         @RenderBody()
@@ -139,5 +137,8 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 
 @RenderSection("Scripts", false)
+
+<partial name="_CookieConsentPartial" />
+
 </body>
 </html>
