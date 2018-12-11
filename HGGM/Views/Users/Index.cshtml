@@ -1,9 +1,17 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using HGGM.Services.Authorization.Simple
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
 @model IEnumerable<HGGM.Models.Identity.User>
 @inject IViewLocalizer lang
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewData["Title"] = lang["title"];
+
+    async Task<bool> Can(SimplePermissionType perm)
+    {
+        return ((await AuthorizationService.AuthorizeAsync(User, null, SimplePermissionRequirement.For(perm))).Succeeded);
+    }
 }
 
 <div class="column is-centered">
@@ -13,10 +21,13 @@
                 <table id="userTable" class="table is-fullwidth is-hoverable">
                     <thead>
                         <tr>
+                            @if (await Can(SimplePermissionType.EditUsers))
+                            {
+                                <th>@lang["joinDate"]</th>
+                                <th>@lang["email"]</th>
+                            }
                             <th>@lang["username"]</th>
-                            <th>@lang["email"]</th>
                             <th>@lang["roles"]</th>
-                            <th>@lang["joinDate"]</th>
                             <th>@lang["action"]</th>
                         </tr>
                     </thead>
@@ -24,14 +35,22 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.UserName</td>
+                                @if (await Can(SimplePermissionType.EditUsers))
+                                {
                                 <td>@item.Email.Address</td>
+                                    <td>@item.JoinDate</td>
+                                }
+                                <td>@item.UserName</td>
                                 <td>@string.Join(", ", item.Roles)</td>
-                                <td>@item.JoinDate</td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
+                                    @if (await Can(SimplePermissionType.EditUsers))
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-fw fa-trash"></i></a>
+
+                                    }
+                                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a>
+
                                 </td>
                             </tr>
                         }
