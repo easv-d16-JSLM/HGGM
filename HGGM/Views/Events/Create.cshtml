@@ -4,39 +4,25 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
 
-<h4>Event</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Published" class="control-label"></label>
-                <input asp-for="Published" class="form-control" />
-                <span asp-validation-for="Published" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TakesPlace" class="control-label"></label>
-                <input asp-for="TakesPlace" class="form-control" />
-                <span asp-validation-for="TakesPlace" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
+<div>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <label asp-for="Name">Event Name</label>
+            <input asp-for="Name" class="input" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div>
+            <label asp-for="TakesPlace">Date</label>
+            <input asp-for="TakesPlace" type="text" id="demogg" class="input" />
+            <span asp-validation-for="TakesPlace"></span>
+
+        </div>
+        <div>
+            <input type="text" id="demo" />
+        </div>
+    </form>
 </div>
 
 <div>
@@ -45,4 +31,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('#demo').datetimepicker({
+            inline: true
+        });
+    </script>
 }
+
+
+
