@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HGGM.Models.Events;
 using HGGM.Models.Identity;
@@ -21,6 +22,17 @@ namespace HGGM.Controllers
             _db = db;
             _userManager = userManager;
             _eventManager = eventManager;
+        }
+
+        public ActionResult AdminView()
+        {
+            var events = _db.Fetch<Event>();
+            return View(events);
+        }
+
+        public ActionResult AuditLogIndex()
+        {
+            return View();
         }
 
         // GET: Event/Create
@@ -45,6 +57,16 @@ namespace HGGM.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult CreatedEvents()
+        {
+            var events = _db.Fetch<Event>();
+            var sortedEvents = new List<Event>();
+            foreach (var eEvent in events)
+                if (eEvent.Publisher == null)
+                    sortedEvents.Add(eEvent);
+            return View(sortedEvents);
         }
 
         // GET: Event/Delete/5
@@ -94,10 +116,14 @@ namespace HGGM.Controllers
             return View(hggmEvent);
         }
 
-        public ActionResult AdminView()
+        public ActionResult EventsSignedUpFor(User user)
         {
             var events = _db.Fetch<Event>();
-            return View(events);
+            var signedUpEvents = events
+                .Where(e => e.Roster
+                    .SelectMany(r => r.SignUps).Any(t => t.User.Id == user.Id))
+                .ToList();
+            return View(signedUpEvents);
         }
 
         public ActionResult PublishedIndex()
@@ -108,21 +134,6 @@ namespace HGGM.Controllers
                 if (eEvent.Publisher != null)
                     sortedEvents.Add(eEvent);
             return View(sortedEvents);
-        }
-
-        public ActionResult CreatedEvents()
-        {
-            var events = _db.Fetch<Event>();
-            var sortedEvents = new List<Event>();
-            foreach (var eEvent in events)
-                if (eEvent.Publisher == null)
-                    sortedEvents.Add(eEvent);
-            return View(sortedEvents);
-        }
-
-        public ActionResult AuditLogIndex()
-        {
-            return View();
         }
     }
 }

@@ -18,6 +18,7 @@
                         <th>@lang["eventPublisher"]</th>
                         <th>@lang["creationDate"]</th>
                         <th>@lang["publishedDate"]</th>
+                        <th>@lang["eventDateTakesPlace"]</th>
 
                     </tr>
                 </thead>
@@ -30,6 +31,7 @@
                         <td>@item.Publisher</td>
                         <td>@item.Created</td>
                         <td>@item.Published</td>
+                        <td>@item.TakesPlace</td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
                             <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-fw fa-search"></i></a> |

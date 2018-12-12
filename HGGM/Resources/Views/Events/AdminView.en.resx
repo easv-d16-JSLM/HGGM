@@ -123,6 +123,9 @@
   <data name="eventAuthor" xml:space="preserve">
     <value>Author</value>
   </data>
+  <data name="eventDateTakesPlace" xml:space="preserve">
+    <value>Takes Place Date</value>
+  </data>
   <data name="eventName" xml:space="preserve">
     <value>Event Name</value>
   </data>
