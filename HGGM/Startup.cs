@@ -12,6 +12,7 @@ using HGGM.Services;
 using HGGM.Services.Authorization;
 using HGGM.Services.Authorization.Simple;
 using HGGM.Services.Discourse;
+using Joonasw.AspNetCore.SecurityHeaders;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +43,13 @@ namespace HGGM
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Content Security Policy
+            app.UseCsp(csp =>
+            {
+                csp.ByDefaultAllow
+                    .FromSelf();
+            });
+
             app.UseHealthChecks("/health");
             var forwardedHeadersOptions = new ForwardedHeadersOptions
             {
@@ -66,7 +74,7 @@ namespace HGGM
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                HstsBuilderExtensions.UseHsts(app);
             }
 
             app.UseHttpsRedirection();
