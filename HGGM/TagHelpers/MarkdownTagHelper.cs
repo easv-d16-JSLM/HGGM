@@ -7,11 +7,11 @@ namespace HGGM.TagHelpers
     [HtmlTargetElement("markdown", TagStructure = TagStructure.NormalOrSelfClosing)]
     public class MarkdownTagHelper : TagHelper
     {
-        private readonly MarkdownService m;
+        private readonly MarkdownService _markdownService;
 
-        public MarkdownTagHelper(MarkdownService m)
+        public MarkdownTagHelper(MarkdownService markdownService)
         {
-            this.m = m;
+            this._markdownService = markdownService;
         }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -22,7 +22,7 @@ namespace HGGM.TagHelpers
             var content = output.Content.IsModified
                 ? output.Content.GetContent()
                 : (await output.GetChildContentAsync()).GetContent();
-            output.Content.SetHtmlContent(m.ToHtml(content));
+            output.Content.SetHtmlContent(_markdownService.ToHtml(content));
         }
     }
 }
