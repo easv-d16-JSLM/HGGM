@@ -14,14 +14,21 @@
             <span asp-validation-for="Name"></span>
         </div>
         <div>
-            <label asp-for="TakesPlace">Date</label>
-            <input asp-for="TakesPlace" type="text" id="demogg" class="input" />
+            <label asp-for="TakesPlace">Start Date&Time</label>
+            <input asp-for="TakesPlace" type="text" id="takesPlacePicker" class="input" />
             <span asp-validation-for="TakesPlace"></span>
-
         </div>
         <div>
-            <input type="text" id="demo" />
+            <label asp-for="EndDate">End Date&Time</label>
+            <input asp-for="EndDate" type="text" id="endDatePicker" class="input" />
+            <span asp-validation-for="EndDate"></span>
         </div>
+        <div>
+            <label asp-for="EventType">Event Type</label>
+            <input asp-for="EventType" type="text" class="input"/>
+            <span asp-validation-for="EventType"></span>
+        </div>
+   
     </form>
 </div>
 
@@ -32,8 +39,13 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        $('#demo').datetimepicker({
-            inline: true
+        $('#takesPlacePicker').datetimepicker({
+            inline: false
+        });
+    </script>
+    <script>
+        $('#endDatePicker').datetimepicker({
+            inline: false
         });
     </script>
 }
