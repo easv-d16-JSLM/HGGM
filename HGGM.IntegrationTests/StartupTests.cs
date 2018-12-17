@@ -1,11 +1,9 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace HGGM.IntegrationTests
 {
@@ -28,6 +26,7 @@ namespace HGGM.IntegrationTests
         [InlineData("/Home/Error")]
         [InlineData("/swagger")]
         [InlineData("/swagger/v1/swagger.json")]
+        [InlineData("/health")]
         public async Task GetReturnsSuccess(string url)
         {
             // Arrange
@@ -51,7 +50,7 @@ namespace HGGM.IntegrationTests
 
             // Act
             var response = await client.GetAsync(url);
-            
+
             // Assert
             try
             {
