@@ -114,7 +114,7 @@ namespace HGGM.Areas.Identity.Pages.Account
             if (info == null)
             {
                 ErrorMessage = "Error loading external login information during confirmation.";
-                return RedirectToPage("./Login", new {ReturnUrl = returnUrl});
+                return LocalRedirect("/");
             }
 
             if (ModelState.IsValid)

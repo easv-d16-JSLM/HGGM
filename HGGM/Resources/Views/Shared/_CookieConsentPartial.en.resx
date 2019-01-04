@@ -117,67 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="avatar" xml:space="preserve">
-    <value>Avatar</value>
+  <data name="acceptButton" xml:space="preserve">
+    <value>Accept</value>
   </data>
-  <data name="back" xml:space="preserve">
-    <value>Back to list</value>
+  <data name="description" xml:space="preserve">
+    <value>This website uses cookies to ensure you get the best experience.</value>
   </data>
-  <data name="biography" xml:space="preserve">
-    <value>Biography</value>
-  </data>
-  <data name="biographyDescription" xml:space="preserve">
-    <value>Write a description of your self, maximum of 500 characters</value>
-  </data>
-  <data name="country" xml:space="preserve">
-    <value>Country</value>
-  </data>
-  <data name="dateofbirth" xml:space="preserve">
-    <value>Date of Birth</value>
-  </data>
-  <data name="email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="header" xml:space="preserve">
-    <value />
-  </data>
-  <data name="heading" xml:space="preserve">
-    <value>User Actions</value>
-  </data>
-  <data name="headline" xml:space="preserve">
-    <value>Headline</value>
-  </data>
-  <data name="headlineDescription" xml:space="preserve">
-    <value>A title for your biography</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>ID</value>
-  </data>
-  <data name="joinDate" xml:space="preserve">
-    <value>Join Date</value>
-  </data>
-  <data name="messageHeader" xml:space="preserve">
-    <value>Message</value>
-  </data>
-  <data name="name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="nickname" xml:space="preserve">
-    <value>Nickname</value>
-  </data>
-  <data name="roles" xml:space="preserve">
-    <value>Roles</value>
-  </data>
-  <data name="steam" xml:space="preserve">
-    <value>Steam 64</value>
-  </data>
-  <data name="teamspeak" xml:space="preserve">
-    <value>Teamspeak</value>
-  </data>
-  <data name="timestampHeader" xml:space="preserve">
-    <value>Time</value>
+  <data name="infoButton" xml:space="preserve">
+    <value>Learn More</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>View User</value>
+    <value>Privacy &amp; Data</value>
   </data>
 </root>
