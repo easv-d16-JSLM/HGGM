@@ -55,6 +55,11 @@
       "files": [
         "js/jquery.dataTables.min.js"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery-datetimepicker@2.5.20",
+      "destination": "wwwroot/lib/jquery-datetimepicker/"
     }
   ]
 }

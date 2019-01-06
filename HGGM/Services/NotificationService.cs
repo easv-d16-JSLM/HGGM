@@ -18,11 +18,10 @@ namespace HGGM.Services
             _userManager = userManager;
         }
 
-        public async Task NotifyUsers(Notification notification, IList<string> userIdList)
+        public async Task NotifyUsers(Notification notification, IList<User> userList)
         {
-            foreach (var id in userIdList)
-            {
-                var user = await _userManager.FindByIdAsync(id);
+            foreach (var user in userList)
+            {              
                 var setting = user.Config;
                 if (setting.AccountNotify)
                 {
@@ -38,6 +37,6 @@ namespace HGGM.Services
 
     public interface INotificationService
     {
-        Task NotifyUsers(Notification notification, IList<string> userIdList);
+        Task NotifyUsers(Notification notification, IList<User> userList);
     }
 }

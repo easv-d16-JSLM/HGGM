@@ -8,14 +8,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HGGM</title>
 
-    <link rel="stylesheet" href="~/lib/bulma/css/bulma.min.css"/>
-    <link rel="stylesheet" href="~/lib/datatables-bulma/css/dataTables.bulma.min.css"/>
-    <link rel="stylesheet" href="~/lib/font-awesome-5-css/css/all.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/bulma/css/bulma.min.css" />
+    <link rel="stylesheet" href="~/lib/datatables-bulma/css/dataTables.bulma.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome-5-css/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/jquery-datetimepicker/jquery.datetimepicker.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
 </head>
 <body>
 
@@ -73,6 +75,9 @@
                     </a>
                     <a class="navbar-item" asp-area="" asp-controller="Audit" asp-action="Index">
                         Audit
+                    </a>
+                    <a class="navbar-item" asp-area="" asp-controller="Events" asp-action="PublishedIndex">
+                        Events
                     </a>
                     <hr class="navbar-divider">
                     <a class="navbar-item" href="/hangfire">
@@ -134,8 +139,9 @@
 <script src="~/lib/jquery/jquery.min.js"></script>
 <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
 <script src="~/lib/datatables-bulma/js/dataTables.bulma.min.js"></script>
+<script src="~/lib/jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-
+    
 @RenderSection("Scripts", false)
 
 <partial name="_CookieConsentPartial" />

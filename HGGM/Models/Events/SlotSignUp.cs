@@ -7,6 +7,7 @@ namespace HGGM.Models.Events
     {
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Deleted { get; set; }
+        public string Note { get; set; }
         public User User { get; set; }
     }
 }

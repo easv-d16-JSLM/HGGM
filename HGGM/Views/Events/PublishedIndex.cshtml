@@ -1,0 +1,67 @@
+﻿@model IEnumerable<HGGM.Models.Events.Event>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Remotion.Linq.Clauses
+@inject IViewLocalizer lang
+
+<nav>
+    <div class="tabs">
+        <ul>
+            <li class="is-active">
+                <a asp-area="" asp-controller="Events" asp-action="PublishedIndex">
+                    Published Events
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Events" asp-action="CreatedEvents">
+                    Created Events
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Events" asp-action="AuditLogIndex">
+                    Audit Log
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="column is-centered">
+    <nav class="panel">
+        <p class="panel-heading">@lang["tableHeading"]</p>
+        <div class="panel-block">
+            <table id="publishedEventTable" class="table is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <th>@lang["eventName"]</th>
+                        <th>@lang["eventAuthor"]</th>
+                        <th>@lang["eventDateTakesPlace"]</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Author</td>
+                            <td>@item.TakesPlace</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-fw fa-edit"></i></a> |
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </nav>
+</div>
+
+
+
+@section Scripts{
+    @Html.Partial("EventsSignedUpFor")
+    <script language="javascript">
+        $("#publishedEventTable").DataTable();
+    </script>
+}

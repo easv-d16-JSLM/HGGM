@@ -1,0 +1,36 @@
+﻿@model IEnumerable<HGGM.Models.Events.Event>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Remotion.Linq.Clauses
+@inject IViewLocalizer lang
+
+<div class="column is-centered">
+    <nav class="panel">
+        <p class="panel-heading">@lang["tableHeading"]</p>
+        <div class="panel-block">
+            <table id="eventsSignedUpForTable" class="table is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <th>@lang["eventName"]</th>
+                        <th>@lang["eventAuthor"]</th>
+                        <th>@lang["eventDateTakesPlace"]</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Author</td>
+                            <td>@item.TakesPlace</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </nav>
+</div>
+
+    <script language="javascript">
+        $("#eventsSignedUpForTable").DataTable();
+    </script>

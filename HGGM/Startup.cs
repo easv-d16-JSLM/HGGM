@@ -7,11 +7,13 @@ using AspNetCore.Identity.LiteDB;
 using AspNetCore.Identity.LiteDB.Data;
 using Hangfire;
 using Hangfire.LiteDB;
+using HGGM.Models.Configuration;
 using HGGM.Models.Identity;
 using HGGM.Services;
 using HGGM.Services.Authorization;
 using HGGM.Services.Authorization.Simple;
-using HGGM.Services.Discourse;
+using HGGM.Services.Discourse
+using HGGM.Services.Authorization.Tag;
 using Joonasw.AspNetCore.SecurityHeaders;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
@@ -128,10 +130,13 @@ namespace HGGM
             services.AddScoped<IAuthorizationHandler, SimplePermissionHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, SimplePermissionPolicyProvider>();
 
+            services.Configure<MailConfig>(Configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailSender, EmailSender>();
 
-            services.AddSingleton<INotificationService, NotificationService>();
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddScoped<IAuthorizationHandler, TagHandler>();
 
+            
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddHangfire(configuration => configuration.UseLiteDbStorage());
@@ -158,7 +163,7 @@ namespace HGGM
 
             services.Configure<DiscourseService.Options>(Configuration.GetSection("Discourse"));
             services.AddSingleton<DiscourseService>();
-
+            services.AddTransient<EventManager>();
             services.AddHealthChecks();
         }
     }

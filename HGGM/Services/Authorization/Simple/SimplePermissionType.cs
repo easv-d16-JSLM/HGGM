@@ -12,6 +12,8 @@
         GetUsers,
         EditUsers,
         DiscourseAdmin,
-        DiscourseModerator
+        DiscourseModerator,
+        PublishEvents,
+        MemberEvent
     }
 }
