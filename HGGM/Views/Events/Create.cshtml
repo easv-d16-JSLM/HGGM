@@ -4,32 +4,63 @@
     ViewData["Title"] = "Create";
 }
 
+<style>
+    [v-cloak] {
+        display: none !important;
+    }
+</style>
 
-<div>
-    <form asp-action="Create">
+
+<div id="vue-container">
         <div asp-validation-summary="ModelOnly"></div>
         <div>
             <label asp-for="Name">Event Name</label>
-            <input asp-for="Name" class="input" />
-            <span asp-validation-for="Name"></span>
-        </div>
-        <div>
-            <label asp-for="TakesPlace">Start Date&Time</label>
-            <input asp-for="TakesPlace" type="text" id="takesPlacePicker" class="input" />
-            <span asp-validation-for="TakesPlace"></span>
-        </div>
-        <div>
-            <label asp-for="EndDate">End Date&Time</label>
-            <input asp-for="EndDate" type="text" id="endDatePicker" class="input" />
-            <span asp-validation-for="EndDate"></span>
+            <input v-model="formData.name" class="input" />
         </div>
         <div>
             <label asp-for="EventType">Event Type</label>
-            <input asp-for="EventType" type="text" class="input"/>
-            <span asp-validation-for="EventType"></span>
+            <input type="text" v-model="formData.type" class="input" />
         </div>
-   
-    </form>
+        <div>
+            <label asp-for="TakesPlace">Start Date&Time</label>
+            <input  type="text" id="takesPlacePicker" ref="takesPlace" class="input" />
+        </div>
+        <div>
+            <label asp-for="EndDate">End Date&Time</label>
+            <input  type="text" ref="endDate" id="endDatePicker" class="input" />
+        </div>
+        
+        <div>
+            <button class="button" type="button" @@click="addSlot" style="margin: 20px 0px;">Add slot</button>
+        </div>
+        <div style="display: flex; align-items: center; margin-bottom: 10px;" v-for="(slot, index) in formData.roster" :key="index" v-cloak>
+            <label style="width: 170px;">Team name</label>
+            <input class="input" type="text" placeholder="Ex. team alpha" v-model="slot.name" style="margin-right: 10px;"/>
+            <div class="dropdown" style="margin-right: 10px;" :class="{'is-active': slot.showDropdown}" @@click="toggleDropdown(slot)">
+                <div class="dropdown-trigger">
+                    <button type="button" class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                        <span>Group</span>
+                        <span class="icon is-small">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                        <div class="dropdown-item">
+                            Other dropdown item
+                        </div>
+                        <div href="#" class="dropdown-item">
+                            Active dropdown item
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="button is-danger" type="button" @@click="removeSlot(slot)" style="margin-left: auto;">
+                <i class="fa fa-fw fa-trash"></i>
+            </button>
+        </div>
+        <button type="button" style="margin: 20px 0px;" class="button is-primary" @@click="createEvent">Create event</button>
 </div>
 
 <div>
@@ -38,6 +69,52 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        new Vue({
+            el: '#vue-container',
+            data: {
+                formData: {
+                    name: '',
+                    type: '',
+                    takesPlace: '',
+                    endDate: '',
+                    roster: []
+                }
+            },
+            methods: {
+                addSlot() {
+                    this.formData.roster.push({
+                        showDropdown: false,
+                        name: null
+                    });
+                },
+                removeSlot(slot) {
+                    this.formData.roster.splice(this.formData.roster.indexOf(slot), 1);
+                },
+                createEvent() {
+                    this.formData.takesPlace = this.$refs.takesPlace.value;
+                    this.formData.endDate = this.$refs.endDate.value;
+                    $.ajax({
+                        type: 'POST',
+                        url: '/events/create',
+                        data: JSON.stringify(this.formData),
+                        contentType: 'application/json',
+                        dataType: 'json'
+                    }).done(function () {
+                        alert('Event created');
+                        window.location.replace('/Events/PublishedIndex');
+                    }).fail(function(res) {
+
+                    });
+
+                },
+                toggleDropdown(slot) {
+                    slot.showDropdown = !slot.showDropdown;
+                }
+            }
+        })
+    </script>
     <script>
         $('#takesPlacePicker').datetimepicker({
             inline: false

@@ -43,8 +43,7 @@ namespace HGGM.Controllers
 
         // POST: Event/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("Name")] Event hggEvent)
+        public async Task<ActionResult> Create([FromBody] Event hggEvent)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             hggEvent.Author = user;
@@ -53,10 +52,12 @@ namespace HGGM.Controllers
             {
                 _db.Insert(hggEvent);
 
-                return RedirectToAction(nameof(PublishedIndex));
+                return Json("OK");
+
+                //return RedirectToAction(nameof(PublishedIndex));
             }
 
-            return View();
+            return BadRequest();
         }
 
         public ActionResult CreatedEvents()
