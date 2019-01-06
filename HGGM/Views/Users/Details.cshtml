@@ -2,7 +2,9 @@
 @using HGGM.Models.Audit
 @using HGGM.Models.Identity
 @using HGGM.Services
+@using HGGM.Services.Authorization.Simple
 @using Humanizer
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Localization
 @model HGGM.ViewModels.EditUserViewModel
@@ -10,9 +12,15 @@
 @inject AuditService audit
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewData["Title"] = lang["title"];
+
+    async Task<bool> Can(SimplePermissionType perm)
+    {
+        return ((await AuthorizationService.AuthorizeAsync(User, null, SimplePermissionRequirement.For(perm))).Succeeded);
+    }
 }
 
 <div class="column">
@@ -27,14 +35,17 @@
                         <span>Overview</span>
                     </a>
                 </li>
-                <li class="tablinks" onclick="openTab(event, 'Auditlog')">
-                    <a>
-                        <span class="icon is-small">
-                            <i class="fas fa-user-secret" aria-hidden="true"></i>
-                        </span>
-                        <span>Auditlog</span>
-                    </a>
-                </li>
+                @if (await Can(SimplePermissionType.GetAuditLog))
+                {
+                    <li class="tablinks" onclick="openTab(event, 'Auditlog')">
+                        <a>
+                            <span class="icon is-small">
+                                <i class="fas fa-user-secret" aria-hidden="true"></i>
+                            </span>
+                            <span>Auditlog</span>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
         <div class="tabcontent" id="Overview">
@@ -53,7 +64,8 @@
                             </figure>
                         </div>
                     </div>
-
+                @if (await Can(SimplePermissionType.EditUsers))
+                {
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
                             <label class="label">@lang["id"]</label>
@@ -61,7 +73,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control has-icons-left">
-                                    <input asp-for="User.Id" class="input" placeholder="@lang["id"]" />
+                                    <input asp-for="User.Id" class="input" placeholder="@lang["id"]"/>
                                     <span asp-validation-for="User.Id" class="is-danger"></span>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-shield-alt"></i>
@@ -70,6 +82,7 @@
                             </div>
                         </div>
                     </div>
+                }
 
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
@@ -104,36 +117,6 @@
                             </div>
 
                             <div class="field-label is-normal">
-                                <label class="label">@lang["email"]</label>
-                            </div>
-                            <div class="field">
-                                <p class="control is-expanded has-icons-left has-icons-right">
-                                    <input asp-for="Email" class="input" placeholder="@lang["email"]" />
-                                    <span asp-validation-for="Email" class="is-danger"></span>
-                                    <span class="icon is-small is-left">
-                                        <i class="fa fa-envelope"></i>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">@lang["dateofbirth"]</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
-                                <p class="control is-expanded has-icons-left">
-                                    <input asp-for="User.DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]" />
-                                    <span asp-validation-for="User.DateOfBirth" class="is-danger"></span>
-                                    <span class="icon is-small is-left">
-                                        <i class="far fa-calendar-alt"></i>
-                                    </span>
-                                </p>
-                            </div>
-
-                            <div class="field-label is-normal">
                                 <label class="label">@lang["joinDate"]</label>
                             </div>
                             <div class="field">
@@ -142,6 +125,38 @@
                                     <span asp-validation-for="User.JoinDate" class="is-danger"></span>
                                     <span class="icon is-small is-left">
                                         <i class="far fa-calendar-alt"></i>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                @if (await Can(SimplePermissionType.EditUsers))
+                {
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">@lang["dateofbirth"]</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control is-expanded has-icons-left">
+                                    <input asp-for="User.DateOfBirth" class="input" type="Date" placeholder="@lang["dateofbirth"]"/>
+                                    <span asp-validation-for="User.DateOfBirth" class="is-danger"></span>
+                                    <span class="icon is-small is-left">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div class="field-label is-normal">
+                                <label class="label">@lang["email"]</label>
+                            </div>
+                            <div class="field">
+                                <p class="control is-expanded has-icons-left has-icons-right">
+                                    <input asp-for="Email" class="input" placeholder="@lang["email"]"/>
+                                    <span asp-validation-for="Email" class="is-danger"></span>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-envelope"></i>
                                     </span>
                                 </p>
                             </div>
@@ -181,6 +196,7 @@
                             </div>
                         </div>
                     </div>
+                }
 
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
@@ -286,51 +302,10 @@
             </div>
 
             <div class="auditcontent" id="UserActions">
-                    <nav class="panel">
-                        <p class="panel-heading">@lang["heading"]</p>
-                        <div class="panel-block">
-                            <table class="table is-fullwidth is-hoverable" id="auditAction">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            @lang["timestampHeader"]
-                                        </th>
-                                        <th>
-                                            @lang["messageHeader"]
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in audit.GetAll<UserActionAudit>())
-                                    {
-                                        if (item.UserId == Model.User.Id)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <abbr title="@item.Time.ToString()">@item.Time.Humanize(culture: CultureInfo.CurrentCulture)</abbr>
-                                                </td>
-                                                <td>
-                                                    @item.Message
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("Details", "Details", "Audit", new { id = item.Id })
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </nav>
-                </div>
-        </div>
-
-        <div class="auditcontent" id="UserAffected" hidden="">
                 <nav class="panel">
-                    <p class="panel-heading">@lang["User Affected"]</p>
+                    <p class="panel-heading">@lang["heading"]</p>
                     <div class="panel-block">
-                        <table class="table is-fullwidth is-hoverable" id="auditAffected">
+                        <table class="table is-fullwidth is-hoverable" id="auditAction">
                             <thead>
                                 <tr>
                                     <th>
@@ -343,9 +318,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in audit.GetAll<AdminEditUserAudit>())
+                                @foreach (var item in audit.GetAll<UserActionAudit>())
                                 {
-                                    if (item.EditedUserId == Model.User.Id)
+                                    if (item.UserId == Model.User.Id)
                                     {
                                         <tr>
                                             <td>
@@ -365,6 +340,47 @@
                     </div>
                 </nav>
             </div>
+        </div>
+
+        <div class="auditcontent" id="UserAffected" hidden="">
+            <nav class="panel">
+                <p class="panel-heading">@lang["User Affected"]</p>
+                <div class="panel-block">
+                    <table class="table is-fullwidth is-hoverable" id="auditAffected">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @lang["timestampHeader"]
+                                </th>
+                                <th>
+                                    @lang["messageHeader"]
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in audit.GetAll<AdminEditUserAudit>())
+                            {
+                                if (item.EditedUserId == Model.User.Id)
+                                {
+                                    <tr>
+                                        <td>
+                                            <abbr title="@item.Time.ToString()">@item.Time.Humanize(culture: CultureInfo.CurrentCulture)</abbr>
+                                        </td>
+                                        <td>
+                                            @item.Message
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Details", "Details", "Audit", new { id = item.Id })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </nav>
+        </div>
     </form>
 </div>
 
@@ -401,11 +417,11 @@
         }
     </script>
 
-<script language="javascript">
-    $("#auditAction").DataTable();
-</script>
+    <script language="javascript">
+        $("#auditAction").DataTable();
+    </script>
 
-<script language="javascript">
-    $("#auditAffected").DataTable();
-</script>
+    <script language="javascript">
+        $("#auditAffected").DataTable();
+    </script>
 }

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using AspNetCore.Identity.LiteDB;
+using AspNetCore.Identity.LiteDB.Data;
 using Hangfire;
 using Hangfire.LiteDB;
 using HGGM.Models.Configuration;
@@ -11,8 +12,9 @@ using HGGM.Models.Identity;
 using HGGM.Services;
 using HGGM.Services.Authorization;
 using HGGM.Services.Authorization.Simple;
-using HGGM.Services.Discourse;
+using HGGM.Services.Discourse
 using HGGM.Services.Authorization.Tag;
+using Joonasw.AspNetCore.SecurityHeaders;
 using LiteDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -27,7 +29,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using LiteDbContext = AspNetCore.Identity.LiteDB.Data.LiteDbContext;
+using LiteDbContext = HGGM.Services.LiteDbContext;
 
 namespace HGGM
 {
@@ -43,6 +45,8 @@ namespace HGGM
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            app.UseHealthChecks("/health");
             var forwardedHeadersOptions = new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.All,
@@ -66,7 +70,7 @@ namespace HGGM
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                HstsBuilderExtensions.UseHsts(app);
             }
 
             app.UseHttpsRedirection();
@@ -114,7 +118,7 @@ namespace HGGM
 
             services.AddSingleton(new LiteDatabase(Configuration.GetConnectionString("LiteDb")));
             services.AddSingleton<LiteRepository>();
-            services.AddSingleton<LiteDbContext, Services.LiteDbContext>();
+            services.AddSingleton<ILiteDbContext, LiteDbContext>();
 
             services.AddAuthentication()
                 .AddSteam();
@@ -160,6 +164,7 @@ namespace HGGM
             services.Configure<DiscourseService.Options>(Configuration.GetSection("Discourse"));
             services.AddSingleton<DiscourseService>();
             services.AddTransient<EventManager>();
+            services.AddHealthChecks();
         }
     }
 }

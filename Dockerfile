@@ -16,5 +16,5 @@ FROM microsoft/dotnet:2.2-aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/HGGM/out .
 EXPOSE 80
-HEALTHCHECK CMD curl -f http://localhost/
+HEALTHCHECK CMD curl -f http://localhost/health
 ENTRYPOINT ["dotnet", "HGGM.dll"]
